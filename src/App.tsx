@@ -1,8 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
 
+import React from "react";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Content from "./components/Content";
+
+export default function App() {
+  return (
+    <React.Fragment>
+      <Header />
+      <Content />
+      <Footer />
+    </React.Fragment>
+  );
+}
+/*
 function App() {
   const [count, setCount] = useState(0)
 
@@ -33,3 +48,4 @@ function App() {
 }
 
 export default App
+*/
