@@ -1,3 +1,13 @@
+import "./ShopCard.css";
+import imgProduct from "../images/biomio.png";
+import basket from "../assets/basket.svg";
+import download from "../assets/download.svg";
+import dotLine from "../assets/dot-line.svg";
+import share from "../assets/share.svg";
+import Button from "./Button";
+import Dropdown from "./Dropdown";
+import { useState } from "react";
+
 export interface ShopCardProps {
   id: string;
   name: string;
@@ -26,56 +36,106 @@ export default function ShopCard(props: ShopCardProps) {
     size,
     type,
   } = props;
+
+  const [count, setCount] = useState(1);
+  function minus() {
+    if (count > 0) setCount(() => count - 1);
+  }
+
   return (
     <div id={"product-" + id} className="card">
-      <header>
-        <h2>{brand}</h2>
-        <span>{name}</span>
-      </header>
       <div className="image">
-        <img className="activator" src={images} alt="" />
+        <img className="activator" src={imgProduct} alt="" />
       </div>
-      <div className="card-content">
-        <span className="card-title">{name}</span>
-        <p>{price} T</p>
+      <div className="card__right-side">
+        <header className="card__header">
+          <span>{brand} </span>
+          <span>{name}</span>
+        </header>
 
-        <div>
-          <button>-</button>
-          <span>1</span>
-          <button>+</button>
-        </div>
-        <div className="card-action">
-          <button className="btn-small">В корзину</button>
-        </div>
-      </div>
+        <div className="card__form">
+          <div className="card__price">
+            <span>{`${price}₸`}</span>
+          </div>
+          <button className="btn-small card__minus" onClick={minus}>
+            -
+          </button>
+          <input
+            type="text"
+            id="card-quantity"
+            name="quantity"
+            className="quantity"
+            value={count}
+          ></input>
 
-      <div>
-        <div>
-          <span>Производитель: </span>
-          <span>{manufacturer}</span>
+          <button
+            className="btn-small card__plus"
+            onClick={() => setCount((count) => count + 1)}
+          >
+            +
+          </button>
+          <Button
+            text="В корзину"
+            icon={basket}
+            id="card-buy"
+            className="btn card__buy"
+            name="buy"
+          />
         </div>
-        <div>
-          <span>Бренд: </span>
-          <span>{brand}</span>
-        </div>
-        <div>
-          <span>Артикул: </span>
-          <span>{article}</span>
-        </div>
-        <div>
-          <span>Штрихкод: </span>
-          <span>{barcode}</span>
-        </div>
-      </div>
 
-      <div>
-        <h3>Описание</h3>
-        <p>{description}</p>
-      </div>
+        <div className="card__additional">
+          <a
+            id="card-share"
+            className="share ui-link"
+            href=""
+            rel="nofollow noopener"
+          >
+            <img src={share}></img>
+          </a>
+          <div className="card__promo">
+            При покупке от 10 000 ₸ бесплатная доставка по Кокчетаву и области
+          </div>
 
-      <div>
-        <h3>Характеристики </h3>
-        <div>
+          <button
+            type="button"
+            id="card-buy"
+            className="card__download"
+            name="download"
+          >
+            <span>Прайс-лист</span>
+            <img src={download} />
+          </button>
+        </div>
+
+        <div className="card__detail">
+          <div>
+            <span>Производитель: </span>
+            <span>{manufacturer}</span>
+          </div>
+          <div>
+            <span>Бренд: </span>
+            <span>{brand}</span>
+          </div>
+          <div>
+            <span>Артикул: </span>
+            <span>{article}</span>
+          </div>
+          <div>
+            <span>Штрихкод: </span>
+            <span>{barcode}</span>
+          </div>
+        </div>
+
+        <div className="card__description">
+          <h3>Описание</h3>
+          <p>{description}</p>
+        </div>
+
+        <img src={dotLine}></img>
+
+        <div className="card__characteristic">
+          <h3>Характеристики </h3>
+
           <div>
             <span>Производитель: </span>
             <span>{manufacturer}</span>
