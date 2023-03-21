@@ -1,0 +1,40 @@
+.header__top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__contacts {
+  display: flex;
+  text-align: start;
+}
+
+.header__address {
+  display: flex;
+  margin-right: 2.5rem;
+}
+
+.header__address-main {
+  margin-left: 1rem;
+}
+
+.header__mail {
+  display: flex;
+}
+
+.header__mail-main {
+  margin-left: 1rem;
+}
+
+.header__menu {
+  display: flex;
+}
+
+.header__menu > * {
+  margin-right: 3.75rem;
+}
+
+.header__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
