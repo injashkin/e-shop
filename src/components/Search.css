@@ -11,7 +11,30 @@
 }
 
 .search input {
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
   border: none;
+  color: #5C6370;
+
+  opacity: 0.6;
   background-color: #EDEDED;
+  width: 7rem;
 }
 
+.search div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 39px;
+  height: 39px;
+  background: #FFC85E;
+  border-radius: 50%;
+}
+
+.search img {
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}

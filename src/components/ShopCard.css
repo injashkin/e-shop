@@ -52,7 +52,7 @@
   border-radius: 1000px;
 }
 
-.card-action {
+.card__form> :last-child {
   margin-left: 2.5rem;
 }
 

@@ -1,3 +1,7 @@
+import React, { useContext } from "react";
+import { AppContext } from "../App";
+import { useState } from "react";
+
 import "./ShopCard.css";
 import imgProduct from "../images/biomio.png";
 import basket from "../assets/basket.svg";
@@ -6,7 +10,6 @@ import dotLine from "../assets/dot-line.svg";
 import share from "../assets/share.svg";
 import Button from "./Button";
 import Dropdown from "./Dropdown";
-import { useState } from "react";
 
 export interface ShopCardProps {
   id: string;
@@ -37,9 +40,32 @@ export default function ShopCard(props: ShopCardProps) {
     type,
   } = props;
 
-  const [count, setCount] = useState(1);
-  function minus() {
-    if (count > 0) setCount(() => count - 1);
+  const { state, dispatch } = useContext(AppContext);
+
+  const changeInputValue = (newValue) => {
+    dispatch({ type: "UPDATE_INPUT", data: newValue });
+  };
+
+  //const [count, setCount] = useState(1);
+
+  function minus(e) {
+    if (state.quantityFromCard > 0) changeInputValue(state.quantityFromCard - 1);
+  }
+
+  function plus(e) {
+    changeInputValue(state.quantityFromCard + 1);
+  }
+
+  function addToBasket() {
+    dispatch({ type: "UPDATE_INPUT", data: state.quantityFromCard });
+    dispatch({ type: "ADD_TO_BASKET_PRICE", data: price });
+
+    dispatch({ type: "UPDATE_NUM", data: state.numProducts + state.quantityFromCard });
+
+    dispatch({
+      type: "UPDATE_SUM",
+      data: state.basketSum + price * state.quantityFromCard,
+    });
   }
 
   return (
@@ -61,17 +87,15 @@ export default function ShopCard(props: ShopCardProps) {
             -
           </button>
           <input
-            type="text"
+            type="number"
             id="card-quantity"
             name="quantity"
             className="quantity"
-            value={count}
+            value={state.quantityFromCard} // Читает/отправляет из стейта/в стейт в App.tsx
+            onChange={(e) => changeInputValue(e.target.value)}
           ></input>
 
-          <button
-            className="btn-small card__plus"
-            onClick={() => setCount((count) => count + 1)}
-          >
+          <button className="btn-small card__plus" onClick={plus}>
             +
           </button>
           <Button
@@ -81,6 +105,7 @@ export default function ShopCard(props: ShopCardProps) {
             className="btn card__buy"
             name="buy"
           />
+          <button onClick={addToBasket}>lskdjflskdf</button>
         </div>
 
         <div className="card__additional">

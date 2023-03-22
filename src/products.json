@@ -1,0 +1,17 @@
+{
+  "article": 460404,
+  "id": "sdfwerw",
+  "brand": "BioMio BIO-SOAP",
+  "images": "./images/biomio.png",
+  "name": "Экологичное туалетное мыло. Литсея и бергамот",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum ut justo, vestibulum sagittis iaculis iaculis. Quis mattis vulputate feugiat massa vestibulum duis. Faucibus consectetur aliquet sed pellentesque consequat consectetur congue mauris venenatis. Nunc elit, dignissim sed nulla ullamcorper enim, malesuada.",
+  "price": 48.76,
+  "type": "мл",
+  "size": 450,
+  "barcode": 4604049097548,
+  "manufacturer": "Нэфис",
+  "тип ухода": [
+    "уход за руками",
+    "уход за лицом"
+  ]
+}

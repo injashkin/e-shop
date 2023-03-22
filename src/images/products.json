@@ -1,0 +1,14 @@
+{
+  "123456": {
+    "image": "/images/image21.png",
+    "name": "AOS",
+    "description": "средство для мытья посуды Crystal",
+    "cost": 48.76,
+    "brand": "AOS",
+    "type": "мл",
+    "size": 450,
+    "barcode": 4604049097548,
+    "manufacturer": "Нэфис",
+    "тип ухода": ["уход за руками", "уход за лицом"]
+  }
+}

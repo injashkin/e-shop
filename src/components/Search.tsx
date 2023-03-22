@@ -1,20 +1,20 @@
-import "./Search.css"
+import "./Search.css";
 
 interface SearchProps {
   text: string;
   icon: string;
-  id: string;
-  className: string;
-  name: string;
+  parentClass: string;
 }
 
 export default function Search(props: SearchProps) {
-  const { id, text, icon, className, name } = props;
+  const { text, icon, parentClass } = props;
 
   return (
-    <div className="search">
-      <input type="text" id={id} className={className} name={name} placeholder={text} />
-      <img src={icon}></img>
+    <div className={`search ${parentClass}__search`}>
+      <input type="text" id={`${parentClass}-search`} placeholder={text} />
+      <div>
+        <img src={icon} />
+      </div>
     </div>
   );
 }
