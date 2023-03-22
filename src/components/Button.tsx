@@ -3,17 +3,16 @@ import "./Button.css";
 interface ButtonProps {
   text: string;
   icon: string;
-  id: string;
-  className: string;
+  parentClass: string;
   name: string;
 }
 
 export default function Button(props: ButtonProps) {
-  const { id, text, icon, className, name } = props;
+  const { text, icon, parentClass, name } = props;
   return (
     <div className="card-action">
-      <button type="button" id={id} className={className} name={name}>
-        <span>{text}</span>
+      <button type="button" className={`btn ${parentClass}__btn`} name={name}>
+        {text}
         <img src={icon}></img>
       </button>
     </div>

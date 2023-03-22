@@ -7,6 +7,8 @@
   gap: 12px;
   background: #FFC85E;
   border-radius: 79px;
+  width: 100%;
+  cursor: pointer;
 
   font-family: 'Inter';
   font-style: normal;
