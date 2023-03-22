@@ -1,3 +1,17 @@
+.header {
+  padding-top: 0.875rem;
+
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+}
+
+a {
+  text-decoration-line: none;
+}
+
 .header__top {
   display: flex;
   justify-content: space-between;
@@ -5,36 +19,188 @@
 
 .header__contacts {
   display: flex;
+  align-items: center;
   text-align: start;
 }
 
 .header__address {
   display: flex;
+  align-items: center;
   margin-right: 2.5rem;
+}
+
+.header__address>img {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .header__address-main {
   margin-left: 1rem;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 130.02%;
+  color: #111111;
+}
+
+.header__address-main>div {
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 130.02%;
+  color: #3F4E65;
 }
 
 .header__mail {
   display: flex;
+  justify-content: start;
 }
 
 .header__mail-main {
   margin-left: 1rem;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: #111111;
+}
+
+.header__mail-main>div {
+  margin-left: 1rem;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 130.02%;
+  color: #3F4E65;
 }
 
 .header__menu {
   display: flex;
+  align-items: center;
 }
 
-.header__menu > * {
-  margin-right: 3.75rem;
+.header__menu>* {
+  margin-right: 1.875rem;
+  margin-left: 1.875rem;
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  /* identical to box height, or 21px */
+}
+
+.header__menu>* a {
+  color: #3F4E65;
 }
 
 .header__bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.header__callback-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.header__callback {
+  text-align: end;
+  margin-right: 0.875rem;
+}
+
+.header__callback :first-child {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
+  /* identical to box height, or 21px */
+  color: #111111;
+}
+
+.header__callback :nth-child(2) {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 150%;
+  /* identical to box height, or 18px */
+  color: #3F4E65;
+}
+
+.header__callback :last-child {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 150%;
+  /* identical to box height, or 15px */
+  text-decoration-line: underline;
+  color: #3F4E65;
+}
+
+.header__manager {
+  position: relative;
+}
+
+.header__manager> :last-child {
+  position: absolute;
+  top: 1.5rem;
+  left: 3.5rem;
+
+}
+
+.header__basket {
+  display: flex;
+}
+
+.header-basket {
+
+  position: relative;
+  margin-right: 1.5rem;
+}
+
+.header-basket__num {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: -0.5rem;
+  left: 1.5rem;
+
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #FFFFFF;
+  border: 3px solid #FFFFFF;
+  border-radius: 50%;
+  background: #FFC85E;
+}
+
+.header__basket-text> :first-child {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 150%;
+  /* identical to box height, or 18px */
+  color: #3F4E65;
+}
+
+.header__basket-text> :last-child {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
+  /* identical to box height, or 21px */
+  color: #111111;
+}
+
+.line {
+  width: 100%;
 }
