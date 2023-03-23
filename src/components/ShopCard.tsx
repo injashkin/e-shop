@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { AppContext } from "../App";
-import { useState } from "react";
 
 import "./ShopCard.css";
 import imgProduct from "../images/biomio.png";
@@ -9,7 +8,6 @@ import download from "../assets/download.svg";
 import dotLine from "../assets/dot-line.svg";
 import share from "../assets/share.svg";
 import Button from "./Button";
-import Dropdown from "./Dropdown";
 
 export interface ShopCardProps {
   id: string;
@@ -49,7 +47,8 @@ export default function ShopCard(props: ShopCardProps) {
   //const [count, setCount] = useState(1);
 
   function minus(e) {
-    if (state.quantityFromCard > 0) changeInputValue(state.quantityFromCard - 1);
+    if (state.quantityFromCard > 0)
+      changeInputValue(state.quantityFromCard - 1);
   }
 
   function plus(e) {
@@ -60,7 +59,10 @@ export default function ShopCard(props: ShopCardProps) {
     dispatch({ type: "UPDATE_INPUT", data: state.quantityFromCard });
     dispatch({ type: "ADD_TO_BASKET_PRICE", data: price });
 
-    dispatch({ type: "UPDATE_NUM", data: state.numProducts + state.quantityFromCard });
+    dispatch({
+      type: "UPDATE_NUM",
+      data: state.numProducts + state.quantityFromCard,
+    });
 
     dispatch({
       type: "UPDATE_SUM",
@@ -91,7 +93,7 @@ export default function ShopCard(props: ShopCardProps) {
             id="card-quantity"
             name="quantity"
             className="quantity"
-            value={state.quantityFromCard} // Читает/отправляет из стейта/в стейт в App.tsx
+            value={state.quantityFromCard}
             onChange={(e) => changeInputValue(e.target.value)}
           ></input>
 
@@ -101,11 +103,10 @@ export default function ShopCard(props: ShopCardProps) {
           <Button
             text="В корзину"
             icon={basket}
-            id="card-buy"
-            className="btn card__buy"
-            name="buy"
+            className="card__basket-btn"
+            name="card-basket-btn"
+            onClick={addToBasket}
           />
-          <button onClick={addToBasket}>lskdjflskdf</button>
         </div>
 
         <div className="card__additional">

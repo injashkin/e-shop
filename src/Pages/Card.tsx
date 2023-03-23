@@ -1,12 +1,14 @@
 import React, { useReducer } from "react";
 import update from "immutability-helper";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
 import "./App.css";
-import ErrorPage from "./Pages/Error";
-import Basket from "./Pages/BasketPage";
-import Catalog from "./Pages/CatalogPage";
-import BasketPage from "./Pages/BasketPage";
+
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Content from "../components/Content";
 
 // Create context object
 export const AppContext = React.createContext();
@@ -35,28 +37,16 @@ function reducer(state, action) {
   }
 }
 
-const router = createBrowserRouter([
-  {
-    path: "/catalog",
-    element: <Catalog />,
-  },
-  {
-    path: "/basket",
-    element: <BasketPage />,
-  },
-  {
-    path: "/error",
-    element: <ErrorPage />,
-  },
-]);
-
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
-    <React.StrictMode>
+    <React.Fragment>
       <AppContext.Provider value={{ state, dispatch }}>
-        <RouterProvider router={router} />
+        <Header />
+        <Content />
+        <Footer />
       </AppContext.Provider>
-    </React.StrictMode>
+    </React.Fragment>
   );
 }

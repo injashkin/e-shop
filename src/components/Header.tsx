@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { AppContext } from "../App";
+import App, { AppContext } from "../App";
 import { useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
 import location from "../assets/location.svg";
 import mail from "../assets/mail.svg";
@@ -15,6 +16,7 @@ import manager from "../assets/manager.png";
 import "./Header.css";
 import Button from "./Button";
 import Search from "./Search";
+import ButtonLink from "./ButtonLink";
 
 export default function Header() {
   const [count2, setCount] = useState(3);
@@ -25,7 +27,6 @@ export default function Header() {
   };
 
   let asd = state.numProducts;
-  //setCount(() => count2 + state.numProducts) // не работает
 
   return (
     <header className="header">
@@ -48,7 +49,7 @@ export default function Header() {
         </div>
         <nav className="header__menu">
           <li>
-            <a href="#">О компании</a>
+            <Link to="/basket">О компании</Link>
           </li>
           <li>
             <a href="#">Доставка и оплата</a>
@@ -64,13 +65,14 @@ export default function Header() {
       <img className="line" src={line} />
       <div className="header__bottom container">
         <img src={logo} />
-        <Button
-          className="btn header__catalog"
+
+        <ButtonLink
+          className="header__catalog-btn"
           text="Каталог"
           icon={frame}
-          id="header-catalog"
-          name="catalog"
+          href="/catalog"
         />
+
         <Search parentClass="header" text="Поиск..." icon={search}></Search>
 
         <div className="header__callback-wrap">
@@ -87,14 +89,13 @@ export default function Header() {
         </div>
 
         <Button
-          className="btn header__price-list"
+          className="header__price-list"
           text="Прайс-лист"
           icon={downloadWhite}
-          id="header-price-list"
-          name="price-list"
+          name="header-price-list"
         />
 
-        <div className="header__basket">
+        <Link to="/basket" className="header__basket">
           <div className="header-basket">
             <img src={basketBlack} />
             <div className="header-basket__num">{state.numProducts}</div>
@@ -103,7 +104,7 @@ export default function Header() {
             <div>Корзина</div>
             <div className="header__basket-sum">{`${state.basketSum} ₸`}</div>
           </div>
-        </div>
+        </Link>
       </div>
       <img className="line" src={line} />
     </header>

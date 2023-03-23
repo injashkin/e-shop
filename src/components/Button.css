@@ -24,3 +24,38 @@
   order: 0;
   flex-grow: 0;
 }
+
+.btn-round {
+  width: 3.6875rem;
+  height: 3.6875rem;
+}
+
+.btn-round>img {
+  width: 1.5625rem;
+  height: 1.5625rem;
+}
+
+.btn-sm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 14px;
+  gap: 10px;
+
+  background: linear-gradient(90deg, rgba(255, 198, 80, 0.3) 0%, rgba(254, 202, 110, 0.3) 97.25%);
+  border-radius: 1000px;
+}
+
+/*   */
+
+.basket-card__control {
+  display: flex;
+  align-items: center;
+
+}
+
+.basket-card__control>input {
+  width: 44px;
+  text-align: center;
+}

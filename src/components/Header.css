@@ -51,7 +51,6 @@ a {
 
 .header__mail {
   display: flex;
-  justify-content: start;
 }
 
 .header__mail-main {

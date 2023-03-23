@@ -52,7 +52,6 @@ export default function Footer() {
           <Button
             text="Прайс-лист"
             icon={download}
-            parentClass="footer"
             name={""}
           ></Button>
           <div>Связь в мессенджерах:</div>
