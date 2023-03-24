@@ -55,7 +55,7 @@ export default function BasketCard(props: ShopCardProps) {
     changeInputValue(state.quantityFromCard + 1);
   }
 
-  let mod = "row";
+  let mod = "cat";
 
   let cat = true;
   let catMob = false;
@@ -120,7 +120,7 @@ export default function BasketCard(props: ShopCardProps) {
             <img src={boxOpen}></img>
             <span>90г</span>
           </div>
-          <h3><span>BioMio BIO-SOAP </span>Экологичное туалетное мыло....</h3>
+          <h3><span>BioMio BIO-SOAP </span>{props.name}</h3>
 
           {cat && (
             <div className="basket-card__detail">
