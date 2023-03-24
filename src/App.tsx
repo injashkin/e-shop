@@ -7,6 +7,7 @@ import ErrorPage from "./Pages/Error";
 import Basket from "./Pages/BasketPage";
 import Catalog from "./Pages/CatalogPage";
 import BasketPage from "./Pages/BasketPage";
+import Card from "./Pages/Card";
 
 // Create context object
 export const AppContext = React.createContext();
@@ -36,6 +37,14 @@ function reducer(state, action) {
 }
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Card />,
+  },
+  {
+    path: "/card",
+    element: <Card />,
+  },
   {
     path: "/catalog",
     element: <Catalog />,

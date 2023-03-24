@@ -49,13 +49,13 @@
 
 /*   */
 
-.basket-card__control {
+.basket-card__inc-dec {
   display: flex;
   align-items: center;
 
 }
 
-.basket-card__control>input {
+.basket-card__inc-dec>input {
   width: 44px;
   text-align: center;
 }

@@ -1,5 +1,6 @@
 .basket {
   margin-top: 2.8125rem;
+  padding-bottom: 3.125rem;
 }
 
 .basket__bread-crumbs {
@@ -10,7 +11,7 @@
   color: #3F4E65;
 }
 
-.basket__bread-crumbs> *:not(:first-child):not(.separator) {
+.basket__bread-crumbs>*:not(:first-child):not(.separator) {
   opacity: 0.5;
 }
 
@@ -40,4 +41,18 @@
   opacity: 0.3;
   border: 1px dashed #3F4E65;
   margin: 0 0.625rem;
+}
+
+.basket__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3.125rem 0;
+}
+
+.basket__sum {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 130%;
+  color: #111111;
 }

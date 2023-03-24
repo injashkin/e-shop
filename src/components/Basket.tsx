@@ -1,5 +1,6 @@
 import BasketCard from "./BasketCard";
 import "./Basket.css";
+import Button from "./Button";
 
 export default function Basket() {
   return (
@@ -16,6 +17,11 @@ export default function Basket() {
         <BasketCard />
         <BasketCard />
         <BasketCard />
+
+        <div className="basket__bottom">
+          <Button text="Оформить заказ"></Button>
+          <div className="basket__sum">1 348,76 ₸</div>
+        </div>
       </div>
     </div>
   );
