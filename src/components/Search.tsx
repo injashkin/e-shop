@@ -1,17 +1,18 @@
 import "./Search.css";
+import search from "../assets/search.svg";
 
 interface SearchProps {
-  text: string;
-  icon: string;
-  parentClass: string;
+  text?: string;
+  icon?: string;
+  className?: string;
 }
 
 export default function Search(props: SearchProps) {
-  const { text, icon, parentClass } = props;
+  const { text="Поиск...", icon, className } = props;
 
   return (
-    <div className={`search ${parentClass}__search`}>
-      <input type="text" id={`${parentClass}-search`} placeholder={text} />
+    <div className={`search ${className}`}>
+      <input type="text" id={`${className}-search`} placeholder={text} />
       <div>
         <img src={icon} />
       </div>

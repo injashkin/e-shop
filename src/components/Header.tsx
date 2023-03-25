@@ -73,7 +73,7 @@ export default function Header() {
           href="/catalog"
         />
 
-        <Search parentClass="header" text="Поиск..." icon={search}></Search>
+        <Search className="header__search" icon={search}></Search>
 
         <div className="header__callback-wrap">
           <div className="header__callback">

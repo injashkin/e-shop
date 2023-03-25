@@ -6,12 +6,14 @@ import deleted from "../assets/deleted.svg";
 import basket from "../assets/basket.svg";
 import "./BasketCard.css";
 import Button from "./Button";
+import { Link } from "react-router-dom";
 
 export interface ShopCardProps {
   id?: string;
   name?: string;
   price?: number;
-  images?: string;
+  image?: string;
+  image_m?: string;
   brand?: string;
   article?: number;
   manufacturer?: string;
@@ -30,7 +32,8 @@ export default function BasketCard(props: ShopCardProps) {
     id,
     name,
     price,
-    images,
+    image,
+    image_m,
     brand = "AOS",
     article,
     manufacturer = "Нэфис",
@@ -107,12 +110,16 @@ export default function BasketCard(props: ShopCardProps) {
     basketCardControl = `${basketCardControl} basket-card__control--cat`;
   }
 
+  function getImageUrl(name) {
+    return new URL(`../images/${name}`, import.meta.url).href
+  }
+
   return (
     <div className={basketCard}>
       <div className={`flex ${colClass}`}>
         {catMob && (<div className="basket-card__pop">ПОПУЛЯРНОЕ</div>)}
         <div className={basketCardImage}>
-          <img className="activator" src={imgProduct} alt="" />
+          <img className="activator" src={getImageUrl(image_m)} alt="" />
         </div>
         <div className="basket-card__description">
           
@@ -120,7 +127,7 @@ export default function BasketCard(props: ShopCardProps) {
             <img src={boxOpen}></img>
             <span>90г</span>
           </div>
-          <h3><span>BioMio BIO-SOAP </span>{props.name}</h3>
+          <h3><span>{brand} </span>{name}</h3>
 
           {cat && (
             <div className="basket-card__detail">
@@ -169,7 +176,7 @@ export default function BasketCard(props: ShopCardProps) {
         )}
 
         {(row || col) && <div className="sep49"></div>}
-        <div className={basketCardPrice}>{`${priceTest} ₸`}</div>
+        <div className={basketCardPrice}>{`${price} ₸`}</div>
         {(row || col) && <div className="sep49"></div>}
         {(row || col) && <Button icon={deleted} className="basket-card__plus" />}
         {cat && (
