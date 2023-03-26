@@ -8,43 +8,20 @@ import download from "../assets/download.svg";
 import dotLine from "../assets/dot-line.svg";
 import share from "../assets/share.svg";
 import Button from "./Button";
+import { useParams } from "react-router-dom";
+import { IProduct } from "../globalTypes";
 
-export interface ShopCardProps {
-  id: string;
-  name: string;
-  price: number;
-  images: string;
-  brand: string;
-  article: number;
-  barcode: number;
-  manufacturer: string;
-  description: string;
-  size: number;
-  type: string;
-}
+export default function ShopCard({ state, dispatch }) {
+  
+  const { title } = useParams()
+  const { products } = state
+  const product: IProduct = products.find(index => index.title.trim() === title?.trim())
 
-export default function ShopCard(props: ShopCardProps) {
-  const {
-    id,
-    name,
-    price,
-    images,
-    brand,
-    barcode,
-    article,
-    manufacturer,
-    description,
-    size,
-    type,
-  } = props;
-
-  const { state, dispatch } = useContext(AppContext);
+  //const { state, dispatch } = useContext(AppContext);
 
   const changeInputValue = (newValue) => {
     dispatch({ type: "UPDATE_INPUT", data: newValue });
   };
-
-  //const [count, setCount] = useState(1);
 
   function minus(e) {
     if (state.quantityFromCard > 0)
@@ -55,9 +32,9 @@ export default function ShopCard(props: ShopCardProps) {
     changeInputValue(state.quantityFromCard + 1);
   }
 
-  function addToBasket() {
+  function addToCart() {
     dispatch({ type: "UPDATE_INPUT", data: state.quantityFromCard });
-    dispatch({ type: "ADD_TO_BASKET_PRICE", data: price });
+    dispatch({ type: "ADD_TO_BASKET_PRICE", data: product.price });
 
     dispatch({
       type: "UPDATE_NUM",
@@ -66,28 +43,33 @@ export default function ShopCard(props: ShopCardProps) {
 
     dispatch({
       type: "UPDATE_SUM",
-      data: state.basketSum + price * state.quantityFromCard,
+      data: state.basketSum + product.price * state.quantityFromCard,
+    });
+
+    dispatch({
+      type: "ADD_TO_CART",
+      data: state.productsInCart = [...state.productsInCart, product],
     });
   }
 
+  console.log(state.productsInCart)
+
   return (
-    <div id={"product-" + id} className="card">
+    <div id={"product-" + state.id} className="card">
       <div className="image">
         <img className="activator" src={imgProduct} alt="" />
       </div>
       <div className="card__right-side">
         <header className="card__header">
-          <span>{brand} </span>
-          <span>{name}</span>
+          <span>{product.brand} </span>
+          <span>{product.name}</span>
         </header>
 
         <div className="card__form">
           <div className="card__price">
-            <span>{`${price}₸`}</span>
+            <span>{`${product.price}₸`}</span>
           </div>
-          <button className="btn-small card__minus" onClick={minus}>
-            -
-          </button>
+          <Button text="-" className="product-card__minus" onClick={minus} />
           <input
             type="number"
             id="card-quantity"
@@ -97,15 +79,13 @@ export default function ShopCard(props: ShopCardProps) {
             onChange={(e) => changeInputValue(e.target.value)}
           ></input>
 
-          <button className="btn-small card__plus" onClick={plus}>
-            +
-          </button>
+          <Button text="+" className="product-card__plus" onClick={plus} />
           <Button
             text="В корзину"
             icon={basket}
             className="card__basket-btn"
             name="card-basket-btn"
-            onClick={addToBasket}
+            onClick={addToCart}
           />
         </div>
 
@@ -136,25 +116,25 @@ export default function ShopCard(props: ShopCardProps) {
         <div className="card__detail">
           <div>
             <span>Производитель: </span>
-            <span>{manufacturer}</span>
+            <span>{product.manufacturer}</span>
           </div>
           <div>
             <span>Бренд: </span>
-            <span>{brand}</span>
+            <span>{product.brand}</span>
           </div>
           <div>
             <span>Артикул: </span>
-            <span>{article}</span>
+            <span>{product.article}</span>
           </div>
           <div>
             <span>Штрихкод: </span>
-            <span>{barcode}</span>
+            <span>{product.barcode}</span>
           </div>
         </div>
 
         <div className="card__description">
           <h3>Описание</h3>
-          <p>{description}</p>
+          <p>{product.description}</p>
         </div>
 
         <img src={dotLine}></img>
@@ -164,34 +144,34 @@ export default function ShopCard(props: ShopCardProps) {
 
           <div>
             <span>Производитель: </span>
-            <span>{manufacturer}</span>
+            <span>{product.manufacturer}</span>
           </div>
           <div>
             <span>Бренд: </span>
-            <span>{brand}</span>
+            <span>{product.brand}</span>
           </div>
           <div>
             <span>Артикул: </span>
-            <span>{article}</span>
+            <span>{product.article}</span>
           </div>
           <div>
             <span>Штрихкод: </span>
-            <span>{barcode}</span>
+            <span>{product.barcode}</span>
           </div>
           <div>
             <span>Вес: </span>
-            <span>{size} </span>
-            <span>{type}</span>
+            <span>{product.size} </span>
+            <span>{product.type}</span>
           </div>
           <div>
             <span>Объем:м </span>
-            <span>{size} </span>
-            <span>{type}</span>
+            <span>{product.size} </span>
+            <span>{product.type}</span>
           </div>
           <div>
             <span>Кол-во в коробке: </span>
-            <span>{size} </span>
-            <span>{type}</span>
+            <span>{product.size} </span>
+            <span>{product.type}</span>
           </div>
         </div>
       </div>

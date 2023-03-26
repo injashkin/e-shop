@@ -4,8 +4,8 @@ import App from "./App";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./Pages/Error";
-import Basket from "./Pages/BasketPage";
-import Catalog from "./Pages/CatalogPage";
+import BasketPage from "./Pages/BasketPage";
+import CatalogPage from "./Pages/CatalogPage";
 
 const router = createBrowserRouter([
   {
@@ -15,11 +15,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/basket",
-    element: <Basket />,
+    element: <BasketPage />,
   },
   {
     path: "/catalog",
-    element: <Catalog />,
+    element: <CatalogPage />,
   },
 ]);
 

@@ -1,8 +1,10 @@
-import BasketCard from "./BasketCard";
+import ProductCard from "./ProductCard";
 import "./Basket.css";
 import Button from "./Button";
 
-export default function Basket() {
+//...{ mod: basket.mod, product: product }
+
+export default function Basket({ state, dispatch }) {
   return (
     <div>
       <div className="basket container">
@@ -14,13 +16,13 @@ export default function Basket() {
 
         <h1>Корзинa</h1>
 
-        <BasketCard />
-        <BasketCard />
-        <BasketCard />
+        {state.productsInCart.map((product) => (
+          <ProductCard key={product.id} mod="row" {...product} />
+        ))}
 
         <div className="basket__bottom">
           <Button text="Оформить заказ"></Button>
-          <div className="basket__sum">1 348,76 ₸</div>
+          <div className="basket__sum">{state.basketSum} ₸</div>
         </div>
       </div>
     </div>

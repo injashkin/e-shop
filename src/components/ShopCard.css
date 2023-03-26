@@ -40,17 +40,6 @@
   margin-right: 2.5rem;
 }
 
-.btn-small {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 4px 14px;
-  gap: 10px;
-
-  background: linear-gradient(90deg, rgba(255, 198, 80, 0.3) 0%, rgba(254, 202, 110, 0.3) 97.25%);
-  border-radius: 1000px;
-}
 
 .card__form> :last-child {
   margin-left: 2.5rem;
@@ -79,7 +68,6 @@
   align-items: center;
   padding: 10px;
   gap: 10px;
-  background: #FFFFFF;
   box-shadow: 0px 15px 70px -11px rgba(43, 28, 1, 0.04);
   border-radius: 10px;
 }
@@ -87,6 +75,10 @@
 .card__promo {
   margin: auto 0.625rem;
 
+}
+
+.card__download {
+  background-color: #ffffff;
 }
 
 .card__download>span {

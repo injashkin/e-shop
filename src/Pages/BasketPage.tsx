@@ -3,11 +3,11 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Basket from "../components/Basket";
 
-export default function BasketPage() {
+export default function BasketPage({ state, dispatch }) {
   return (
     <React.Fragment>
       <Header />
-      <Basket />
+      <Basket state={state} dispatch={dispatch} />
       <Footer />
     </React.Fragment>
   );

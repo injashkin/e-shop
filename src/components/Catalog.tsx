@@ -1,6 +1,5 @@
 import "./Catalog.css";
-import products from "../products2.json";
-import BasketCard from "./BasketCard";
+import ProductCard from "./ProductCard";
 import Search from "./Search";
 import search from "../assets/search.svg";
 import chevron2 from "../assets/chevron2.svg";
@@ -26,7 +25,7 @@ const pages = [
   { id: 5, http: "", active: false },
 ];
 
-export default function Catalog() {
+export default function Catalog({ state, dispatch }) {
   return (
     <div className="catalog container">
       <div className="catalog__bread-crumbs">
@@ -106,8 +105,8 @@ export default function Catalog() {
         </div>
         <div>
           <div className="catalog__products">
-            {products.map((prod) => (
-              <BasketCard key={prod.id} {...prod} />
+            {state.products.map((product) => (
+              <ProductCard key={product.id} mod="cat" {...product} />
             ))}
           </div>
           <div className="pagination">

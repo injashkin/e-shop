@@ -49,22 +49,24 @@ export default function Header() {
         </div>
         <nav className="header__menu">
           <li>
-            <Link to="/basket">О компании</Link>
+            <Link to="/">О компании</Link>
           </li>
           <li>
-            <a href="#">Доставка и оплата</a>
+            <Link to="/">Доставка и оплата</Link>
           </li>
           <li>
-            <a href="#">Возврат</a>
+            <Link to="/">Возврат</Link>
           </li>
           <li>
-            <a href="#">Контакты</a>
+            <Link to="/">Контакты</Link>
           </li>
         </nav>
       </div>
       <img className="line" src={line} />
       <div className="header__bottom container">
-        <img src={logo} />
+        <Link to="/">
+          <img src={logo} />
+        </Link>
 
         <ButtonLink
           className="header__catalog-btn"

@@ -13,7 +13,7 @@ export default function Button(props: ButtonProps) {
   const { href, icon, className, text } = props;
   return (
     <div className="card-action">
-      <Link to={href} className={`btn ${className}`} target="_blank">
+      <Link to={href} className={`btn ${className}`}>
         {text}
         <img src={icon}></img>
       </Link>

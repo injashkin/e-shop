@@ -2,6 +2,7 @@
   {
     "article": 460404,
     "id": "1",
+    "title": "biomio",
     "brand": "BioMio BIO-SOAP",
     "image": "biomio.png",
     "image_m": "biomio-m.png",
@@ -20,6 +21,7 @@
   {
     "article": 460404,
     "id": "2",
+    "title": "aos",
     "brand": "AOS",
     "image": "aos.png",
     "image_m": "aos-m.png",
@@ -38,6 +40,7 @@
   {
     "article": 460404,
     "id": "3",
+    "title": "ariel",
     "brand": "ARIEL",
     "images": "ariel.png",
     "image_m": "ariel-m.png",
@@ -56,6 +59,7 @@
   {
     "article": 460404,
     "id": "4",
+    "title": "bimax",
     "brand": "BIMAX",
     "image": "bimax.png",
     "image_m": "bimax-m.png",
@@ -74,6 +78,7 @@
   {
     "article": 460404,
     "id": "1",
+    "title": "biomio",
     "brand": "BioMio BIO-SOAP",
     "image": "biomio.png",
     "image_m": "biomio-m.png",
@@ -92,6 +97,7 @@
   {
     "article": 460404,
     "id": "2",
+    "title": "aos",
     "brand": "AOS",
     "image": "aos.png",
     "image_m": "aos-m.png",
@@ -110,6 +116,7 @@
   {
     "article": 460404,
     "id": "3",
+    "title": "ariel",
     "brand": "ARIEL",
     "images": "ariel.png",
     "image_m": "ariel-m.png",
@@ -128,6 +135,7 @@
   {
     "article": 460404,
     "id": "4",
+    "title": "bimax",
     "brand": "BIMAX",
     "image": "bimax.png",
     "image_m": "bimax-m.png",
@@ -142,10 +150,10 @@
       "уход за руками",
       "уход за лицом"
     ]
-  },
-  {
+  },  {
     "article": 460404,
     "id": "1",
+    "title": "biomio",
     "brand": "BioMio BIO-SOAP",
     "image": "biomio.png",
     "image_m": "biomio-m.png",
@@ -164,6 +172,7 @@
   {
     "article": 460404,
     "id": "2",
+    "title": "aos",
     "brand": "AOS",
     "image": "aos.png",
     "image_m": "aos-m.png",
@@ -182,6 +191,7 @@
   {
     "article": 460404,
     "id": "3",
+    "title": "ariel",
     "brand": "ARIEL",
     "images": "ariel.png",
     "image_m": "ariel-m.png",
@@ -200,6 +210,7 @@
   {
     "article": 460404,
     "id": "4",
+    "title": "bimax",
     "brand": "BIMAX",
     "image": "bimax.png",
     "image_m": "bimax-m.png",
@@ -214,10 +225,10 @@
       "уход за руками",
       "уход за лицом"
     ]
-  },
-  {
+  },  {
     "article": 460404,
     "id": "1",
+    "title": "biomio",
     "brand": "BioMio BIO-SOAP",
     "image": "biomio.png",
     "image_m": "biomio-m.png",
@@ -236,6 +247,7 @@
   {
     "article": 460404,
     "id": "2",
+    "title": "aos",
     "brand": "AOS",
     "image": "aos.png",
     "image_m": "aos-m.png",
@@ -254,6 +266,7 @@
   {
     "article": 460404,
     "id": "3",
+    "title": "ariel",
     "brand": "ARIEL",
     "images": "ariel.png",
     "image_m": "ariel-m.png",
@@ -272,6 +285,7 @@
   {
     "article": 460404,
     "id": "4",
+    "title": "bimax",
     "brand": "BIMAX",
     "image": "bimax.png",
     "image_m": "bimax-m.png",

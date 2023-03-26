@@ -1,27 +1,28 @@
-import React, { useReducer } from "react";
+import React, { createContext, useReducer } from "react";
 import update from "immutability-helper";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./App.css";
 import ErrorPage from "./Pages/Error";
-import Basket from "./Pages/BasketPage";
-import Catalog from "./Pages/CatalogPage";
 import BasketPage from "./Pages/BasketPage";
-import Card from "./Pages/Card";
+import CardPage from "./Pages/CardPage";
+import { IState } from "./globalTypes";
+import { ProductDetail } from "./Pages/ProductDetail";
+import products from "./products2.json";
+import CatalogPage from "./Pages/CatalogPage";
 
-// Create context object
-export const AppContext = React.createContext();
-
-// Set up Initial State
-const initialState = {
+const initialState: IState = {
+  products: products,
+  productsInCart: [],
   numProducts: 0,
   price: 0,
   quantityFromCard: 1,
   basketSum: 0,
-  testText: "Hello world",
 };
 
-function reducer(state, action) {
+export const AppContext = React.createContext<IState | null>(null);
+
+function reducer(state: IState, action) {
   switch (action.type) {
     case "UPDATE_INPUT":
       return update(state, { quantityFromCard: { $set: action.data } });
@@ -31,36 +32,43 @@ function reducer(state, action) {
       return update(state, { price: { $set: action.data } });
     case "UPDATE_SUM":
       return update(state, { basketSum: { $set: action.data } });
+    case "ADD_TO_CART":
+      return update(state, { productsInCart: { $set: action.data } });
     default:
       return initialState;
   }
 }
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Card />,
-  },
-  {
-    path: "/card",
-    element: <Card />,
-  },
-  {
-    path: "/catalog",
-    element: <Catalog />,
-  },
-  {
-    path: "/basket",
-    element: <BasketPage />,
-  },
-  {
-    path: "/error",
-    element: <ErrorPage />,
-  },
-]);
-
-export default function App() {
+function App(): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <CatalogPage state={state} dispatch={dispatch} />,
+    },
+    {
+      path: "/catalog/:title",
+      element: <CardPage state={state} dispatch={dispatch} />,
+    },
+    {
+      path: "/card",
+      element: <CardPage state={state} dispatch={dispatch} />,
+    },
+    {
+      path: "/catalog",
+      element: <CatalogPage state={state} dispatch={dispatch} />,
+    },
+    {
+      path: "/basket",
+      element: <BasketPage state={state} dispatch={dispatch} />,
+    },
+    {
+      //path: "/error",
+      //element: <ErrorPage />,
+    },
+  ]);
+
   return (
     <React.StrictMode>
       <AppContext.Provider value={{ state, dispatch }}>
@@ -69,3 +77,5 @@ export default function App() {
     </React.StrictMode>
   );
 }
+
+export default App;
