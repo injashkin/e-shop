@@ -6,10 +6,11 @@ interface ButtonProps {
   name?: string;
   className?: string;
   onClick?: () => void;
+  onMouseUp?: () => void;
 }
 
 export default function Button(props: ButtonProps) {
-  const { text, icon, className, name, onClick } = props;
+  const { text, icon, className, name, onClick, onMouseUp } = props;
   let classes = className;
 
   if (!text) classes = `${classes} btn-round`;
@@ -22,6 +23,7 @@ export default function Button(props: ButtonProps) {
         className={`btn ${classes}`}
         name={name}
         onClick={onClick}
+        onMouseUp={onMouseUp}
       >
         {text}
         {icon && <img src={icon}></img>}
