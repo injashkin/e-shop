@@ -32,8 +32,13 @@
   margin: 3.125rem 0;
 }
 
+.catalog__sort-wrapper {
+  position: relative;
+}
+
 .catalog__sort {
   display: flex;
+
 }
 
 .catalog__sort> :first-child {
@@ -48,6 +53,28 @@
   font-size: 16px;
   line-height: 150%;
   color: #3F4E65;
+}
+
+.catalog__sort-popover {
+  display: none;
+
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, .08);
+  border-radius: 8px;
+  box-shadow: 0 8px 12px 0 rgba(0, 0, 0, .16);
+  max-width: 460px;
+  min-width: 300px;
+  overflow: hidden;
+  position: absolute;
+  transition: opacity .4s;
+  z-index: 1001;
+  left: -7rem;
+  top: 2rem;
+}
+
+.catalog__sort-popover_show {
+  display: block;
+
 }
 
 .catalog__top-filter {

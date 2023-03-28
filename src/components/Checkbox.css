@@ -43,6 +43,10 @@
   border-radius: 1px;
 }
 
+.checkbox__span--radio {
+  border-radius: 50%;
+}
+
 /* Для галочки*/
 .checkbox__span::before {
   content: "";
@@ -58,6 +62,15 @@
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
+}
+
+.checkbox__span--radio::before {
+  border-width: 4px;
+  border-radius: 50%;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
 }
 
 .checkbox__label:hover .checkbox__input~.checkbox__span {

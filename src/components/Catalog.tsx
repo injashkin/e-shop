@@ -11,12 +11,13 @@ import brand5 from "../images/brand5.png";
 import Checkbox from "./Checkbox";
 import { AppContext } from "../App";
 import { useContext } from "react";
+import { IProduct } from "../globalTypes";
 
 const makers = [
-  { id: 11, name: "Grifon", count: 56 },
-  { id: 22, name: "Boyscout", count: 66 },
-  { id: 33, name: "Paclan", count: 166 },
-  { id: 44, name: "Булгари Грин", count: 21 },
+  { id: 1, name: "Grifon", count: 56 },
+  { id: 2, name: "Boyscout", count: 66 },
+  { id: 3, name: "Paclan", count: 166 },
+  { id: 4, name: "Булгари Грин", count: 21 },
 ];
 
 const pages = [
@@ -27,8 +28,24 @@ const pages = [
   { id: 5, http: "", active: false },
 ];
 
+const sort = [
+  { id: 1, name: "Название" },
+  { id: 2, name: "Сначала недорогие" },
+  { id: 3, name: "Сначала дорогие" },
+  { id: 4, name: "Производитель" },
+  { id: 5, name: "Бренд" },
+];
+
+let outProducts: IProduct[] = [];
+
 export default function Catalog() {
   const { state } = useContext(AppContext);
+
+  // Сортировка в обратно порядке
+  const reversedArr = state.products.reverse();
+  // Сортировка по полям
+  const newArr = [...state.products].sort((a, b) => (b.name < a.name ? 1 : -1));
+  outProducts = [...state.products];
 
   return (
     <div className="catalog container">
@@ -39,9 +56,18 @@ export default function Catalog() {
       </div>
       <div className="catalog__header">
         <h1>Косметика и гигиена</h1>
-        <div className="catalog__sort">
-          <span>Сортировка: </span>
-          <div>Название</div>
+        <div className="catalog__sort-wrapper">
+          <div className="catalog__sort">
+            <span>Сортировка: </span>
+            <a>
+              <span>Название</span>
+            </a>
+          </div>
+          <div className="catalog__sort-popover catalog__sort-popover_show">
+            {sort.map((item) => (
+              <Checkbox key={item.id} type="radio" {...item} />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -78,7 +104,7 @@ export default function Catalog() {
             <Search icon={search} />
             <div className="catalog-left__brand-list">
               {makers.map((maker) => (
-                <Checkbox  key={maker.id} {...maker} />
+                <Checkbox key={maker.id} {...maker} />
               ))}
             </div>
             <div>Показать все</div>
@@ -109,7 +135,7 @@ export default function Catalog() {
         </div>
         <div>
           <div className="catalog__products">
-            {state.products.map((product) => (
+            {outProducts.map((product) => (
               <ProductCard key={product.id} mod="cat" {...product} />
             ))}
           </div>
