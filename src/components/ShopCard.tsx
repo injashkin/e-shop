@@ -11,19 +11,19 @@ import Button from "./Button";
 import { useParams } from "react-router-dom";
 import { IProduct } from "../globalTypes";
 
-export default function ShopCard({ state, dispatch }) {
-  
-  const { title } = useParams()
-  const { products } = state
-  const product: IProduct = products.find(index => index.title.trim() === title?.trim())
-
-  //const { state, dispatch } = useContext(AppContext);
+export default function ShopCard() {
+  const { state, dispatch } = useContext(AppContext);
+  const { title } = useParams();
+  const { products } = state;
+  const product: IProduct = products.find(
+    (index) => index.title.trim() === title?.trim()
+  );
 
   const changeInputValue = (newValue) => {
     dispatch({ type: "UPDATE_INPUT", data: newValue });
   };
 
-  function minus(e) {
+  function minus() {
     if (state.quantityFromCard > 0)
       changeInputValue(state.quantityFromCard - 1);
   }
@@ -33,26 +33,55 @@ export default function ShopCard({ state, dispatch }) {
   }
 
   function addToCart() {
+    let index: number = -1;
+    let productInCart = state.productsInCart.find((item, idItem) => {
+      if (item.id === product.id) {
+        index = +idItem;
+        return true;
+      }
+      return false;
+    });
+
+    if (productInCart) {
+      productInCart.quantity = productInCart.quantity + 1;
+      let productsInCart = state.productsInCart;
+      productsInCart[index] = productInCart;
+      dispatch({
+        type: "ADD_TO_CART",
+        data: productsInCart,
+      });
+    } else {
+      product.quantity = 1;
+
+      dispatch({
+        type: "ADD_TO_CART",
+        data: [...state.productsInCart, product],
+      });
+    }
+
     dispatch({ type: "UPDATE_INPUT", data: state.quantityFromCard });
     dispatch({ type: "ADD_TO_BASKET_PRICE", data: product.price });
 
+    //dispatch({
+    //  type: "ADD_TO_CART",
+    //  data: (state.productsInCart = [...state.productsInCart, product]),
+    //});
+
     dispatch({
-      type: "UPDATE_NUM",
-      data: state.numProducts + state.quantityFromCard,
+      type: "UPDATE_QUANTITY",
+      data: { id: product.id, quantityFromCard: state.quantityFromCard },
+    });
+
+    dispatch({
+      type: "UPDATE_TOTAL_NUM",
+      data: "", //state.numProducts + state.quantityFromCard,
     });
 
     dispatch({
       type: "UPDATE_SUM",
-      data: state.basketSum + product.price * state.quantityFromCard,
-    });
-
-    dispatch({
-      type: "ADD_TO_CART",
-      data: state.productsInCart = [...state.productsInCart, product],
+      data: "", //+(state.totalSum + product.price * state.quantityFromCard).toFixed(2),
     });
   }
-
-  console.log(state.productsInCart)
 
   return (
     <div id={"product-" + state.id} className="card">

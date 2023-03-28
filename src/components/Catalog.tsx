@@ -9,12 +9,14 @@ import brand3 from "../images/brand3.png";
 import brand4 from "../images/brand4.png";
 import brand5 from "../images/brand5.png";
 import Checkbox from "./Checkbox";
+import { AppContext } from "../App";
+import { useContext } from "react";
 
 const makers = [
-  { id: 1, name: "Grifon", count: 56 },
-  { id: 2, name: "Boyscout", count: 66 },
-  { id: 3, name: "Paclan", count: 166 },
-  { id: 4, name: "Булгари Грин", count: 21 },
+  { id: 11, name: "Grifon", count: 56 },
+  { id: 22, name: "Boyscout", count: 66 },
+  { id: 33, name: "Paclan", count: 166 },
+  { id: 44, name: "Булгари Грин", count: 21 },
 ];
 
 const pages = [
@@ -25,7 +27,9 @@ const pages = [
   { id: 5, http: "", active: false },
 ];
 
-export default function Catalog({ state, dispatch }) {
+export default function Catalog() {
+  const { state } = useContext(AppContext);
+
   return (
     <div className="catalog container">
       <div className="catalog__bread-crumbs">
@@ -74,7 +78,7 @@ export default function Catalog({ state, dispatch }) {
             <Search icon={search} />
             <div className="catalog-left__brand-list">
               {makers.map((maker) => (
-                <Checkbox {...maker} />
+                <Checkbox  key={maker.id} {...maker} />
               ))}
             </div>
             <div>Показать все</div>

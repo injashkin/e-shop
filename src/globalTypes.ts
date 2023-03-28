@@ -19,7 +19,7 @@ export interface IState {
   products: IProduct[];
   productsInCart: IProduct[];
   numProducts: number;
-  basketSum: number;
+  totalSum: number;
   quantityFromCard: number;
   price: number;
 }

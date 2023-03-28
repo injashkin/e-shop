@@ -1,4 +1,4 @@
-import { useContext, useMemo, useReducer } from "react";
+import { useContext, useEffect, useReducer } from "react";
 import { AppContext } from "../App";
 import boxOpen from "../assets/box-open.svg";
 import deleted from "../assets/deleted.svg";
@@ -34,26 +34,6 @@ const ProductCard = ({ mod, ...product }): JSX.Element => {
 
   const { state, dispatch } = useContext(AppContext);
 
-
-  /*
-  const changeInputValue = (newValue) => {
-    dispatch({ type: "UPDATE_INPUT", data: newValue });
-    dispatch({ type: "ADD_TO_BASKET_PRICE", data: price });
-    dispatch({
-      type: "UPDATE_NUM",
-      data: state.numProducts + state.quantityFromCard,
-    });
-    dispatch({
-      type: "UPDATE_SUM",
-      data: state.basketSum + product.price * state.quantityFromCard,
-    });
-    dispatch({
-      type: "ADD_TO_CART",
-      data: (state.productsInCart = [...state.productsInCart, product]),
-    });
-  };
-  */
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: "CHANGE_QUANTITY",
@@ -61,23 +41,49 @@ const ProductCard = ({ mod, ...product }): JSX.Element => {
     });
   };
 
-  //const changeInputValue = (newValue) => {
-  //  dispatch({ type: "UPDATE_INPUT", data: newValue });
-  //};
+  function remove() {
+    dispatch({
+      type: "REMOVE",
+      data: { id: id },
+    });
+
+    dispatch({
+      type: "UPDATE_SUM",
+      data: "",
+    });
+
+    dispatch({
+      type: "UPDATE_TOTAL_NUM",
+      data: "",
+    });
+  }
 
   function minus() {
     dispatch({
       type: "MINUS_QUANTITY",
       data: { id: id },
     });
+
+    dispatch({
+      type: "UPDATE_SUM",
+      data: "",
+    });
   }
 
-  function plus(e) {
-    console.log("dfghdfudtu");
-
+  function plus() {
     dispatch({
       type: "PLUS_QUANTITY",
       data: { id: id },
+    });
+
+    dispatch({
+      type: "UPDATE_NUM",
+      data: state.numProducts + state.quantityFromCard,
+    });
+
+    dispatch({
+      type: "UPDATE_SUM",
+      data: "", //+(state.totalSum + product.price * state.quantityFromCard).toFixed(2),
     });
   }
 
@@ -107,6 +113,20 @@ const ProductCard = ({ mod, ...product }): JSX.Element => {
         data: [...state.productsInCart, product],
       });
     }
+
+    //dispatch({
+    //  type: "UPDATE_NUM",
+    //  data: state.numProducts + state.quantityFromCard,
+    //});
+    dispatch({
+      type: "UPDATE_TOTAL_NUM",
+      data: "", //state.numProducts + state.quantityFromCard,
+    });
+
+    dispatch({
+      type: "UPDATE_SUM",
+      data: "", //+(state.totalSum + product.price * state.quantityFromCard).toFixed(2),
+    });
   }
 
   let cat = true;
@@ -207,23 +227,18 @@ const ProductCard = ({ mod, ...product }): JSX.Element => {
         {row && <div className="sep49"></div>}
         {(row || col) && (
           <div className="product-card__inc-dec">
-            <Button
-              text="-"
-              className="product-card__minus"
-              onMouseUp={minus}
-            />
+            <Button text="-" className="product-card__minus" onClick={minus} />
 
             <input
               type="text"
               id="card-quantity"
               name="quantity"
               className="quantity"
-              value={quantity}
+              value={product.quantity}
               onChange={(e) => handleChange(e)}
             ></input>
 
             <Button text="+" className="product-card__plus" onClick={plus} />
-            <button onClick={plus}>fghfghfhfgth</button>
           </div>
         )}
 
@@ -231,14 +246,18 @@ const ProductCard = ({ mod, ...product }): JSX.Element => {
         <div className={productCardPrice}>{`${price} ₸`}</div>
         {(row || col) && <div className="sep49"></div>}
         {(row || col) && (
-          <Button icon={deleted} className="product-card__plus" />
+          <Button
+            icon={deleted}
+            className="product-card__plus"
+            onClick={remove}
+          />
         )}
         {cat && (
           <Button
             text="В корзину"
             icon={basket}
             className="product-card__plus"
-            onMouseUp={addToCart}
+            onClick={addToCart}
           />
         )}
       </div>

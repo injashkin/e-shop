@@ -19,14 +19,22 @@ import Search from "./Search";
 import ButtonLink from "./ButtonLink";
 
 export default function Header() {
-  const [count2, setCount] = useState(3);
+  //const [count2, setCount] = useState(3);
   const { state, dispatch } = useContext(AppContext);
 
   const changeInputValue = (newValue) => {
     dispatch({ type: "UPDATE_INPUT", data: newValue });
   };
 
-  let asd = state.numProducts;
+  /*
+  let sum = 0;
+  React.useEffect(() => {
+    state.productsInCart.forEach((product) => {
+      sum = sum + product.price * product.quantity;
+    });
+    console.log("sum", sum);
+  }, [state.productsInCart, state.numProducts]);
+*/
 
   return (
     <header className="header">
@@ -104,7 +112,7 @@ export default function Header() {
           </div>
           <div className="header__basket-text">
             <div>Корзина</div>
-            <div className="header__basket-sum">{`${state.basketSum} ₸`}</div>
+            <div className="header__basket-sum">{`${state.totalSum} ₸`}</div>
           </div>
         </Link>
       </div>

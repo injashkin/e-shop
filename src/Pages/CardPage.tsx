@@ -6,8 +6,7 @@ import ShopCard from "../components/ShopCard";
 // Create context object
 //export const AppContext = React.createContext();
 
-
-export default function CardPage({ state, dispatch }) {
+export default function CardPage() {
   //const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
@@ -15,7 +14,7 @@ export default function CardPage({ state, dispatch }) {
       {/*<AppContext.Provider value={{ state, dispatch }}>*/}
       <Header />
       <main className="container">
-        <ShopCard state={state} dispatch={dispatch} />
+        <ShopCard />
       </main>
       <Footer />
       {/*</AppContext.Provider>*/}

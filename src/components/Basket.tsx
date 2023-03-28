@@ -1,10 +1,13 @@
 import ProductCard from "./ProductCard";
 import "./Basket.css";
 import Button from "./Button";
+import { useContext } from "react";
+import { AppContext } from "../App";
 
 //...{ mod: basket.mod, product: product }
 
-export default function Basket({ state, dispatch }) {
+export default function Basket() {
+  const { state } = useContext(AppContext);
   return (
     <div>
       <div className="basket container">
@@ -22,7 +25,7 @@ export default function Basket({ state, dispatch }) {
 
         <div className="basket__bottom">
           <Button text="Оформить заказ"></Button>
-          <div className="basket__sum">{state.basketSum} ₸</div>
+          <div className="basket__sum">{state.totalSum} ₸</div>
         </div>
       </div>
     </div>
