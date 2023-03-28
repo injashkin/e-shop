@@ -1,5 +1,5 @@
 import { IProduct, IState } from "./globalTypes";
-import products from "./products2.json";
+import products from "./products.json";
 
 export const initialState: IState = {
   products: products,
