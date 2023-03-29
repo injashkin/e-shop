@@ -43,6 +43,10 @@
   border-radius: 1px;
 }
 
+.checkbox__label>span:hover {
+  font-weight: bolder;
+}
+
 .checkbox__span--radio {
   border-radius: 50%;
 }

@@ -4,22 +4,46 @@ import products from "./products.json";
 export const initialState: IState = {
   products: products,
   productsInCart: [],
+  sortedProducts: [...products],
+  sortedName: "По умолчанию",
   numProducts: 0,
   price: 0,
   quantityFromCard: 1,
   totalSum: 0,
 };
 
-export default function reducer(state: IState, action) {
+export interface ISortedData {
+  id: string;
+  label: string;
+  http: string;
+  count: string;
+}
+
+export interface IData {
+  id: string;
+  quantityFromCard: number;
+  sortedData: ISortedData[];
+  changed: string;
+  min: number;
+  max: number;
+  checkboxes: string[],
+}
+
+export interface IAction {
+  type: string;
+  data: IData;
+}
+
+export default function reducer(state: IState, action: IAction) {
   const { type, data } = action;
   let index: number | undefined;
   let newProductsInCart: IProduct[];
 
   console.log(type);
 
-  const getIndex = () => {
-    return state.products.findIndex((item) => item.id === data);
-  };
+  //const getIndex = () => {
+  //  return state.products.findIndex((item) => item.id === data);
+  //};
 
   switch (type) {
     case "PLUS_QUANTITY":
@@ -31,7 +55,6 @@ export default function reducer(state: IState, action) {
           (newProductsInCart[index].quantity as number) + 1;
       } else newProductsInCart[index].quantity = 1;
 
-      console.log("state", state.productsInCart[index]);
       return {
         ...state,
         productsInCart: newProductsInCart,
@@ -60,8 +83,6 @@ export default function reducer(state: IState, action) {
       index = state.productsInCart.findIndex((item) => item.id === data.id);
       newProductsInCart = [...state.productsInCart];
 
-      console.log("AAAAAAA", index);
-
       newProductsInCart[index].quantity = data.quantityFromCard;
       return {
         ...state,
@@ -69,7 +90,6 @@ export default function reducer(state: IState, action) {
       };
 
     case "REMOVE":
-      index = getIndex();
       newProductsInCart = state.productsInCart.filter(
         (product) => product.id !== data.id
       );
@@ -85,13 +105,51 @@ export default function reducer(state: IState, action) {
     case "UPDATE_TOTAL_NUM":
       let num = 0;
       state.productsInCart.forEach((product) => {
-        if(product.quantity) {
+        if (product.quantity) {
           num = num + product.quantity;
         }
-        
       });
       return { ...state, numProducts: num };
 
+    case "SORT":
+      let sorted: IProduct[] = [];
+      let sortedName: string = data.sortedData[+data.changed].label;
+
+      if (data.changed === "0") {
+        sorted = [...state.products];
+      }
+      if (data.changed === "1") {
+        sorted = [...state.products].sort((a, b) => (b.name < a.name ? 1 : -1));
+      }
+      if (data.changed === "2") {
+        sorted = [...state.products].sort((a, b) => a.price - b.price);
+      }
+      if (data.changed === "3") {
+        sorted = [...state.products].sort((a, b) => b.price - a.price);
+      }
+      if (data.changed === "4") {
+        sorted = [...state.products].sort((a, b) =>
+          b.manufacturer < a.manufacturer ? 1 : -1
+        );
+      }
+      if (data.changed === "5") {
+        sorted = [...state.products].sort((a, b) =>
+          b.brand < a.brand ? 1 : -1
+        );
+      }
+      return { ...state, sortedProducts: sorted, sortedName: sortedName };
+
+    case "RANGE_FILTER":
+      let rangePrice = state.products.filter(
+        (item) => item.price >= data.min && item.price <= data.max
+      );
+
+      // Ищет совпадения в массивах
+      var filtered = rangePrice.filter(function (item) {
+        return data.checkboxes.indexOf(item.manufacturer) !== -1;
+      });
+
+      return { ...state, sortedProducts: filtered };
     case "UPDATE_INPUT":
       return { ...state, quantityFromCard: action.data };
     case "ADD_TO_BASKET_PRICE":

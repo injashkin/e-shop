@@ -38,7 +38,6 @@
 
 .catalog__sort {
   display: flex;
-
 }
 
 .catalog__sort> :first-child {
@@ -46,6 +45,7 @@
   font-size: 16px;
   line-height: 150%;
   color: #111111;
+  padding-right: 1rem;
 }
 
 .catalog__sort> :last-child {
@@ -53,12 +53,17 @@
   font-size: 16px;
   line-height: 150%;
   color: #3F4E65;
+  cursor: pointer;
+}
+
+.catalog__sort> :last-child:hover {
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .catalog__sort-popover {
   display: none;
-
   background: #fff;
+  padding: 0.5rem 1rem;
   border: 1px solid rgba(0, 0, 0, .08);
   border-radius: 8px;
   box-shadow: 0 8px 12px 0 rgba(0, 0, 0, .16);
@@ -74,7 +79,6 @@
 
 .catalog__sort-popover_show {
   display: block;
-
 }
 
 .catalog__top-filter {
@@ -194,6 +198,18 @@
 
 .catalog-left__filter>*:not(:last-child) {
   margin-bottom: 0.625rem;
+}
+
+.catalog__controls {
+  display: flex;
+  align-items: center;
+  margin: 1.5625rem 0;
+}
+
+.catalog__btn-show {
+  margin-right: 0.625rem;
+  width: 10.5625rem;
+  height: 3.6875rem;
 }
 
 .catalog-left__brands-logo {

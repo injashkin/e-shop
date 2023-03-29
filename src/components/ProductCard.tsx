@@ -193,7 +193,7 @@ const ProductCard = ({ mod, ...product }): JSX.Element => {
         <div className="product-card__description">
           <div className="product-card__unit">
             <img src={boxOpen}></img>
-            <span>90г</span>
+            <span>{size}{type}</span>
           </div>
           <Link to={`/catalog/${title}`}>
             <h3>

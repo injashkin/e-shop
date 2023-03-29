@@ -2,6 +2,7 @@ import "./Catalog.css";
 import ProductCard from "./ProductCard";
 import Search from "./Search";
 import search from "../assets/search.svg";
+import deleted from "../assets/deleted.svg";
 import chevron2 from "../assets/chevron2.svg";
 import brand1 from "../images/brand1.png";
 import brand2 from "../images/brand2.png";
@@ -10,15 +11,9 @@ import brand4 from "../images/brand4.png";
 import brand5 from "../images/brand5.png";
 import Checkbox from "./Checkbox";
 import { AppContext } from "../App";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { IProduct } from "../globalTypes";
-
-const makers = [
-  { id: 1, name: "Grifon", count: 56 },
-  { id: 2, name: "Boyscout", count: 66 },
-  { id: 3, name: "Paclan", count: 166 },
-  { id: 4, name: "Булгари Грин", count: 21 },
-];
+import Button from "./Button";
 
 const pages = [
   { id: 1, http: "", active: true },
@@ -29,23 +24,73 @@ const pages = [
 ];
 
 const sort = [
-  { id: 1, name: "Название" },
-  { id: 2, name: "Сначала недорогие" },
-  { id: 3, name: "Сначала дорогие" },
-  { id: 4, name: "Производитель" },
-  { id: 5, name: "Бренд" },
+  { id: "0", label: "По умолчанию" },
+  { id: "1", label: "По названию" },
+  { id: "2", label: "Сначала недорогие" },
+  { id: "3", label: "Сначала дорогие" },
+  { id: "4", label: "По производителю" },
+  { id: "5", label: "По бренду" },
 ];
 
-let outProducts: IProduct[] = [];
-
 export default function Catalog() {
-  const { state } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
+  const [max, setMax] = useState("10000"); // (*)
 
-  // Сортировка в обратно порядке
-  const reversedArr = state.products.reverse();
-  // Сортировка по полям
-  const newArr = [...state.products].sort((a, b) => (b.name < a.name ? 1 : -1));
-  outProducts = [...state.products];
+  //let set = new Set();
+  const arr = state.products.map((item) => item.manufacturer);
+  //const unique = [...new Set(arr)];
+
+  // Посчитывает сколько раз встречается каждое значение в массиве
+  var obj = {};
+  arr.forEach((item) => (obj[item] = (obj[item] || 0) + 1));
+
+  // Преобразует объект в массив объектов
+  const makers = Object.keys(obj).map((key, index) => ({
+    id: index,
+    label: key,
+    count: obj[key],
+  }));
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch({
+      type: "SORT",
+      data: { sortedData: sort, changed: e.target.value },
+    });
+  };
+
+  const handleClick = (e) => {
+    const sortPopoverElem = document.querySelector(
+      ".catalog__sort-popover"
+    ) as HTMLElement;
+
+    if (e.target.closest(".catalog__sort")) {
+      sortPopoverElem.classList.add("catalog__sort-popover_show");
+    } else {
+      sortPopoverElem.classList.remove("catalog__sort-popover_show");
+    }
+
+    if (e.target.closest(".catalog__btn-show")) {
+      // Получает цены из диапазона цен
+      const inputFilterMin = document.querySelector("input[name='filter-min']");
+      const inputFilterMax = document.querySelector("input[name='filter-max']");
+      let min = inputFilterMin.value;
+      let max = inputFilterMax.value;
+
+      // Создает массив из отмеченных чекбоксов
+      const brandList = document.querySelector(".catalog-left__brand-list");
+      const inputs = brandList.querySelectorAll(
+        "input[type=checkbox]:checked"
+      );
+      let checkboxes = Array.from(inputs, (input) => input.value);
+
+      dispatch({
+        type: "RANGE_FILTER",
+        data: { min, max, checkboxes },
+      });
+    }
+  };
+
+  addEventListener("click", handleClick);
 
   return (
     <div className="catalog container">
@@ -58,14 +103,17 @@ export default function Catalog() {
         <h1>Косметика и гигиена</h1>
         <div className="catalog__sort-wrapper">
           <div className="catalog__sort">
-            <span>Сортировка: </span>
+            <span>Сортировка:</span>
             <a>
-              <span>Название</span>
+              <span>{state.sortedName}</span>
             </a>
           </div>
-          <div className="catalog__sort-popover catalog__sort-popover_show">
+          <div
+            className="catalog__sort-popover"
+            onChange={(e) => handleChange(e)}
+          >
             {sort.map((item) => (
-              <Checkbox key={item.id} type="radio" {...item} />
+              <Checkbox key={item.id} type="radio" value={item.id} {...item} />
             ))}
           </div>
         </div>
@@ -91,11 +139,23 @@ export default function Catalog() {
             <div>Цена ₸</div>
             <div className="catalog-left__inputs">
               <div>
-                <input type="number" min="0" placeholder="0" />
+                <input
+                  defaultValue="0"
+                  name="filter-min"
+                  type="number"
+                  min="0"
+                />
               </div>
               -
               <div>
-                <input type="number" min="0" placeholder="10000" />
+                <input
+                  defaultValue="10000"
+                  name="filter-max"
+                  type="number"
+                  min="0"
+                  //value={max} (*)
+                  //onChange={(e) => setMax(e.target.value) (*)
+                />
               </div>
             </div>
           </div>
@@ -104,7 +164,7 @@ export default function Catalog() {
             <Search icon={search} />
             <div className="catalog-left__brand-list">
               {makers.map((maker) => (
-                <Checkbox key={maker.id} {...maker} />
+                <Checkbox key={maker.id} value={maker.label} {...maker} />
               ))}
             </div>
             <div>Показать все</div>
@@ -122,6 +182,10 @@ export default function Catalog() {
             <div>Гигиена полости рта</div>
             <div>Бумажная продукция</div>
           </div>
+          <div className="catalog__controls">
+            <Button text="Показать" className="catalog__btn-show" />
+            <Button icon={deleted} className="catalog__btn-delete" />
+          </div>
           <div className="catalog-left__brands-logo">
             <div>Бренды</div>
             <div className="catalog-left__logos">
@@ -135,7 +199,7 @@ export default function Catalog() {
         </div>
         <div>
           <div className="catalog__products">
-            {outProducts.map((product) => (
+            {state.sortedProducts.map((product: IProduct) => (
               <ProductCard key={product.id} mod="cat" {...product} />
             ))}
           </div>
@@ -172,4 +236,7 @@ export default function Catalog() {
       </div>
     </div>
   );
+}
+function dispatch(arg0: { type: string; data: { id: any; quantity: number } }) {
+  throw new Error("Function not implemented.");
 }

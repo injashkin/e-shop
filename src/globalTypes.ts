@@ -19,6 +19,7 @@ export interface IState {
   products: IProduct[];
   productsInCart: IProduct[];
   sortedProducts: IProduct[];
+  sortedName: string;
   numProducts: number;
   totalSum: number;
   quantityFromCard: number;
