@@ -10,7 +10,8 @@ export interface IProduct {
   manufacturer?: string;
   description?: string;
   size?: number;
-  type?: string;
+  unit?: string;
+  types?: string[];
   barcode?: number;
   quantity?: number;
 }
@@ -24,4 +25,5 @@ export interface IState {
   totalSum: number;
   quantityFromCard: number;
   price: number;
+  currentPageCatalog: number;
 }

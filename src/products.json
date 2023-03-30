@@ -9,11 +9,11 @@
     "name": "Экологичное туалетное мыло. Литсея и бергамот",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum ut justo, vestibulum sagittis iaculis iaculis. Quis mattis vulputate feugiat massa vestibulum duis. Faucibus consectetur aliquet sed pellentesque consequat consectetur congue mauris venenatis. Nunc elit, dignissim sed nulla ullamcorper enim, malesuada.",
     "price": 48.76,
-    "type": "мл",
+    "unit": "мл",
     "size": 450,
     "barcode": 4604049097548,
     "manufacturer": "Нэфис",
-    "тип ухода": [
+    "types": [
       "уход за руками",
       "уход за лицом",
       "уход за телом"
@@ -29,11 +29,11 @@
     "name": "AOS средство для мытья посуды Crystal",
     "description": "Моющая основа растительного происхождения. Входящие в состав компоненты обладают антисептической активностью. Молниеносно удаляет жир, не оставляя разводов. Гипоаллергенный аромат.Aos; Аромат: Свежий; Концентрат: Да; Назначение: Стандарт; Товар для детей:",
     "price": 10.00,
-    "type": "мл",
+    "unit": "мл",
     "size": 450,
     "barcode": 4604049097548,
     "manufacturer": "Нэфис",
-    "тип ухода": [
+    "types": [
       "бытовая химия"
     ]
   },
@@ -47,11 +47,11 @@
     "name": "Автмат Гель СМС жидкое в растворимых капсулах Liquid Capsules Горный родник",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum ut justo, vestibulum sagittis iaculis iaculis. Quis mattis vulputate feugiat massa vestibulum duis. Faucibus consectetur aliquet sed pellentesque consequat consectetur congue mauris venenatis. Nunc elit, dignissim sed nulla ullamcorper enim, malesuada.",
     "price": 55.50,
-    "type": "мл",
+    "unit": "мл",
     "size": 450,
     "barcode": 4604049097548,
     "manufacturer": "Нэфис",
-    "тип ухода": [
+    "types": [
       "уход за руками",
       "уход за лицом"
     ]
@@ -66,11 +66,11 @@
     "name": "Порошок стиральный Автомат 100 пятен COMPACT",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum ut justo, vestibulum sagittis iaculis iaculis. Quis mattis vulputate feugiat massa vestibulum duis. Faucibus consectetur aliquet sed pellentesque consequat consectetur congue mauris venenatis. Nunc elit, dignissim sed nulla ullamcorper enim, malesuada.",
     "price": 100.00,
-    "type": "мл",
+    "unit": "мл",
     "size": 450,
     "barcode": 4604049097548,
     "manufacturer": "Нэфис",
-    "тип ухода": [
+    "types": [
       "уход за руками",
       "уход за лицом"
     ]
@@ -85,11 +85,11 @@
     "name": "Экологичное туалетное мыло. Литсея и бергамот",
     "description": "Гель для душа DICORA URBAN FIT женский для всех типов кожи с ароматом Миндаль",
     "price": 309.00,
-    "type": "мл",
+    "unit": "мл",
     "size": 400,
     "barcode": 4684049012548,
     "manufacturer": "DICORA URBAN FIT",
-    "тип ухода": [
+    "types": [
       "уход за телом"
     ]
   },
@@ -103,11 +103,11 @@
     "name": "Крем для загара на солнце SPF 25",
     "description": "Нежный солнцезащитный крем лосьон для лица и тела Защита + Загар Израильской косметики ISRAELIK эффективно защищает кожу всех типов от UVA/UVB лучей и обеспечивает получение безопасного естественного красивого загара.",
     "price": 1111.20,
-    "type": "мл",
+    "unit": "мл",
     "size": 75,
     "barcode": 4604049097548,
     "manufacturer": "ISRAELIK",
-    "тип ухода": [
+    "types": [
       "уход за телом",
       "уход за лицом",
       "средства для загара"
@@ -123,11 +123,11 @@
     "name": "Гель для бритья для чувствительной кожи",
     "description": "Гель для бритья для чувствительной кожи. Состав: Aqua, Palmitic Acid, Triethanolamine, Glycerin, Isopentane, Glyceryl Oleate, Isobutane, Stearic Acid, Hydroxyethylcellulose, PEG-90M",
     "price": 269.50,
-    "type": "мл",
+    "unit": "мл",
     "size": 200,
     "barcode": 4604049097548,
     "manufacturer": "Турция",
-    "тип ухода": [
+    "types": [
       "уход за лицом",
       "средства для бритья"
     ]
@@ -142,11 +142,11 @@
     "name": "Порошок стиральный Автомат 100 пятен COMPACT",
     "description": "Ершики-зубочистки PECHAM Dental Stick PC-602 легко и деликатно очищают межзубное пространство. Мягкое и эластичное силиконовые покрытие не царапает полость рта, но при этом полностью удаляет остатки пищи. Это происходит за счет уникального рельефа, который проникает в самую глубь и эффективно очищает поверхность зубов.",
     "price": 240.40,
-    "type": "шт",
+    "unit": "шт",
     "size": 40,
     "barcode": 4604049097548,
     "manufacturer": "Китай",
-    "тип ухода": [
+    "types": [
       "гигиеническая продукция",
       "гигиена полости рта"
     ]
@@ -160,11 +160,11 @@
     "name": "Черный Жемчуг подарочный набор лифтинг-эффект дневной и ночной крем",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum ut justo, vestibulum sagittis iaculis iaculis. Quis mattis vulputate feugiat massa vestibulum duis. Faucibus consectetur aliquet sed pellentesque consequat consectetur congue mauris venenatis. Nunc elit, dignissim sed nulla ullamcorper enim, malesuada.",
     "price": 391.76,
-    "type": "мл",
+    "unit": "мл",
     "size": 92,
     "barcode": 4604049097548,
     "manufacturer": "Россия",
-    "тип ухода": [
+    "types": [
       "уход за руками",
       "уход за лицом"
     ]
@@ -179,11 +179,11 @@
     "name": "AOS средство для мытья посуды Crystal",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum ut justo, vestibulum sagittis iaculis iaculis. Quis mattis vulputate feugiat massa vestibulum duis. Faucibus consectetur aliquet sed pellentesque consequat consectetur congue mauris venenatis. Nunc elit, dignissim sed nulla ullamcorper enim, malesuada.",
     "price": 10.00,
-    "type": "мл",
+    "unit": "мл",
     "size": 450,
     "barcode": 4604049097548,
     "manufacturer": "Нэфис",
-    "тип ухода": [
+    "types": [
       "уход за руками",
       "уход за лицом"
     ]
@@ -198,11 +198,11 @@
     "name": "Автмат Гель СМС жидкое в растворимых капсулах Liquid Capsules Горный родник",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum ut justo, vestibulum sagittis iaculis iaculis. Quis mattis vulputate feugiat massa vestibulum duis. Faucibus consectetur aliquet sed pellentesque consequat consectetur congue mauris venenatis. Nunc elit, dignissim sed nulla ullamcorper enim, malesuada.",
     "price": 55.50,
-    "type": "мл",
+    "unit": "мл",
     "size": 450,
     "barcode": 4604049097548,
     "manufacturer": "Нэфис",
-    "тип ухода": [
+    "types": [
       "уход за руками",
       "уход за лицом"
     ]
@@ -217,11 +217,11 @@
     "name": "Порошок стиральный Автомат 100 пятен COMPACT",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum ut justo, vestibulum sagittis iaculis iaculis. Quis mattis vulputate feugiat massa vestibulum duis. Faucibus consectetur aliquet sed pellentesque consequat consectetur congue mauris venenatis. Nunc elit, dignissim sed nulla ullamcorper enim, malesuada.",
     "price": 100.00,
-    "type": "мл",
+    "unit": "мл",
     "size": 450,
     "barcode": 4604049097548,
     "manufacturer": "Нэфис",
-    "тип ухода": [
+    "types": [
       "уход за руками",
       "уход за лицом"
     ]
@@ -235,11 +235,11 @@
     "name": "Экологичное туалетное мыло. Литсея и бергамот",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum ut justo, vestibulum sagittis iaculis iaculis. Quis mattis vulputate feugiat massa vestibulum duis. Faucibus consectetur aliquet sed pellentesque consequat consectetur congue mauris venenatis. Nunc elit, dignissim sed nulla ullamcorper enim, malesuada.",
     "price": 48.76,
-    "type": "мл",
+    "unit": "мл",
     "size": 450,
     "barcode": 4604049097548,
     "manufacturer": "Нэфис",
-    "тип ухода": [
+    "types": [
       "уход за руками",
       "уход за лицом"
     ]
@@ -254,11 +254,11 @@
     "name": "AOS средство для мытья посуды Crystal",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum ut justo, vestibulum sagittis iaculis iaculis. Quis mattis vulputate feugiat massa vestibulum duis. Faucibus consectetur aliquet sed pellentesque consequat consectetur congue mauris venenatis. Nunc elit, dignissim sed nulla ullamcorper enim, malesuada.",
     "price": 10.00,
-    "type": "мл",
+    "unit": "мл",
     "size": 450,
     "barcode": 4604049097548,
     "manufacturer": "Нэфис",
-    "тип ухода": [
+    "types": [
       "уход за руками",
       "уход за лицом"
     ]
@@ -273,11 +273,11 @@
     "name": "Автмат Гель СМС жидкое в растворимых капсулах Liquid Capsules Горный родник",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum ut justo, vestibulum sagittis iaculis iaculis. Quis mattis vulputate feugiat massa vestibulum duis. Faucibus consectetur aliquet sed pellentesque consequat consectetur congue mauris venenatis. Nunc elit, dignissim sed nulla ullamcorper enim, malesuada.",
     "price": 55.50,
-    "type": "мл",
+    "unit": "мл",
     "size": 450,
     "barcode": 4604049097548,
     "manufacturer": "Нэфис",
-    "тип ухода": [
+    "types": [
       "уход за руками",
       "уход за лицом"
     ]
@@ -292,11 +292,11 @@
     "name": "Порошок стиральный Автомат 100 пятен COMPACT",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam interdum ut justo, vestibulum sagittis iaculis iaculis. Quis mattis vulputate feugiat massa vestibulum duis. Faucibus consectetur aliquet sed pellentesque consequat consectetur congue mauris venenatis. Nunc elit, dignissim sed nulla ullamcorper enim, malesuada.",
     "price": 100.00,
-    "type": "мл",
+    "unit": "мл",
     "size": 450,
     "barcode": 4604049097548,
     "manufacturer": "Нэфис",
-    "тип ухода": [
+    "types": [
       "уход за руками",
       "уход за лицом"
     ]

@@ -10,6 +10,7 @@ export const initialState: IState = {
   price: 0,
   quantityFromCard: 1,
   totalSum: 0,
+  currentPageCatalog: 1,
 };
 
 export interface ISortedData {
@@ -26,7 +27,7 @@ export interface IData {
   changed: string;
   min: number;
   max: number;
-  checkboxes: string[],
+  checkboxes: string[];
 }
 
 export interface IAction {
@@ -140,16 +141,52 @@ export default function reducer(state: IState, action: IAction) {
       return { ...state, sortedProducts: sorted, sortedName: sortedName };
 
     case "RANGE_FILTER":
-      let rangePrice = state.products.filter(
-        (item) => item.price >= data.min && item.price <= data.max
-      );
+      let filtered = state.products;
 
-      // Ищет совпадения в массивах
-      var filtered = rangePrice.filter(function (item) {
-        return data.checkboxes.indexOf(item.manufacturer) !== -1;
-      });
+      if (data.min && data.max) {
+        filtered = filtered.filter(
+          (item) => item.price >= data.min && item.price <= data.max
+        );
+      }
+
+      if (data.type) {
+        filtered = filtered.filter(function (item) {
+          return item.types.find((item2) => {
+            return item2 == data.type.toLowerCase();
+          })
+            ? true
+            : false;
+        });
+      }
+
+      if (data.checkboxes && data.checkboxes.length) {
+        // Ищет совпадения в массивах
+        filtered = filtered.filter(function (item) {
+          return data.checkboxes.indexOf(item.manufacturer) !== -1;
+        });
+      }
 
       return { ...state, sortedProducts: filtered };
+
+    case "PAGINATION":
+      return {
+        ...state,
+        sortedProducts: data.currentProducts,
+        currentPageCatalog: data.currentPage,
+      };
+
+    /*
+    case "TOP_FILTER":
+      let typeFiltered = rangePrice.filter(function (item) {
+        return item.types.find((item2) => {
+          return item2 === data.type;
+        })
+          ? true
+          : false;
+      });
+      return { ...state, sortedProducts: typeFiltered };
+    */
+
     case "UPDATE_INPUT":
       return { ...state, quantityFromCard: action.data };
     case "ADD_TO_BASKET_PRICE":

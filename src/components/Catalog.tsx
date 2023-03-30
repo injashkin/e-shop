@@ -14,14 +14,8 @@ import { AppContext } from "../App";
 import { useContext, useState } from "react";
 import { IProduct } from "../globalTypes";
 import Button from "./Button";
-
-const pages = [
-  { id: 1, http: "", active: true },
-  { id: 2, http: "", active: false },
-  { id: 3, http: "", active: false },
-  { id: 4, http: "", active: false },
-  { id: 5, http: "", active: false },
-];
+import React from "react";
+import Pagination from "./Pagination";
 
 const sort = [
   { id: "0", label: "По умолчанию" },
@@ -32,13 +26,25 @@ const sort = [
   { id: "5", label: "По бренду" },
 ];
 
+const typesOfCare = [
+  "Уход за телом",
+  "Уход за руками",
+  "Уход за ногами",
+  "Уход за лицом",
+  "Уход за волосами",
+  "Средства для загара",
+  "Средства для бритья",
+  "Подарочные наборы",
+  "Гигиеническая продукция",
+  "Гигиена полости рта",
+  "Бумажная продукция",
+];
+
 export default function Catalog() {
   const { state, dispatch } = useContext(AppContext);
-  const [max, setMax] = useState("10000"); // (*)
+  //const [max, setMax] = useState("10000"); // (*)
 
-  //let set = new Set();
   const arr = state.products.map((item) => item.manufacturer);
-  //const unique = [...new Set(arr)];
 
   // Посчитывает сколько раз встречается каждое значение в массиве
   var obj = {};
@@ -77,10 +83,8 @@ export default function Catalog() {
       let max = inputFilterMax.value;
 
       // Создает массив из отмеченных чекбоксов
-      const brandList = document.querySelector(".catalog-left__brand-list");
-      const inputs = brandList.querySelectorAll(
-        "input[type=checkbox]:checked"
-      );
+      const brandList = document.querySelector(".catalog__left-brand-list");
+      const inputs = brandList.querySelectorAll("input[type=checkbox]:checked");
       let checkboxes = Array.from(inputs, (input) => input.value);
 
       dispatch({
@@ -88,12 +92,55 @@ export default function Catalog() {
         data: { min, max, checkboxes },
       });
     }
+
+    if (
+      e.target.closest(".catalog__top-filter-label") ||
+      e.target.closest(".catalog__left-filter-label")
+    ) {
+      //let topFilter = e.target.closest(".catalog__top-filter-label");
+      //topFilter.classList.add("catalog__top-filter-label--checked");
+      let type = e.target.value;
+
+      dispatch({
+        type: "RANGE_FILTER",
+        data: { type },
+      });
+    }
   };
 
-  addEventListener("click", handleClick);
+  let productsPerPage = 6;
+
+  function paginate(current) {
+    let currentProducts;
+    let currentPage = state.currentPageCatalog;
+    let totalProducts = state.products.length;
+    let totalPage = Math.ceil(totalProducts / productsPerPage);
+
+    if (current === "prev") {
+      if (state.currentPageCatalog > 1) {
+        currentPage = state.currentPageCatalog - 1;
+      }
+    }
+
+    if (current === "next") {
+      if (state.currentPageCatalog < totalPage) {
+        currentPage = state.currentPageCatalog + 1;
+      }
+    }
+
+    if (typeof current === "number") currentPage = current;
+    const lastProductIndex = currentPage * productsPerPage;
+    const firstProductIndex = lastProductIndex - productsPerPage;
+    currentProducts = state.products.slice(firstProductIndex, lastProductIndex);
+
+    dispatch({
+      type: "PAGINATION",
+      data: { currentProducts, currentPage },
+    });
+  }
 
   return (
-    <div className="catalog container">
+    <div className="catalog container" onClick={(e) => handleClick(e)}>
       <div className="catalog__bread-crumbs">
         <div>Главная</div>
         <div className="separator"></div>
@@ -120,24 +167,19 @@ export default function Catalog() {
       </div>
 
       <div className="catalog__top-filter">
-        <li>Уход за телом</li>
-        <li>Уход за руками</li>
-        <li>Уход за ногами</li>
-        <li>Уход за лицом</li>
-        <li>Уход за волосами</li>
-        <li>Средства для загара</li>
-        <li>Средства для бритья</li>
-        <li>Подарочные наборы</li>
-        <li>Гигиеническая продукция</li>
-        <li>Гигиена полости рта</li>
-        <li>Бумажная продукция</li>
+        {typesOfCare.map((item) => (
+          <label className="catalog__top-filter-label">
+            <span>{item}</span>
+            <input value={item} type="radio" name="types-of-care" />
+          </label>
+        ))}
       </div>
       <div className="catalog__main">
         <div className="catalog__left">
           <div>ПОДБОР ПО ПАРАМЕТРАМ</div>
-          <div className="catalog-left__by-price">
+          <div className="catalog__left-by-price">
             <div>Цена ₸</div>
-            <div className="catalog-left__inputs">
+            <div className="catalog__left-inputs">
               <div>
                 <input
                   defaultValue="0"
@@ -159,36 +201,31 @@ export default function Catalog() {
               </div>
             </div>
           </div>
-          <div className="catalog-left__brand">
+          <div className="catalog__left-brand">
             <div>Производитель</div>
             <Search icon={search} />
-            <div className="catalog-left__brand-list">
+            <div className="catalog__left-brand-list">
               {makers.map((maker) => (
                 <Checkbox key={maker.id} value={maker.label} {...maker} />
               ))}
             </div>
             <div>Показать все</div>
           </div>
-          <div className="catalog-left__filter">
-            <div>Уход за телом</div>
-            <div>Уход за руками</div>
-            <div>Уход за ногами</div>
-            <div>Уход за лицом</div>
-            <div>Уход за волосами</div>
-            <div>Средства для загара</div>
-            <div>Средства для бритья</div>
-            <div>Подарочные наборы</div>
-            <div>Гигиеническая продукция</div>
-            <div>Гигиена полости рта</div>
-            <div>Бумажная продукция</div>
-          </div>
           <div className="catalog__controls">
             <Button text="Показать" className="catalog__btn-show" />
             <Button icon={deleted} className="catalog__btn-delete" />
           </div>
-          <div className="catalog-left__brands-logo">
+          <div className="catalog__left-filter">
+            {typesOfCare.map((item) => (
+              <label className="catalog__left-filter-label">
+                <span>{item}</span>
+                <input value={item} type="radio" name="left-types-of-care" />
+              </label>
+            ))}
+          </div>
+          <div className="catalog__left-brands-logo">
             <div>Бренды</div>
-            <div className="catalog-left__logos">
+            <div className="catalog__left-logos">
               <img src={brand1}></img>
               <img src={brand2}></img>
               <img src={brand3}></img>
@@ -203,26 +240,13 @@ export default function Catalog() {
               <ProductCard key={product.id} mod="cat" {...product} />
             ))}
           </div>
+
           <div className="pagination">
-            <ul>
-              <li>
-                <a href="">
-                  <img className="pagination__prev" src={chevron2} />
-                </a>
-              </li>
-              {pages.map((page) => (
-                <li className={`${page.active && "pagination__active"}`}>
-                  <a key={page.id} href={page.http}>
-                    {page.id}
-                  </a>
-                </li>
-              ))}
-              <li>
-                <a href="">
-                  <img className="pagination__next" src={chevron2} />
-                </a>
-              </li>
-            </ul>
+            <Pagination
+              productsPerPage={productsPerPage}
+              totalProducts={state.products.length}
+              paginate={paginate}
+            />
           </div>
           <p className="catalog__text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
