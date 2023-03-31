@@ -1,17 +1,16 @@
-import React, { useContext } from "react";
-import App, { AppContext } from "../App";
-import { useState } from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../App";
+import { Link } from "react-router-dom";
 
 import location from "../assets/location.svg";
 import mail from "../assets/mail.svg";
 import logo from "../assets/logo.svg";
 import frame from "../assets/frame.svg";
-import search from "../assets/search.svg";
 import basketBlack from "../assets/basket-black.svg";
 import inTouch from "../assets/in-touch.svg";
 import downloadWhite from "../assets/download-white.svg";
 import line from "../assets/line.svg";
+import hamburger from "../assets/hamburger.svg";
 import manager from "../assets/manager.png";
 import "./Header.css";
 import Button from "./Button";
@@ -19,22 +18,11 @@ import Search from "./Search";
 import ButtonLink from "./ButtonLink";
 
 export default function Header() {
-  //const [count2, setCount] = useState(3);
   const { state, dispatch } = useContext(AppContext);
 
   const changeInputValue = (newValue) => {
     dispatch({ type: "UPDATE_INPUT", data: newValue });
   };
-
-  /*
-  let sum = 0;
-  React.useEffect(() => {
-    state.productsInCart.forEach((product) => {
-      sum = sum + product.price * product.quantity;
-    });
-    console.log("sum", sum);
-  }, [state.productsInCart, state.numProducts]);
-*/
 
   return (
     <header className="header">
@@ -55,6 +43,7 @@ export default function Header() {
             </div>
           </div>
         </div>
+
         <nav className="header__menu">
           <li>
             <Link to="/">О компании</Link>
@@ -69,21 +58,39 @@ export default function Header() {
             <Link to="/">Контакты</Link>
           </li>
         </nav>
+
+        <div className="header__hamburger-wrapper">
+          <Button className="header__hamburger" icon={hamburger}></Button>
+        </div>
+        
+        <Link to="/" className="header__logo-mobile-wrapper">
+          <img src={logo} className="header__logo-mobile" />
+        </Link>
+
+        <Link to="/basket" className="header__basket-mobile">
+          <div className="header-basket">
+            <img src={basketBlack} />
+            <div className="header-basket__num">{state.numProducts}</div>
+          </div>
+        </Link>
+
       </div>
       <img className="line" src={line} />
       <div className="header__bottom container">
-        <Link to="/">
+        <Link to="/" className="header__logo-wrapper">
           <img src={logo} />
         </Link>
 
-        <ButtonLink
-          className="header__catalog-btn"
-          text="Каталог"
-          icon={frame}
-          href="/catalog"
-        />
+        <div className="header__catalog-btn-wrap">
+          <ButtonLink
+            className="header__catalog-btn"
+            text="Каталог"
+            icon={frame}
+            href="/catalog"
+          />
+        </div>
 
-        <Search className="header__search" icon={search}></Search>
+        <Search className="header__search"></Search>
 
         <div className="header__callback-wrap">
           <div className="header__callback">

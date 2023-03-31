@@ -10,12 +10,9 @@
   width: 100%;
   cursor: pointer;
 
-  font-family: 'Inter';
-  font-style: normal;
   font-weight: 700;
   font-size: 14px;
   line-height: 17px;
-  /* identical to box height */
   color: #FFFFFF;
 }
 

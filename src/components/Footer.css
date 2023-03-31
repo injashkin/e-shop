@@ -1,22 +1,20 @@
 .footer-wrap {
   background: #3F4E65;
   box-shadow: 0px 15px 70px -11px rgba(43, 28, 1, 0.04);
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .footer {
   display: flex;
   justify-content: space-between;
+
   text-align: start;
   padding: 4.4375rem 0 7.25rem;
-
-
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
   color: #FFFFFF;
   font-weight: 400;
   font-size: 14px;
   line-height: 150%;
-  /* identical to box height, or 21px */
 }
 
 .footer h3 {
@@ -43,6 +41,31 @@
   margin-bottom: 0.875rem;
 }
 
+.footer__search {
+  width: 17.625rem;
+  height: 3.6875rem;
+}
+
+.footer__group {
+  display: flex;
+  justify-content: space-around;
+  flex: 1 1 auto;
+}
+
+@media (max-width: 1100px) {
+  .footer {
+    flex-direction: column;
+  }
+
+  .footer__col1 {
+    align-self: center;
+  }
+
+  .footer__group {
+    margin-top: 1.875rem;
+  }
+}
+
 .footer__col2 li,
 .footer__col3 li {
   margin-bottom: 1.25rem;
@@ -55,6 +78,14 @@
 
 .footer__col4> :nth-child(4) :first-child {
   margin-right: 0.625rem;
+}
+
+.footer__btn-download-btn-wrap {
+  width: 13.375rem;
+}
+
+.footer__btn-download {
+  height: 3.6875rem;
 }
 
 .footer__col5 :nth-child(2) {

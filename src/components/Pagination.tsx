@@ -1,11 +1,16 @@
+import { useContext } from "react";
+import { AppContext } from "../App";
 import chevron2 from "../assets/chevron2.svg";
 
-const Pagination = ({ productsPerPage, totalProducts, paginate }) => {
+const Pagination = ({ paginate }) => {
+  const { state, dispatch } = useContext(AppContext);
+  const totalProducts = state.products.length;
   const pageNumbers = [];
 
-  for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(totalProducts / state.productsPerPage); i++) {
     pageNumbers.push(i);
   }
+
   return (
     <ul className="pagination">
       <li onClick={() => paginate("prev")}>
@@ -14,7 +19,12 @@ const Pagination = ({ productsPerPage, totalProducts, paginate }) => {
         </a>
       </li>
       {pageNumbers.map((number) => (
-        <li className="page-item pagination__active" key={number}>
+        <li
+          className={`page-item ${
+            number === state.currentPageCatalog ? "pagination__active" : ""
+          }`}
+          key={number}
+        >
           <a href="#!" className="page-link" onClick={() => paginate(number)}>
             {number}
           </a>

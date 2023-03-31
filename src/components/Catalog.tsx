@@ -42,7 +42,6 @@ const typesOfCare = [
 
 export default function Catalog() {
   const { state, dispatch } = useContext(AppContext);
-  //const [max, setMax] = useState("10000"); // (*)
 
   const arr = state.products.map((item) => item.manufacturer);
 
@@ -108,13 +107,11 @@ export default function Catalog() {
     }
   };
 
-  let productsPerPage = 6;
-
   function paginate(current) {
     let currentProducts;
     let currentPage = state.currentPageCatalog;
     let totalProducts = state.products.length;
-    let totalPage = Math.ceil(totalProducts / productsPerPage);
+    let totalPage = Math.ceil(totalProducts / state.productsPerPage);
 
     if (current === "prev") {
       if (state.currentPageCatalog > 1) {
@@ -129,8 +126,8 @@ export default function Catalog() {
     }
 
     if (typeof current === "number") currentPage = current;
-    const lastProductIndex = currentPage * productsPerPage;
-    const firstProductIndex = lastProductIndex - productsPerPage;
+    const lastProductIndex = currentPage * state.productsPerPage;
+    const firstProductIndex = lastProductIndex - state.productsPerPage;
     currentProducts = state.products.slice(firstProductIndex, lastProductIndex);
 
     dispatch({
@@ -148,6 +145,7 @@ export default function Catalog() {
       </div>
       <div className="catalog__header">
         <h1>Косметика и гигиена</h1>
+
         <div className="catalog__sort-wrapper">
           <div className="catalog__sort">
             <span>Сортировка:</span>
@@ -223,6 +221,29 @@ export default function Catalog() {
               </label>
             ))}
           </div>
+
+          <div className="catalog__sort-wrapper catalog__sort-wrapper--mobile">
+            <div className="catalog__sort">
+              <span>Сортировка:</span>
+              <a>
+                <span>{state.sortedName}</span>
+              </a>
+            </div>
+            <div
+              className="catalog__sort-popover"
+              onChange={(e) => handleChange(e)}
+            >
+              {sort.map((item) => (
+                <Checkbox
+                  key={item.id}
+                  type="radio"
+                  value={item.id}
+                  {...item}
+                />
+              ))}
+            </div>
+          </div>
+
           <div className="catalog__left-brands-logo">
             <div>Бренды</div>
             <div className="catalog__left-logos">
@@ -234,19 +255,21 @@ export default function Catalog() {
             </div>
           </div>
         </div>
-        <div>
+        <div className=".catalog__content">
           <div className="catalog__products">
             {state.sortedProducts.map((product: IProduct) => (
               <ProductCard key={product.id} mod="cat" {...product} />
             ))}
           </div>
 
+          <div className="catalog__products catalog__products--mobile">
+            {state.sortedProducts.map((product: IProduct) => (
+              <ProductCard key={product.id} mod="cat-mob" {...product} />
+            ))}
+          </div>
+
           <div className="pagination">
-            <Pagination
-              productsPerPage={productsPerPage}
-              totalProducts={state.products.length}
-              paginate={paginate}
-            />
+            <Pagination paginate={paginate} />
           </div>
           <p className="catalog__text">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam

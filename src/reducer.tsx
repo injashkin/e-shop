@@ -11,6 +11,7 @@ export const initialState: IState = {
   quantityFromCard: 1,
   totalSum: 0,
   currentPageCatalog: 1,
+  productsPerPage: 6,
 };
 
 export interface ISortedData {
@@ -99,7 +100,7 @@ export default function reducer(state: IState, action: IAction) {
     case "UPDATE_SUM":
       let sum = 0;
       state.productsInCart.forEach((product) => {
-        sum = sum + product.price * product.quantity!;
+        sum = +(sum + product.price * product.quantity!).toFixed(2);
       });
       return { ...state, totalSum: sum };
 

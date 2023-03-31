@@ -26,4 +26,5 @@ export interface IState {
   quantityFromCard: number;
   price: number;
   currentPageCatalog: number;
+  productsPerPage: number;
 }

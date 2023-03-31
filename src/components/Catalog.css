@@ -1,3 +1,8 @@
+.catalog {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .catalog__bread-crumbs {
   display: flex;
   flex-direction: row;
@@ -176,6 +181,10 @@
   border-bottom: 1px dashed #3F4E65;
 }
 
+.catalog__left-brand .search {
+  width: 18.125rem;
+}
+
 .catalog__left-brand> :first-child {
   font-weight: 500;
   font-size: 16px;
@@ -232,7 +241,7 @@
 
 .catalog__btn-show {
   margin-right: 0.625rem;
-  width: 10.5625rem;
+  width: 13.5rem;
   height: 3.6875rem;
 }
 
@@ -265,7 +274,6 @@
 
 .catalog__products {
   display: grid;
-  grid-template-rows: repeat(5, fr);
   grid-template-columns: repeat(3, auto);
   gap: 1.3125rem;
 }
@@ -336,4 +344,95 @@
 
 .pagination__next {
   transform: rotate(180deg);
+}
+
+@media (max-width: 1350px) {
+  .catalog__products {
+    grid-template-columns: repeat(2, auto);
+    gap: 1rem;
+  }
+
+  .catalog__products>* {
+    justify-self: center;
+  }
+}
+
+@media (max-width: 1200px) {
+  .catalog__top-filter {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .catalog__products {
+    grid-template-columns: repeat(1, auto);
+  }
+}
+
+@media (max-width: 900px) {
+  .catalog__header {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .catalog__header h1 {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 120%;
+
+    color: #111111;
+  }
+
+}
+
+@media (max-width: 680px) {
+  .catalog__main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .catalog__header {
+    align-items: center;
+  }
+
+  .catalog__left {
+    margin-right: 0;
+  }
+
+  .catalog__sort-wrapper {
+    display: none;
+  }
+
+  .catalog__sort-wrapper--mobile {
+    display: flex;
+  }
+
+  .catalog__left-brands-logo {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .catalog__products {
+    display: none;
+  }
+
+  .catalog__products--mobile {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .catalog__main {
+    align-items: start;
+  }
+
+  .catalog__header {
+    align-items: start;
+  }
+
+  .catalog__sort-popover {
+    left: 0;
+    top: 2rem;
+    min-width: 270px;
+  }
 }

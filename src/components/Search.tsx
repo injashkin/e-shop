@@ -8,11 +8,11 @@ interface SearchProps {
 }
 
 export default function Search(props: SearchProps) {
-  const { text="Поиск...", icon, className } = props;
+  const { text="Поиск...", icon=search, className="" } = props;
 
   return (
     <div className={`search ${className}`}>
-      <input type="text" id={`${className}-search`} placeholder={text} />
+      <input type="text" placeholder={text} />
       <div>
         <img src={icon} />
       </div>
