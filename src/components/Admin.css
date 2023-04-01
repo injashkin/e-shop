@@ -1,0 +1,66 @@
+.admin-wrap {
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.admin {
+  margin-top: 2rem;
+  display: flex;
+}
+
+.admin-left {
+  display: flex;
+  flex-direction: column;
+  margin-right: 2rem;
+}
+
+.admin-left>a {
+  margin-top: 2rem;
+  padding: 1rem 1rem;
+  font-size: larger;
+  background-color: rgb(221, 221, 221);
+}
+
+.admin__editPanel {
+  text-align: left;
+}
+
+.admin__editPanel>* {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: 0.5rem 0;
+}
+
+.admin-controls {
+  display: flex;
+  margin: 2rem 0;
+}
+
+.admin-controls>*:not(:last-child) {
+  margin-right: 2rem;
+}
+
+.admin button {
+  padding: 1rem 1rem;
+  font-size: larger;
+}
+
+.admin input {
+  font-size: larger;
+  border: 1px solid #000000;
+  padding: 0.2rem 0.5rem;
+}
+
+.admin label {
+  font-size: larger;
+}
+
+.admin__editPanel>* {
+  background-color: rgb(221, 221, 221);
+}
+
+.admin option {
+  font-size: large;
+}

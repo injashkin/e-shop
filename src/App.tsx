@@ -8,11 +8,12 @@ import CardPage from "./Pages/CardPage";
 import { IState } from "./globalTypes";
 import CatalogPage from "./Pages/CatalogPage";
 import reducer, { initialState } from "./reducer";
+import Admin from "./components/Admin";
 
 export const AppContext = React.createContext<IState | null>(initialState);
 
 function App(): JSX.Element {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   const router = createBrowserRouter([
     {
@@ -38,6 +39,10 @@ function App(): JSX.Element {
     {
       path: "/error",
       element: <ErrorPage />,
+    },
+    {
+      path: "/admin",
+      element: <Admin />,
     },
   ]);
 

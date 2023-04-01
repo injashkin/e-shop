@@ -41,6 +41,10 @@
   position: relative;
 }
 
+.catalog__sort-wrapper--mobile {
+  display: none;
+}
+
 .catalog__sort {
   display: flex;
 }
@@ -282,6 +286,12 @@
   justify-self: end;
 }
 
+.catalog__products--mobile {
+  display: none;
+  flex-direction: column;
+}
+
+
 .catalog__text {
   text-align: left;
 
@@ -419,7 +429,6 @@
 
   .catalog__products--mobile {
     display: flex;
-    flex-direction: column;
   }
 
   .catalog__main {

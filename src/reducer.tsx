@@ -29,6 +29,9 @@ export interface IData {
   min: number;
   max: number;
   checkboxes: string[];
+  currentProducts: IProduct;
+  currentPage: number;
+  type: string;
 }
 
 export interface IAction {
@@ -40,12 +43,6 @@ export default function reducer(state: IState, action: IAction) {
   const { type, data } = action;
   let index: number | undefined;
   let newProductsInCart: IProduct[];
-
-  console.log(type);
-
-  //const getIndex = () => {
-  //  return state.products.findIndex((item) => item.id === data);
-  //};
 
   switch (type) {
     case "PLUS_QUANTITY":
@@ -121,7 +118,7 @@ export default function reducer(state: IState, action: IAction) {
         sorted = [...state.products];
       }
       if (data.changed === "1") {
-        sorted = [...state.products].sort((a, b) => (b.name < a.name ? 1 : -1));
+        sorted = [...state.products].sort((a, b) => (b.name! < a.name! ? 1 : -1));
       }
       if (data.changed === "2") {
         sorted = [...state.products].sort((a, b) => a.price - b.price);
@@ -131,12 +128,12 @@ export default function reducer(state: IState, action: IAction) {
       }
       if (data.changed === "4") {
         sorted = [...state.products].sort((a, b) =>
-          b.manufacturer < a.manufacturer ? 1 : -1
+          b.manufacturer! < a.manufacturer! ? 1 : -1
         );
       }
       if (data.changed === "5") {
         sorted = [...state.products].sort((a, b) =>
-          b.brand < a.brand ? 1 : -1
+          b.brand! < a.brand! ? 1 : -1
         );
       }
       return { ...state, sortedProducts: sorted, sortedName: sortedName };
@@ -152,7 +149,7 @@ export default function reducer(state: IState, action: IAction) {
 
       if (data.type) {
         filtered = filtered.filter(function (item) {
-          return item.types.find((item2) => {
+          return item.types?.find((item2) => {
             return item2 == data.type.toLowerCase();
           })
             ? true
@@ -163,7 +160,7 @@ export default function reducer(state: IState, action: IAction) {
       if (data.checkboxes && data.checkboxes.length) {
         // Ищет совпадения в массивах
         filtered = filtered.filter(function (item) {
-          return data.checkboxes.indexOf(item.manufacturer) !== -1;
+          return data.checkboxes.indexOf(item.manufacturer!) !== -1;
         });
       }
 

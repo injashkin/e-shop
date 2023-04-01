@@ -3,7 +3,6 @@ import ProductCard from "./ProductCard";
 import Search from "./Search";
 import search from "../assets/search.svg";
 import deleted from "../assets/deleted.svg";
-import chevron2 from "../assets/chevron2.svg";
 import brand1 from "../images/brand1.png";
 import brand2 from "../images/brand2.png";
 import brand3 from "../images/brand3.png";
@@ -12,7 +11,7 @@ import brand5 from "../images/brand5.png";
 import Checkbox from "./Checkbox";
 import { AppContext } from "../App";
 import { useContext, useState } from "react";
-import { IProduct } from "../globalTypes";
+import { IProduct, IState } from "../globalTypes";
 import Button from "./Button";
 import React from "react";
 import Pagination from "./Pagination";
@@ -42,6 +41,7 @@ const typesOfCare = [
 
 export default function Catalog() {
   const { state, dispatch } = useContext(AppContext);
+  //const dispatch = useContext(AppContext) as React.DispatchWithoutAction;
 
   const arr = state.products.map((item) => item.manufacturer);
 
@@ -56,7 +56,7 @@ export default function Catalog() {
     count: obj[key],
   }));
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (e: React.FormEvent<HTMLDivElement>) => {
     dispatch({
       type: "SORT",
       data: { sortedData: sort, changed: e.target.value },
@@ -76,14 +76,22 @@ export default function Catalog() {
 
     if (e.target.closest(".catalog__btn-show")) {
       // Получает цены из диапазона цен
-      const inputFilterMin = document.querySelector("input[name='filter-min']");
-      const inputFilterMax = document.querySelector("input[name='filter-max']");
+      const inputFilterMin = document.querySelector(
+        "input[name='filter-min']"
+      ) as HTMLInputElement;
+      const inputFilterMax = document.querySelector(
+        "input[name='filter-max']"
+      ) as HTMLInputElement;
       let min = inputFilterMin.value;
       let max = inputFilterMax.value;
 
       // Создает массив из отмеченных чекбоксов
-      const brandList = document.querySelector(".catalog__left-brand-list");
-      const inputs = brandList.querySelectorAll("input[type=checkbox]:checked");
+      const brandList = document.querySelector(
+        ".catalog__left-brand-list"
+      ) as HTMLElement;
+      const inputs = brandList.querySelectorAll(
+        "input[type=checkbox]:checked"
+      ) as NodeListOf<HTMLInputElement>;
       let checkboxes = Array.from(inputs, (input) => input.value);
 
       dispatch({
@@ -96,8 +104,6 @@ export default function Catalog() {
       e.target.closest(".catalog__top-filter-label") ||
       e.target.closest(".catalog__left-filter-label")
     ) {
-      //let topFilter = e.target.closest(".catalog__top-filter-label");
-      //topFilter.classList.add("catalog__top-filter-label--checked");
       let type = e.target.value;
 
       dispatch({
