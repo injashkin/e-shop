@@ -58,6 +58,7 @@ export default function Footer() {
               icon={download}
               name={""}
               className="footer__btn-download"
+              onClick={(e) => (e)}
             ></Button>
             <div>Связь в мессенджерах:</div>
             <div>

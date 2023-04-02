@@ -1,5 +1,23 @@
-import { IProduct, IState } from "./globalTypes";
+import { IAction, IData, IProduct, IState } from "./globalTypes";
 import products from "./products.json";
+
+export enum Types {
+  CHANGE_QUANTITY = "CHANGE_QUANTITY",
+  REMOVE = "REMOVE",
+  UPDATE_SUM = "UPDATE_SUM",
+  UPDATE_TOTAL_NUM = "UPDATE_TOTAL_NUM",
+  MINUS_QUANTITY = "MINUS_QUANTITY",
+  PLUS_QUANTITY = "PLUS_QUANTITY",
+  UPDATE_NUM = "UPDATE_NUM",
+  ADD_TO_CART = "ADD_TO_CART",
+  RANGE_FILTER = "RANGE_FILTER",
+  PAGINATION = "PAGINATION",
+}
+
+type SetCartAction = {
+  type: typeof Types.PAGINATION
+  team: string
+}
 
 export const initialState: IState = {
   products: products,
@@ -13,31 +31,6 @@ export const initialState: IState = {
   currentPageCatalog: 1,
   productsPerPage: 6,
 };
-
-export interface ISortedData {
-  id: string;
-  label: string;
-  http: string;
-  count: string;
-}
-
-export interface IData {
-  id: string;
-  quantityFromCard: number;
-  sortedData: ISortedData[];
-  changed: string;
-  min: number;
-  max: number;
-  checkboxes: string[];
-  currentProducts: IProduct;
-  currentPage: number;
-  type: string;
-}
-
-export interface IAction {
-  type: string;
-  data: IData;
-}
 
 export default function reducer(state: IState, action: IAction) {
   const { type, data } = action;
@@ -118,7 +111,9 @@ export default function reducer(state: IState, action: IAction) {
         sorted = [...state.products];
       }
       if (data.changed === "1") {
-        sorted = [...state.products].sort((a, b) => (b.name! < a.name! ? 1 : -1));
+        sorted = [...state.products].sort((a, b) =>
+          b.name! < a.name! ? 1 : -1
+        );
       }
       if (data.changed === "2") {
         sorted = [...state.products].sort((a, b) => a.price - b.price);
@@ -172,18 +167,6 @@ export default function reducer(state: IState, action: IAction) {
         sortedProducts: data.currentProducts,
         currentPageCatalog: data.currentPage,
       };
-
-    /*
-    case "TOP_FILTER":
-      let typeFiltered = rangePrice.filter(function (item) {
-        return item.types.find((item2) => {
-          return item2 === data.type;
-        })
-          ? true
-          : false;
-      });
-      return { ...state, sortedProducts: typeFiltered };
-    */
 
     case "UPDATE_INPUT":
       return { ...state, quantityFromCard: action.data };

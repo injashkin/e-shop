@@ -3,9 +3,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ShopCard from "../components/ShopCard";
 
-// Create context object
-//export const AppContext = React.createContext();
-
 export default function CardPage() {
   //const [state, dispatch] = useReducer(reducer, initialState);
 

@@ -3,8 +3,7 @@ import "./Basket.css";
 import Button from "./Button";
 import { useContext } from "react";
 import { AppContext } from "../App";
-
-//...{ mod: basket.mod, product: product }
+import { IProduct, IState } from "../globalTypes";
 
 export default function Basket() {
   const { state } = useContext(AppContext);
@@ -19,12 +18,12 @@ export default function Basket() {
 
         <h1>Корзинa</h1>
 
-        {state.productsInCart.map((product) => (
+        {state.productsInCart.map((product: IProduct) => (
           <ProductCard key={product.id} mod="row" {...product} />
         ))}
 
         <div className="basket__bottom">
-          <Button text="Оформить заказ"></Button>
+          <Button text="Оформить заказ" onClick={(e) => (e)}></Button>
           <div className="basket__sum">{state.totalSum} ₸</div>
         </div>
       </div>

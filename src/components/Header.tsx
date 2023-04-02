@@ -18,11 +18,7 @@ import Search from "./Search";
 import ButtonLink from "./ButtonLink";
 
 export default function Header() {
-  const { state, dispatch } = useContext(AppContext);
-
-  const changeInputValue = (newValue) => {
-    dispatch({ type: "UPDATE_INPUT", data: newValue });
-  };
+  const { state } = useContext(AppContext);
 
   return (
     <header className="header">
@@ -60,7 +56,7 @@ export default function Header() {
         </nav>
 
         <div className="header__hamburger-wrapper">
-          <Button className="header__hamburger" icon={hamburger}></Button>
+          <Button className="header__hamburger" icon={hamburger} onClick={(e) => (e)}></Button>
         </div>
         
         <Link to="/" className="header__logo-mobile-wrapper">
@@ -110,6 +106,7 @@ export default function Header() {
           text="Прайс-лист"
           icon={downloadWhite}
           name="header-price-list"
+          onClick={(e) => (e)}
         />
 
         <Link to="/basket" className="header__basket">

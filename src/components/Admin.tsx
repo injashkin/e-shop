@@ -13,7 +13,6 @@ export default function Admin() {
     title: "",
     name: "",
     price: "",
-    image: "",
     image_m: "",
     brand: "",
     article: 0,

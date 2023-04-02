@@ -17,9 +17,11 @@ export default function ShopCard() {
   const { products } = state;
   const product: IProduct = products.find(
     (index) => index.title.trim() === title?.trim()
-  );
+  ) as IProduct;
 
-  const changeInputValue = (newValue) => {
+  console.log(product);
+
+  const changeInputValue = (newValue: number) => {
     dispatch({ type: "UPDATE_INPUT", data: newValue });
   };
 
@@ -28,7 +30,7 @@ export default function ShopCard() {
       changeInputValue(state.quantityFromCard - 1);
   }
 
-  function plus(e) {
+  function plus() {
     changeInputValue(state.quantityFromCard + 1);
   }
 
@@ -62,11 +64,6 @@ export default function ShopCard() {
     dispatch({ type: "UPDATE_INPUT", data: state.quantityFromCard });
     dispatch({ type: "ADD_TO_BASKET_PRICE", data: product.price });
 
-    //dispatch({
-    //  type: "ADD_TO_CART",
-    //  data: (state.productsInCart = [...state.productsInCart, product]),
-    //});
-
     dispatch({
       type: "UPDATE_QUANTITY",
       data: { id: product.id, quantityFromCard: state.quantityFromCard },
@@ -74,17 +71,17 @@ export default function ShopCard() {
 
     dispatch({
       type: "UPDATE_TOTAL_NUM",
-      data: "", //state.numProducts + state.quantityFromCard,
+      data: "",
     });
 
     dispatch({
       type: "UPDATE_SUM",
-      data: "", //+(state.totalSum + product.price * state.quantityFromCard).toFixed(2),
+      data: "",
     });
   }
 
   return (
-    <div id={"product-" + state.id} className="card">
+    <div id={"product-" + product.id} className="card">
       <div className="image">
         <img className="activator" src={imgProduct} alt="" />
       </div>
@@ -105,7 +102,7 @@ export default function ShopCard() {
             name="quantity"
             className="quantity"
             value={state.quantityFromCard}
-            onChange={(e) => changeInputValue(e.target.value)}
+            onChange={(e) => changeInputValue(+e.target.value)}
           ></input>
 
           <Button text="+" className="product-card__plus" onClick={plus} />
@@ -190,17 +187,17 @@ export default function ShopCard() {
           <div>
             <span>Вес: </span>
             <span>{product.size} </span>
-            <span>{product.type}</span>
+            <span>{product.types}</span>
           </div>
           <div>
             <span>Объем:м </span>
             <span>{product.size} </span>
-            <span>{product.type}</span>
+            <span>{product.types}</span>
           </div>
           <div>
             <span>Кол-во в коробке: </span>
             <span>{product.size} </span>
-            <span>{product.type}</span>
+            <span>{product.types}</span>
           </div>
         </div>
       </div>

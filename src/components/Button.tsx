@@ -5,7 +5,8 @@ interface ButtonProps {
   icon?: string;
   name?: string;
   className?: string;
-  onClick?: () => void;
+  //onClick: (name: string | undefined) => (event: any) => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function Button(props: ButtonProps) {
@@ -21,7 +22,7 @@ export default function Button(props: ButtonProps) {
         type="button"
         className={`btn ${classes}`}
         name={name}
-        onClick={onClick}
+        onClick={(e) => onClick(e)}
       >
         {text}
         {icon && <img src={icon}></img>}

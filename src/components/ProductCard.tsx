@@ -5,29 +5,27 @@ import deleted from "../assets/deleted.svg";
 import basket from "../assets/basket.svg";
 import "./ProductCard.css";
 import Button from "./Button";
-import { IProduct } from "../globalTypes";
 import { Link } from "react-router-dom";
+import { IProduct, typesOfCare } from "../globalTypes";
 
-//export interface ShopCardProps {
-//  mod: string;
-//  product: IProduct;
-//}
+
+
+export type Mod = "row" | "col" | "cat" | "cat-mob";
 
 //const Product: React.FC<ShopCardProps> = ({product}): JSX.Element => {
-const ProductCard = ({ mod, ...product }): JSX.Element => {
+const ProductCard = ({mod, ...product}): JSX.Element => {
   const {
     id,
     title,
     name,
     price,
-    image,
     image_m,
     brand = "AOS",
     article,
     manufacturer = "Нэфис",
     description,
     size,
-    type,
+    types,
     barcode = 4604049097548,
     quantity = 1,
   } = product;
@@ -114,18 +112,14 @@ const ProductCard = ({ mod, ...product }): JSX.Element => {
       });
     }
 
-    //dispatch({
-    //  type: "UPDATE_NUM",
-    //  data: state.numProducts + state.quantityFromCard,
-    //});
     dispatch({
       type: "UPDATE_TOTAL_NUM",
-      data: "", //state.numProducts + state.quantityFromCard,
+      data: "",
     });
 
     dispatch({
       type: "UPDATE_SUM",
-      data: "", //+(state.totalSum + product.price * state.quantityFromCard).toFixed(2),
+      data: "",
     });
   }
 
@@ -179,7 +173,7 @@ const ProductCard = ({ mod, ...product }): JSX.Element => {
     productCardControl = `${productCardControl} product-card__control--cat`;
   }
 
-  function getImageUrl(name) {
+  function getImageUrl(name: string) {
     return new URL(`../images/${name}`, import.meta.url).href;
   }
 
@@ -192,8 +186,11 @@ const ProductCard = ({ mod, ...product }): JSX.Element => {
         </div>
         <div className="product-card__description">
           <div className="product-card__unit">
-            <img src={boxOpen}></img>
-            <span>{size}{type}</span>
+            <img src={boxOpen} />
+            <span>
+              {size}
+              {types}
+            </span>
           </div>
           <Link to={`/catalog/${title}`}>
             <h3>

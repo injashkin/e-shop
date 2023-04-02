@@ -11,7 +11,7 @@ import brand5 from "../images/brand5.png";
 import Checkbox from "./Checkbox";
 import { AppContext } from "../App";
 import { useContext, useState } from "react";
-import { IProduct, IState } from "../globalTypes";
+import { IProduct, typesOfCare } from "../globalTypes";
 import Button from "./Button";
 import React from "react";
 import Pagination from "./Pagination";
@@ -25,29 +25,21 @@ const sort = [
   { id: "5", label: "По бренду" },
 ];
 
-const typesOfCare = [
-  "Уход за телом",
-  "Уход за руками",
-  "Уход за ногами",
-  "Уход за лицом",
-  "Уход за волосами",
-  "Средства для загара",
-  "Средства для бритья",
-  "Подарочные наборы",
-  "Гигиеническая продукция",
-  "Гигиена полости рта",
-  "Бумажная продукция",
-];
+export type Current = "prev" | "next" | "number";
 
 export default function Catalog() {
   const { state, dispatch } = useContext(AppContext);
-  //const dispatch = useContext(AppContext) as React.DispatchWithoutAction;
 
-  const arr = state.products.map((item) => item.manufacturer);
+  const arr = state.products.map((item: IProduct) => item.manufacturer);
+
+  type My = { [obj: string]: string };
 
   // Посчитывает сколько раз встречается каждое значение в массиве
-  var obj = {};
-  arr.forEach((item) => (obj[item] = (obj[item] || 0) + 1));
+  var obj: My = {};
+  let count;
+  arr.forEach((item) => {
+    return (obj[item] = ((+obj[item] || 0) + 1).toString());
+  });
 
   // Преобразует объект в массив объектов
   const makers = Object.keys(obj).map((key, index) => ({
@@ -56,25 +48,27 @@ export default function Catalog() {
     count: obj[key],
   }));
 
-  const handleChange = (e: React.FormEvent<HTMLDivElement>) => {
+  const handleChange = (value: string | number) => {
     dispatch({
       type: "SORT",
-      data: { sortedData: sort, changed: e.target.value },
+      data: { sortedData: sort, changed: value },
     });
   };
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const sortPopoverElem = document.querySelector(
       ".catalog__sort-popover"
     ) as HTMLElement;
 
-    if (e.target.closest(".catalog__sort")) {
+    const target = e.target as HTMLInputElement;
+
+    if (target.closest(".catalog__sort")) {
       sortPopoverElem.classList.add("catalog__sort-popover_show");
     } else {
       sortPopoverElem.classList.remove("catalog__sort-popover_show");
     }
 
-    if (e.target.closest(".catalog__btn-show")) {
+    if (target.closest(".catalog__btn-show")) {
       // Получает цены из диапазона цен
       const inputFilterMin = document.querySelector(
         "input[name='filter-min']"
@@ -101,10 +95,10 @@ export default function Catalog() {
     }
 
     if (
-      e.target.closest(".catalog__top-filter-label") ||
-      e.target.closest(".catalog__left-filter-label")
+      target.closest(".catalog__top-filter-label") ||
+      target.closest(".catalog__left-filter-label")
     ) {
-      let type = e.target.value;
+      let type = target.value;
 
       dispatch({
         type: "RANGE_FILTER",
@@ -113,7 +107,7 @@ export default function Catalog() {
     }
   };
 
-  function paginate(current) {
+  function paginate(current: Current) {
     let currentProducts;
     let currentPage = state.currentPageCatalog;
     let totalProducts = state.products.length;
@@ -143,7 +137,7 @@ export default function Catalog() {
   }
 
   return (
-    <div className="catalog container" onClick={(e) => handleClick(e)}>
+    <div className="catalog container" onClick={handleClick}>
       <div className="catalog__bread-crumbs">
         <div>Главная</div>
         <div className="separator"></div>
@@ -159,22 +153,25 @@ export default function Catalog() {
               <span>{state.sortedName}</span>
             </a>
           </div>
-          <div
-            className="catalog__sort-popover"
-            onChange={(e) => handleChange(e)}
-          >
+          <div className="catalog__sort-popover">
             {sort.map((item) => (
-              <Checkbox key={item.id} type="radio" value={item.id} {...item} />
+              <Checkbox
+                key={item.id}
+                type="radio"
+                value={item.id}
+                handleChange={handleChange}
+                {...item}
+              />
             ))}
           </div>
         </div>
       </div>
 
       <div className="catalog__top-filter">
-        {typesOfCare.map((item) => (
+        {typesOfCare.map((item, index) => (
           <label className="catalog__top-filter-label">
             <span>{item}</span>
-            <input value={item} type="radio" name="types-of-care" />
+            <input key={index} value={item} type="radio" name="types-of-care" />
           </label>
         ))}
       </div>
@@ -199,8 +196,6 @@ export default function Catalog() {
                   name="filter-max"
                   type="number"
                   min="0"
-                  //value={max} (*)
-                  //onChange={(e) => setMax(e.target.value) (*)
                 />
               </div>
             </div>
@@ -210,14 +205,19 @@ export default function Catalog() {
             <Search icon={search} />
             <div className="catalog__left-brand-list">
               {makers.map((maker) => (
-                <Checkbox key={maker.id} value={maker.label} {...maker} />
+                <Checkbox
+                  key={maker.id}
+                  value={maker.label}
+                  handleChange={handleChange}
+                  {...maker}
+                />
               ))}
             </div>
             <div>Показать все</div>
           </div>
           <div className="catalog__controls">
-            <Button text="Показать" className="catalog__btn-show" />
-            <Button icon={deleted} className="catalog__btn-delete" />
+            <Button text="Показать" className="catalog__btn-show" onClick={(e) => (e)} />
+            <Button icon={deleted} className="catalog__btn-delete" onClick={(e) => (e)}/>
           </div>
           <div className="catalog__left-filter">
             {typesOfCare.map((item) => (
@@ -235,15 +235,13 @@ export default function Catalog() {
                 <span>{state.sortedName}</span>
               </a>
             </div>
-            <div
-              className="catalog__sort-popover"
-              onChange={(e) => handleChange(e)}
-            >
+            <div className="catalog__sort-popover">
               {sort.map((item) => (
                 <Checkbox
                   key={item.id}
                   type="radio"
                   value={item.id}
+                  handleChange={handleChange}
                   {...item}
                 />
               ))}
@@ -289,7 +287,4 @@ export default function Catalog() {
       </div>
     </div>
   );
-}
-function dispatch(arg0: { type: string; data: { id: any; quantity: number } }) {
-  throw new Error("Function not implemented.");
 }
