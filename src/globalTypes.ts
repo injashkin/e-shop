@@ -55,9 +55,12 @@ export interface IData {
   min: number;
   max: number;
   checkboxes: string[];
-  currentProducts: IProduct;
+  currentProducts: IProduct[];
+  productsInCart: IProduct[];
   currentPage: number;
   type: string;
+  price: number;
+  newValue: number;
 }
 
 interface ISortedData {

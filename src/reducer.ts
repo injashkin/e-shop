@@ -15,9 +15,9 @@ export enum Types {
 }
 
 type SetCartAction = {
-  type: typeof Types.PAGINATION
-  team: string
-}
+  type: typeof Types.PAGINATION;
+  team: string;
+};
 
 export const initialState: IState = {
   products: products,
@@ -32,7 +32,7 @@ export const initialState: IState = {
   productsPerPage: 6,
 };
 
-export default function reducer(state: IState, action: IAction) {
+export default function reducer(state: IState, action: IAction): IState {
   const { type, data } = action;
   let index: number | undefined;
   let newProductsInCart: IProduct[];
@@ -169,11 +169,11 @@ export default function reducer(state: IState, action: IAction) {
       };
 
     case "UPDATE_INPUT":
-      return { ...state, quantityFromCard: action.data };
+      return { ...state, quantityFromCard: data.newValue };
     case "ADD_TO_BASKET_PRICE":
-      return { ...state, price: action.data };
+      return { ...state, price: data.price };
     case "ADD_TO_CART":
-      return { ...state, productsInCart: action.data };
+      return { ...state, productsInCart: data.productsInCart };
     default:
       return { ...state };
   }

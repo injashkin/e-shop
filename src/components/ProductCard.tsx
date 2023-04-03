@@ -1,4 +1,4 @@
-import { useContext, useEffect, useReducer } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../App";
 import boxOpen from "../assets/box-open.svg";
 import deleted from "../assets/deleted.svg";
@@ -6,14 +6,13 @@ import basket from "../assets/basket.svg";
 import "./ProductCard.css";
 import Button from "./Button";
 import { Link } from "react-router-dom";
-import { IProduct, typesOfCare } from "../globalTypes";
-
-
 
 export type Mod = "row" | "col" | "cat" | "cat-mob";
 
-//const Product: React.FC<ShopCardProps> = ({product}): JSX.Element => {
-const ProductCard = ({mod, ...product}): JSX.Element => {
+  export default function ProductCard({mod, ...product}: {
+    [x: string]: any;
+    mod: Mod;
+}) {
   const {
     id,
     title,
@@ -81,7 +80,7 @@ const ProductCard = ({mod, ...product}): JSX.Element => {
 
     dispatch({
       type: "UPDATE_SUM",
-      data: "", //+(state.totalSum + product.price * state.quantityFromCard).toFixed(2),
+      data: "",
     });
   }
 
@@ -261,5 +260,3 @@ const ProductCard = ({mod, ...product}): JSX.Element => {
     </div>
   );
 };
-
-export default ProductCard;

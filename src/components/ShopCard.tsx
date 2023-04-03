@@ -19,8 +19,6 @@ export default function ShopCard() {
     (index) => index.title.trim() === title?.trim()
   ) as IProduct;
 
-  console.log(product);
-
   const changeInputValue = (newValue: number) => {
     dispatch({ type: "UPDATE_INPUT", data: newValue });
   };

@@ -8,14 +8,14 @@ let retrievedObject = localStorage.getItem("products") as string;
 export default function Admin() {
   let store = JSON.parse(retrievedObject);
   let index = "0";
-  let edited = {
+
+  let edited: any = {
     id: "",
     title: "",
     name: "",
     price: "",
     image_m: "",
     brand: "",
-    article: 0,
     manufacturer: "",
     description: "",
     size: "",
@@ -32,7 +32,7 @@ export default function Admin() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let nameProp = e.target.name;
-    edited[nameProp] = e.target.value;
+      edited[nameProp] = e.target.value
   };
 
   const handleSave = () => {
