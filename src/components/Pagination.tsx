@@ -3,7 +3,6 @@ import { AppContext } from "../App";
 import chevron2 from "../assets/chevron2.svg";
 
 const Pagination = ({ paginate }: any) => {
-  console.log(paginate);
   const { state } = useContext(AppContext);
   const totalProducts = state.products.length;
   const pageNumbers = [];

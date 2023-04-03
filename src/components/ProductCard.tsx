@@ -6,13 +6,16 @@ import basket from "../assets/basket.svg";
 import "./ProductCard.css";
 import Button from "./Button";
 import { Link } from "react-router-dom";
+import { IProduct } from "../globalTypes";
 
 export type Mod = "row" | "col" | "cat" | "cat-mob";
 
-  export default function ProductCard({mod, ...product}: {
-    [x: string]: any;
-    mod: Mod;
-}) {
+interface IProductCard {
+  mod: Mod;
+  product: IProduct;
+}
+
+export default function ProductCard({ mod, product }: IProductCard) {
   const {
     id,
     title,
@@ -84,30 +87,41 @@ export type Mod = "row" | "col" | "cat" | "cat-mob";
     });
   }
 
+  // Перенести в редьюсер
   function addToCart() {
     let index: number = -1;
-    let productInCart = state.productsInCart.find((item, idItem) => {
+    console.log("index1", index);
+
+    let productInCart = state.productsInCart.find((item, i) => {
       if (item.id === product.id) {
-        index = +idItem;
+        index = i;
+        console.log("index2", index);
         return true;
       }
       return false;
     });
 
     if (productInCart) {
+      console.log("KKKKKKKKKKKKKKKKKKKK", productInCart.quantity)
+
       productInCart.quantity = productInCart.quantity + 1;
       let productsInCart = state.productsInCart;
-      productsInCart[index] = productInCart;
-      dispatch({
-        type: "ADD_TO_CART",
-        data: productsInCart,
-      });
-    } else {
-      product.quantity = 1;
+
+      console.log("index3", index);
+      productsInCart[index + 1] = productInCart;
 
       dispatch({
         type: "ADD_TO_CART",
-        data: [...state.productsInCart, product],
+        data: { productsInCart: productsInCart },
+      });
+    } else {
+      product.quantity = 1;
+      let productsInCart = state.productsInCart;
+      productsInCart[0] = product;
+
+      dispatch({
+        type: "ADD_TO_CART",
+        data: { productsInCart: productsInCart },
       });
     }
 
@@ -259,4 +273,4 @@ export type Mod = "row" | "col" | "cat" | "cat-mob";
       </div>
     </div>
   );
-};
+}

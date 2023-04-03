@@ -169,9 +169,9 @@ export default function Catalog() {
 
       <div className="catalog__top-filter">
         {typesOfCare.map((item, index) => (
-          <label className="catalog__top-filter-label">
+          <label key={index} className="catalog__top-filter-label">
             <span>{item}</span>
-            <input key={index} value={item} type="radio" name="types-of-care" />
+            <input value={item} type="radio" name="types-of-care" />
           </label>
         ))}
       </div>
@@ -220,8 +220,8 @@ export default function Catalog() {
             <Button icon={deleted} className="catalog__btn-delete" onClick={(e) => (e)}/>
           </div>
           <div className="catalog__left-filter">
-            {typesOfCare.map((item) => (
-              <label className="catalog__left-filter-label">
+            {typesOfCare.map((item, index) => (
+              <label key={index} className="catalog__left-filter-label">
                 <span>{item}</span>
                 <input value={item} type="radio" name="left-types-of-care" />
               </label>
@@ -262,13 +262,13 @@ export default function Catalog() {
         <div className=".catalog__content">
           <div className="catalog__products">
             {state.sortedProducts.map((product: IProduct) => (
-              <ProductCard key={product.id} mod="cat" {...product} />
+              <ProductCard key={product.id} mod="cat" product={product} />
             ))}
           </div>
 
           <div className="catalog__products catalog__products--mobile">
             {state.sortedProducts.map((product: IProduct) => (
-              <ProductCard key={product.id} mod="cat-mob" {...product} />
+              <ProductCard key={product.id} mod="cat-mob" product={product} />
             ))}
           </div>
 

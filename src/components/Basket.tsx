@@ -19,7 +19,7 @@ export default function Basket() {
         <h1>Корзинa</h1>
 
         {state.productsInCart.map((product: IProduct) => (
-          <ProductCard key={product.id} mod="row" {...product} />
+          <ProductCard key={product.id} mod="row" product={product} />
         ))}
 
         <div className="basket__bottom">
