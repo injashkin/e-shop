@@ -17,12 +17,10 @@ import React from "react";
 import Pagination from "./Pagination";
 
 const sort = [
-  { id: "0", label: "По умолчанию" },
-  { id: "1", label: "По названию" },
+  { id: "0", label: "Название" },
+  { id: "1", label: "Название (Я-А)" },
   { id: "2", label: "Сначала недорогие" },
   { id: "3", label: "Сначала дорогие" },
-  { id: "4", label: "По производителю" },
-  { id: "5", label: "По бренду" },
 ];
 
 export type Current = "prev" | "next" | "number";
@@ -48,7 +46,7 @@ export default function Catalog() {
     count: obj[key],
   }));
 
-  const handleChange = (value: string | number) => {
+  const handleChangeSort = (value: string | number) => {
     dispatch({
       type: "SORT",
       data: { sortedData: sort, changed: value },
@@ -56,19 +54,40 @@ export default function Catalog() {
   };
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const sortPopoverElem = document.querySelector(
+    const targetDiv = e.target as HTMLElement;
+    const sortWrapper: HTMLElement | null = targetDiv.closest(
+      ".catalog__sort-wrapper"
+    );
+    const sortWrapperMobile: HTMLElement | null = targetDiv.closest(
+      ".catalog__sort-wrapper--mobile"
+    );
+
+    let parent: HTMLElement = document.body;
+
+    if (sortWrapperMobile) {
+      parent = sortWrapperMobile;
+    }
+
+    if (sortWrapper) {
+      parent = sortWrapper;
+    }
+
+    const sortPopoverElem = parent.querySelector(
       ".catalog__sort-popover"
     ) as HTMLElement;
 
-    const target = e.target as HTMLInputElement;
-
-    if (target.closest(".catalog__sort")) {
+    if (parent == sortWrapperMobile || parent == sortWrapper) {
       sortPopoverElem.classList.add("catalog__sort-popover_show");
     } else {
-      sortPopoverElem.classList.remove("catalog__sort-popover_show");
+      document
+        .querySelectorAll(".catalog__sort-popover")
+        .forEach((elem) => elem.classList.remove("catalog__sort-popover_show"));
     }
 
-    if (target.closest(".catalog__btn-show")) {
+    if (
+      targetDiv.closest(".catalog__btn-show") ||
+      targetDiv.closest(".catalog__btn-delete")
+    ) {
       // Получает цены из диапазона цен
       const inputFilterMin = document.querySelector(
         "input[name='filter-min']"
@@ -89,19 +108,32 @@ export default function Catalog() {
       let checkboxes = Array.from(inputs, (input) => input.value);
 
       dispatch({
-        type: "RANGE_FILTER",
+        type: "FILTER",
         data: { min, max, checkboxes },
       });
+
+      if (targetDiv.closest(".catalog__btn-delete")) {
+        dispatch({
+          type: "FILTER",
+          data: { min: 0, max: 10000, Checkbox: [] },
+        });
+
+        inputFilterMin.value = "0";
+        inputFilterMax.value = "10000";
+        inputs.forEach((elem) => (elem.checked = false));
+      }
     }
 
+    const targetInput = e.target as HTMLInputElement;
+
     if (
-      target.closest(".catalog__top-filter-label") ||
-      target.closest(".catalog__left-filter-label")
+      targetInput.closest(".catalog__top-filter-label") ||
+      targetInput.closest(".catalog__left-filter-label")
     ) {
-      let type = target.value;
+      let type = targetInput.value;
 
       dispatch({
-        type: "RANGE_FILTER",
+        type: "FILTER",
         data: { type },
       });
     }
@@ -159,7 +191,7 @@ export default function Catalog() {
                 key={item.id}
                 type="radio"
                 value={item.id}
-                handleChange={handleChange}
+                handleChange={handleChangeSort}
                 {...item}
               />
             ))}
@@ -208,7 +240,7 @@ export default function Catalog() {
                 <Checkbox
                   key={maker.id}
                   value={maker.label}
-                  handleChange={handleChange}
+                  handleChange={(e) => e}
                   {...maker}
                 />
               ))}
@@ -216,8 +248,16 @@ export default function Catalog() {
             <div>Показать все</div>
           </div>
           <div className="catalog__controls">
-            <Button text="Показать" className="catalog__btn-show" onClick={(e) => (e)} />
-            <Button icon={deleted} className="catalog__btn-delete" onClick={(e) => (e)}/>
+            <Button
+              text="Показать"
+              className="catalog__btn-show"
+              onClick={(e) => e}
+            />
+            <Button
+              icon={deleted}
+              className="catalog__btn-delete"
+              onClick={(e) => e}
+            />
           </div>
           <div className="catalog__left-filter">
             {typesOfCare.map((item, index) => (
@@ -228,7 +268,10 @@ export default function Catalog() {
             ))}
           </div>
 
-          <div className="catalog__sort-wrapper catalog__sort-wrapper--mobile">
+          <div
+            className="catalog__sort-wrapper catalog__sort-wrapper--mobile"
+            //onClick={(e) => handleClickSortMobile(e)}
+          >
             <div className="catalog__sort">
               <span>Сортировка:</span>
               <a>
@@ -241,7 +284,7 @@ export default function Catalog() {
                   key={item.id}
                   type="radio"
                   value={item.id}
-                  handleChange={handleChange}
+                  handleChange={handleChangeSort}
                   {...item}
                 />
               ))}

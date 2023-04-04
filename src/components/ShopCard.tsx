@@ -51,7 +51,6 @@ export default function ShopCard() {
   }
 
   function plus() {
-    console.log("product.id", product.id);
     dispatch({
       type: "PLUS_QUANTITY",
       data: { id: product.id },

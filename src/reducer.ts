@@ -1,4 +1,10 @@
-import { IAction, IData, IProduct, IProductInCart, IState } from "./globalTypes";
+import {
+  IAction,
+  IData,
+  IProduct,
+  IProductInCart,
+  IState,
+} from "./globalTypes";
 import products from "./products.json";
 
 export enum Types {
@@ -10,7 +16,7 @@ export enum Types {
   PLUS_QUANTITY = "PLUS_QUANTITY",
   UPDATE_NUM = "UPDATE_NUM",
   ADD_TO_CART = "ADD_TO_CART",
-  RANGE_FILTER = "RANGE_FILTER",
+  FILTER = "FILTER",
   PAGINATION = "PAGINATION",
 }
 
@@ -30,8 +36,6 @@ export const initialState: IState = {
   totalSum: 0,
   currentPageCatalog: 1,
   productsPerPage: 6,
-  currentIdProduct: "0",
-
 };
 
 export default function reducer(state: IState, action: IAction): IState {
@@ -43,27 +47,25 @@ export default function reducer(state: IState, action: IAction): IState {
 
   switch (type) {
     case "PLUS_QUANTITY":
-      console.log("data.id", data.id)
-      index = state.productsInCart.findIndex((item) => item.product.id === data.id);
+      index = state.productsInCart.findIndex(
+        (item) => item.product.id === data.id
+      );
       newProductsInCart = state.productsInCart;
-      console.log("index", index)
-      console.log("newProductsInCart", newProductsInCart)
 
-      
       if (newProductsInCart[index].quantity) {
         newProductsInCart[index].quantity =
           (newProductsInCart[index].quantity as number) + 1;
       } else newProductsInCart[index].quantity = 1;
-      
 
       return {
         ...state,
         productsInCart: newProductsInCart,
-        //numProducts: state.numProducts + 1,
       };
 
     case "MINUS_QUANTITY":
-      index = state.productsInCart.findIndex((item) => item.product.id === data.id);
+      index = state.productsInCart.findIndex(
+        (item) => item.product.id === data.id
+      );
       newProductsInCart = [...state.productsInCart];
       let numProducts = state.numProducts;
 
@@ -77,11 +79,12 @@ export default function reducer(state: IState, action: IAction): IState {
       return {
         ...state,
         productsInCart: newProductsInCart,
-        //numProducts: numProducts,
       };
 
     case "UPDATE_QUANTITY":
-      index = state.productsInCart.findIndex((item) => item.product.id === data.id);
+      index = state.productsInCart.findIndex(
+        (item) => item.product.id === data.id
+      );
       newProductsInCart = [...state.productsInCart];
 
       newProductsInCart[index].quantity = data.quantityFromCard;
@@ -104,13 +107,9 @@ export default function reducer(state: IState, action: IAction): IState {
 
       state.productsInCart.forEach((product) => {
         if (product.quantity) {
-
-          console.log("product.quantity", product.quantity)
-
           num = num + product.quantity;
         }
       });
-      console.log("total-num", num)
       return { ...state, numProducts: num };
 
     case "UPDATE_SUM":
@@ -121,6 +120,7 @@ export default function reducer(state: IState, action: IAction): IState {
       return { ...state, totalSum: sum };
 
     case "SORT":
+      console.log("data.changed", data.changed);
       let sorted: IProduct[] = [];
       let sortedName: string = data.sortedData[+data.changed].label;
 
@@ -138,19 +138,10 @@ export default function reducer(state: IState, action: IAction): IState {
       if (data.changed === "3") {
         sorted = [...state.products].sort((a, b) => b.price - a.price);
       }
-      if (data.changed === "4") {
-        sorted = [...state.products].sort((a, b) =>
-          b.manufacturer! < a.manufacturer! ? 1 : -1
-        );
-      }
-      if (data.changed === "5") {
-        sorted = [...state.products].sort((a, b) =>
-          b.brand! < a.brand! ? 1 : -1
-        );
-      }
+
       return { ...state, sortedProducts: sorted, sortedName: sortedName };
 
-    case "RANGE_FILTER":
+    case "FILTER":
       let filtered = state.products;
 
       if (data.min && data.max) {

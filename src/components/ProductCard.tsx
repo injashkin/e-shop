@@ -17,14 +17,12 @@ interface IProductCard {
 
 export default function ProductCard({ mod, product }: IProductCard) {
 
-  console.log("product", product)
   let productInCart: IProductInCart | undefined = {
     product: product,
     quantity: 0,
   }
 
   let index: number = 0;
-  console.log("index", index)
 
   const { state, dispatch } = useContext(AppContext);
 
@@ -71,7 +69,6 @@ export default function ProductCard({ mod, product }: IProductCard) {
   }
 
   function plus() {
-    console.log("product.id", product.id)
     dispatch({
       type: "PLUS_QUANTITY",
       data: { id: product.id },

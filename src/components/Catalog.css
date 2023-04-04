@@ -389,10 +389,8 @@
     font-weight: 500;
     font-size: 20px;
     line-height: 120%;
-
     color: #111111;
   }
-
 }
 
 @media (max-width: 680px) {
@@ -415,6 +413,7 @@
 
   .catalog__sort-wrapper--mobile {
     display: flex;
+    position: relative;
   }
 
   .catalog__left-brands-logo {
