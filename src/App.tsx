@@ -42,10 +42,6 @@ function App(): JSX.Element {
       element: <CardPage />,
     },
     {
-      path: "/card",
-      element: <CardPage />,
-    },
-    {
       path: "/catalog",
       element: <CatalogPage />,
     },

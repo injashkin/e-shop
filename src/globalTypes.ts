@@ -26,18 +26,23 @@ export interface IProduct {
   unit: string;
   types: string[];
   barcode: number;
+}
+
+export interface IProductInCart {
+  product: IProduct;
   quantity: number;
 }
 
 export interface IState {
   products: IProduct[];
-  productsInCart: IProduct[];
+  productsInCart: IProductInCart[];
   sortedProducts: IProduct[];
   sortedName: string;
   numProducts: number;
   totalSum: number;
   quantityFromCard: number;
   price: number;
+  currentIdProduct: string;
   currentPageCatalog: number;
   productsPerPage: number;
 }
@@ -56,7 +61,7 @@ export interface IData {
   max: number;
   checkboxes: string[];
   currentProducts: IProduct[];
-  productsInCart: IProduct[];
+  productsInCart: IProductInCart[];
   currentPage: number;
   type: string;
   price: number;

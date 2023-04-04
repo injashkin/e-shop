@@ -9,34 +9,71 @@ import dotLine from "../assets/dot-line.svg";
 import share from "../assets/share.svg";
 import Button from "./Button";
 import { useParams } from "react-router-dom";
-import { IProduct } from "../globalTypes";
+import { IProduct, IProductInCart } from "../globalTypes";
 
 export default function ShopCard() {
   const { state, dispatch } = useContext(AppContext);
-  const { title } = useParams();
-  const { products } = state;
-  const product: IProduct = products.find(
-    (index) => index.title.trim() === title?.trim()
-  ) as IProduct;
+  let { title } = useParams();
+
+  let productInCart: IProductInCart = {
+    product: state.products[0],
+    quantity: 0,
+  };
+
+  const productInCartCurrent = state.productsInCart.find(
+    (index) => index.product.title.trim() === title?.trim()
+  );
+
+  if (productInCartCurrent) productInCart = productInCartCurrent;
+
+  let { product } = productInCart;
 
   const changeInputValue = (newValue: number) => {
     dispatch({ type: "UPDATE_INPUT", data: newValue });
   };
 
+
   function minus() {
-    if (state.quantityFromCard > 0)
-      changeInputValue(state.quantityFromCard - 1);
+    dispatch({
+      type: "MINUS_QUANTITY",
+      data: { id: product.id },
+    });
+
+    dispatch({
+      type: "UPDATE_TOTAL_NUM",
+      data: "",
+    });
+
+    dispatch({
+      type: "UPDATE_SUM",
+      data: "",
+    });
   }
 
   function plus() {
-    changeInputValue(state.quantityFromCard + 1);
+    console.log("product.id", product.id);
+    dispatch({
+      type: "PLUS_QUANTITY",
+      data: { id: product.id },
+    });
+
+    dispatch({
+      type: "UPDATE_TOTAL_NUM",
+      data: "",
+    });
+
+    dispatch({
+      type: "UPDATE_SUM",
+      data: "",
+    });
   }
 
+  // Перенести в редьюсер
   function addToCart() {
-    let index: number = -1;
-    let productInCart = state.productsInCart.find((item, idItem) => {
-      if (item.id === product.id) {
-        index = +idItem;
+    let index = 0;
+    let productInCart = state.productsInCart.find((item, i) => {
+      if (item.product.id === product.id) {
+        index = i;
         return true;
       }
       return false;
@@ -44,28 +81,28 @@ export default function ShopCard() {
 
     if (productInCart) {
       productInCart.quantity = productInCart.quantity + 1;
-      let productsInCart = state.productsInCart;
-      productsInCart[index] = productInCart;
+      let addedCart = state.productsInCart;
+
+      addedCart[index] = productInCart;
+
       dispatch({
         type: "ADD_TO_CART",
-        data: productsInCart,
+        data: { productsInCart: addedCart },
       });
     } else {
-      product.quantity = 1;
+      let productsInCart = state.productsInCart;
+      productInCart = {
+        product: product,
+        quantity: 1,
+      };
+
+      productsInCart.push(productInCart);
 
       dispatch({
         type: "ADD_TO_CART",
-        data: [...state.productsInCart, product],
+        data: { productsInCart: productsInCart },
       });
     }
-
-    dispatch({ type: "UPDATE_INPUT", data: state.quantityFromCard });
-    dispatch({ type: "ADD_TO_BASKET_PRICE", data: product.price });
-
-    dispatch({
-      type: "UPDATE_QUANTITY",
-      data: { id: product.id, quantityFromCard: state.quantityFromCard },
-    });
 
     dispatch({
       type: "UPDATE_TOTAL_NUM",
@@ -99,7 +136,7 @@ export default function ShopCard() {
             id="card-quantity"
             name="quantity"
             className="quantity"
-            value={state.quantityFromCard}
+            value={productInCart.quantity}
             onChange={(e) => changeInputValue(+e.target.value)}
           ></input>
 

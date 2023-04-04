@@ -6,7 +6,7 @@ import basket from "../assets/basket.svg";
 import "./ProductCard.css";
 import Button from "./Button";
 import { Link } from "react-router-dom";
-import { IProduct } from "../globalTypes";
+import { IProduct, IProductInCart } from "../globalTypes";
 
 export type Mod = "row" | "col" | "cat" | "cat-mob";
 
@@ -16,35 +16,30 @@ interface IProductCard {
 }
 
 export default function ProductCard({ mod, product }: IProductCard) {
-  const {
-    id,
-    title,
-    name,
-    price,
-    image_m,
-    brand = "AOS",
-    article,
-    manufacturer = "Нэфис",
-    description,
-    size,
-    types,
-    barcode = 4604049097548,
-    quantity = 1,
-  } = product;
+
+  console.log("product", product)
+  let productInCart: IProductInCart | undefined = {
+    product: product,
+    quantity: 0,
+  }
+
+  let index: number = 0;
+  console.log("index", index)
 
   const { state, dispatch } = useContext(AppContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
     dispatch({
       type: "CHANGE_QUANTITY",
-      data: { id: id, quantity: +e.target.value },
+      data: { id: product.id, quantity: +e.target.value },
     });
   };
 
   function remove() {
     dispatch({
       type: "REMOVE",
-      data: { id: id },
+      data: { id: product.id },
     });
 
     dispatch({
@@ -61,7 +56,12 @@ export default function ProductCard({ mod, product }: IProductCard) {
   function minus() {
     dispatch({
       type: "MINUS_QUANTITY",
-      data: { id: id },
+      data: { id: product.id },
+    });
+
+    dispatch({
+      type: "UPDATE_TOTAL_NUM",
+      data: "",
     });
 
     dispatch({
@@ -71,14 +71,15 @@ export default function ProductCard({ mod, product }: IProductCard) {
   }
 
   function plus() {
+    console.log("product.id", product.id)
     dispatch({
       type: "PLUS_QUANTITY",
-      data: { id: id },
+      data: { id: product.id },
     });
 
     dispatch({
-      type: "UPDATE_NUM",
-      data: state.numProducts + state.quantityFromCard,
+      type: "UPDATE_TOTAL_NUM",
+      data: "",
     });
 
     dispatch({
@@ -89,35 +90,34 @@ export default function ProductCard({ mod, product }: IProductCard) {
 
   // Перенести в редьюсер
   function addToCart() {
-    let index: number = -1;
-    console.log("index1", index);
 
-    let productInCart = state.productsInCart.find((item, i) => {
-      if (item.id === product.id) {
+    productInCart = state.productsInCart.find((item, i) => {
+      if (item.product.id === product.id) {
         index = i;
-        console.log("index2", index);
         return true;
       }
       return false;
     });
 
     if (productInCart) {
-      console.log("KKKKKKKKKKKKKKKKKKKK", productInCart.quantity)
 
       productInCart.quantity = productInCart.quantity + 1;
-      let productsInCart = state.productsInCart;
+      let addedCart = state.productsInCart;
 
-      console.log("index3", index);
-      productsInCart[index + 1] = productInCart;
+      addedCart[index] = productInCart;
 
       dispatch({
         type: "ADD_TO_CART",
-        data: { productsInCart: productsInCart },
+        data: { productsInCart: addedCart },
       });
     } else {
-      product.quantity = 1;
       let productsInCart = state.productsInCart;
-      productsInCart[0] = product;
+      productInCart = {
+        product: product,
+        quantity: 1,
+      };
+
+      productsInCart.push(productInCart);
 
       dispatch({
         type: "ADD_TO_CART",
@@ -191,24 +191,24 @@ export default function ProductCard({ mod, product }: IProductCard) {
   }
 
   return (
-    <div id={id} className={productCard}>
+    <div id={product.id} className={productCard}>
       <div className={`flex ${colClass}`}>
         {catMob && <div className="product-card__pop">ПОПУЛЯРНОЕ</div>}
         <div className={productCardImage}>
-          <img className="activator" src={getImageUrl(image_m)} alt="" />
+          <img className="activator" src={getImageUrl(product.image_m)} alt="" />
         </div>
         <div className="product-card__description">
           <div className="product-card__unit">
             <img src={boxOpen} />
             <span>
-              {size}
-              {types}
+              {product.size}
+              {product.types}
             </span>
           </div>
-          <Link to={`/catalog/${title}`}>
+          <Link to={`/catalog/${product.title}`}>
             <h3>
-              <span>{brand} </span>
-              {name}
+              <span>{product.brand} </span>
+              {product.name}
             </h3>
           </Link>
 
@@ -216,20 +216,20 @@ export default function ProductCard({ mod, product }: IProductCard) {
             <div className="product-card__detail">
               <div>
                 <span>Штрихкод: </span>
-                <span>{barcode}</span>
+                <span>{product.barcode}</span>
               </div>
               <div>
                 <span>Производитель: </span>
-                <span>{manufacturer}</span>
+                <span>{product.manufacturer}</span>
               </div>
               <div>
                 <span>Бренд: </span>
-                <span>{brand}</span>
+                <span>{product.brand}</span>
               </div>
             </div>
           )}
 
-          {(col || row) && <p>{description}</p>}
+          {(col || row) && <p>{product.description}</p>}
         </div>
       </div>
 
@@ -244,7 +244,7 @@ export default function ProductCard({ mod, product }: IProductCard) {
               id="card-quantity"
               name="quantity"
               className="quantity"
-              value={product.quantity}
+              value={state.productsInCart[+product.id - 1].quantity}
               onChange={(e) => handleChange(e)}
             ></input>
 
@@ -253,7 +253,7 @@ export default function ProductCard({ mod, product }: IProductCard) {
         )}
 
         {(row || col) && <div className="sep49"></div>}
-        <div className={productCardPrice}>{`${price} ₸`}</div>
+        <div className={productCardPrice}>{`${product.price} ₸`}</div>
         {(row || col) && <div className="sep49"></div>}
         {(row || col) && (
           <Button

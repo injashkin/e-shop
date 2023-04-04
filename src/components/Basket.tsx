@@ -3,7 +3,7 @@ import "./Basket.css";
 import Button from "./Button";
 import { useContext } from "react";
 import { AppContext } from "../App";
-import { IProduct, IState } from "../globalTypes";
+import { IProduct, IProductInCart, IState } from "../globalTypes";
 
 export default function Basket() {
   const { state } = useContext(AppContext);
@@ -18,8 +18,8 @@ export default function Basket() {
 
         <h1>Корзинa</h1>
 
-        {state.productsInCart.map((product: IProduct) => (
-          <ProductCard key={product.id} mod="row" product={product} />
+        {state.productsInCart.map((product: IProductInCart) => (
+          <ProductCard key={product.product.id} mod="row" product={product.product} />
         ))}
 
         <div className="basket__bottom">

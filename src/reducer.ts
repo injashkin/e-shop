@@ -1,4 +1,4 @@
-import { IAction, IData, IProduct, IState } from "./globalTypes";
+import { IAction, IData, IProduct, IProductInCart, IState } from "./globalTypes";
 import products from "./products.json";
 
 export enum Types {
@@ -21,8 +21,8 @@ type SetCartAction = {
 
 export const initialState: IState = {
   products: products,
-  productsInCart: [],
   sortedProducts: [...products],
+  productsInCart: [],
   sortedName: "По умолчанию",
   numProducts: 0,
   price: 0,
@@ -30,33 +30,40 @@ export const initialState: IState = {
   totalSum: 0,
   currentPageCatalog: 1,
   productsPerPage: 6,
+  currentIdProduct: "0",
+
 };
 
 export default function reducer(state: IState, action: IAction): IState {
   const { type, data } = action;
   let index: number | undefined;
-  let newProductsInCart: IProduct[];
+  let newProductsInCart: IProductInCart[];
 
   console.log(type);
 
   switch (type) {
     case "PLUS_QUANTITY":
-      index = state.productsInCart.findIndex((item) => item.id === data.id);
-      newProductsInCart = [...state.productsInCart];
+      console.log("data.id", data.id)
+      index = state.productsInCart.findIndex((item) => item.product.id === data.id);
+      newProductsInCart = state.productsInCart;
+      console.log("index", index)
+      console.log("newProductsInCart", newProductsInCart)
 
+      
       if (newProductsInCart[index].quantity) {
         newProductsInCart[index].quantity =
           (newProductsInCart[index].quantity as number) + 1;
       } else newProductsInCart[index].quantity = 1;
+      
 
       return {
         ...state,
         productsInCart: newProductsInCart,
-        numProducts: state.numProducts + 1,
+        //numProducts: state.numProducts + 1,
       };
 
     case "MINUS_QUANTITY":
-      index = state.productsInCart.findIndex((item) => item.id === data.id);
+      index = state.productsInCart.findIndex((item) => item.product.id === data.id);
       newProductsInCart = [...state.productsInCart];
       let numProducts = state.numProducts;
 
@@ -70,11 +77,11 @@ export default function reducer(state: IState, action: IAction): IState {
       return {
         ...state,
         productsInCart: newProductsInCart,
-        numProducts: numProducts,
+        //numProducts: numProducts,
       };
 
     case "UPDATE_QUANTITY":
-      index = state.productsInCart.findIndex((item) => item.id === data.id);
+      index = state.productsInCart.findIndex((item) => item.product.id === data.id);
       newProductsInCart = [...state.productsInCart];
 
       newProductsInCart[index].quantity = data.quantityFromCard;
@@ -85,7 +92,7 @@ export default function reducer(state: IState, action: IAction): IState {
 
     case "REMOVE":
       newProductsInCart = state.productsInCart.filter(
-        (product) => product.id !== data.id
+        (product) => product.product.id !== data.id
       );
       return { ...state, productsInCart: newProductsInCart };
 
@@ -97,15 +104,19 @@ export default function reducer(state: IState, action: IAction): IState {
 
       state.productsInCart.forEach((product) => {
         if (product.quantity) {
+
+          console.log("product.quantity", product.quantity)
+
           num = num + product.quantity;
         }
       });
+      console.log("total-num", num)
       return { ...state, numProducts: num };
 
     case "UPDATE_SUM":
       let sum = 0;
       state.productsInCart.forEach((product) => {
-        sum = +(sum + product.price * product.quantity!).toFixed(2);
+        sum = +(sum + product.product.price * product.quantity).toFixed(2);
       });
       return { ...state, totalSum: sum };
 
