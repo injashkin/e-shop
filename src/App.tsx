@@ -2,13 +2,13 @@ import React, { createContext, useContext, useReducer } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./App.css";
-//import ErrorPage from "./Pages/Error";
+import ErrorPage from "./Pages/Error";
 import BasketPage from "./Pages/BasketPage";
 import CardPage from "./Pages/CardPage";
 import { IAction, IState } from "./globalTypes";
 import CatalogPage from "./Pages/CatalogPage";
 import reducer, { initialState } from "./reducer";
-//import Admin from "./components/Admin";
+import Admin from "./components/Admin";
 
 //export const GameContext = React.createContext<{
 //  state: GameState;
@@ -50,14 +50,14 @@ function App(): JSX.Element {
         path: "/basket",
         element: <BasketPage />,
       },
-      //{
-      //  path: "/error",
-      //  element: <ErrorPage />,
-      //},
-      //{
-      //  path: "/admin",
-      //  element: <Admin />,
-      //},
+      {
+        path: "/error",
+        element: <ErrorPage />,
+      },
+      {
+        path: "/admin",
+        element: <Admin />,
+      },
     ],
     {
       basename: "/e-shop",
