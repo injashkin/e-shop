@@ -3,7 +3,7 @@ import "./Button.css";
 
 interface ButtonProps {
   href: string;
-  icon: string;
+  icon?: string;
   className: string;
   text: string;
 }

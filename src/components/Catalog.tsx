@@ -33,7 +33,7 @@ export default function Catalog() {
   type My = { [obj: string]: string };
 
   // Посчитывает сколько раз встречается каждое значение в массиве
-  var obj: My = {};
+  let obj: My = {};
   let count;
   arr.forEach((item) => {
     return (obj[item] = ((+obj[item] || 0) + 1).toString());
@@ -270,7 +270,6 @@ export default function Catalog() {
 
           <div
             className="catalog__sort-wrapper catalog__sort-wrapper--mobile"
-            //onClick={(e) => handleClickSortMobile(e)}
           >
             <div className="catalog__sort">
               <span>Сортировка:</span>
@@ -294,11 +293,11 @@ export default function Catalog() {
           <div className="catalog__left-brands-logo">
             <div>Бренды</div>
             <div className="catalog__left-logos">
-              <img src={brand1}></img>
-              <img src={brand2}></img>
-              <img src={brand3}></img>
-              <img src={brand4}></img>
-              <img src={brand5}></img>
+              <img src={brand1} />
+              <img src={brand2} />
+              <img src={brand3} />
+              <img src={brand4} />
+              <img src={brand5} />
             </div>
           </div>
         </div>

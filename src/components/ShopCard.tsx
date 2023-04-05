@@ -32,7 +32,6 @@ export default function ShopCard() {
     dispatch({ type: "UPDATE_INPUT", data: newValue });
   };
 
-
   function minus() {
     dispatch({
       type: "MINUS_QUANTITY",
@@ -114,10 +113,14 @@ export default function ShopCard() {
     });
   }
 
+  function getImageUrl(name: string) {
+    return new URL(`../images/${name}`, import.meta.url).href;
+  }
+
   return (
     <div id={"product-" + product.id} className="card">
       <div className="image">
-        <img className="activator" src={imgProduct} alt="" />
+        <img className="activator" src={getImageUrl(product.image_m)} alt="" />
       </div>
       <div className="card__right-side">
         <header className="card__header">

@@ -3,26 +3,31 @@ import "./Admin.css";
 import { IProduct } from "../globalTypes";
 import { Link } from "react-router-dom";
 
-let retrievedObject = localStorage.getItem("products") as string;
+if (!localStorage.getItem("products")) {
+  let prodsStr = JSON.stringify(products);
+  localStorage.setItem("products", prodsStr);
+}
 
 export default function Admin() {
+  let retrievedObject = localStorage.getItem("products") as string;
   let store = JSON.parse(retrievedObject);
+
   let index = "0";
 
   let edited: any = {
     id: "",
     title: "",
     name: "",
-    price: "",
+    price: 0,
     image_m: "",
     brand: "",
+    article: 0,
     manufacturer: "",
     description: "",
-    size: "",
+    size: 0,
     unit: "",
     types: [],
-    barcode: "",
-    quantity: "",
+    barcode: 0,
   };
 
   const handleLoad = () => {
@@ -31,8 +36,9 @@ export default function Admin() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let nameProp = e.target.name;
-      edited[nameProp] = e.target.value
+    let target = e.target;
+    let nameProp = target.name;
+    edited[nameProp] = target.value;
   };
 
   const handleSave = () => {
@@ -50,47 +56,37 @@ export default function Admin() {
     localStorage.setItem("products", JSON.stringify(store));
   };
 
-  interface IForm extends HTMLFormControlsCollection {
-    title: string;
-  }
-
   function handleClick(e: React.MouseEvent<HTMLOptionElement, MouseEvent>) {
     let elem = e.target as HTMLOptionElement;
     index = elem.value;
 
-    let edit = document.querySelector(".editProducts");
+    let edit = document.querySelector(".editProducts") as HTMLElement;
 
-    let titleElem = edit?.querySelector(
+    let titleElem = edit.querySelector(
       "input[name='title']"
     ) as HTMLInputElement;
-    let descriptionElem = edit?.querySelector(
+    let descriptionElem = edit.querySelector(
       "input[name='description']"
     ) as HTMLInputElement;
-    let sizeElem = edit?.querySelector(
-      "input[name='size']"
-    ) as HTMLInputElement;
-    let brandElem = edit?.querySelector(
+    let sizeElem = edit.querySelector("input[name='size']") as HTMLInputElement;
+    let brandElem = edit.querySelector(
       "input[name='brand']"
     ) as HTMLInputElement;
-    let manufacturerElem = edit?.querySelector(
+    let manufacturerElem = edit.querySelector(
       "input[name='manufacturer']"
     ) as HTMLInputElement;
-    let image_mElem = edit?.querySelector(
+    let image_mElem = edit.querySelector(
       "input[name='image_m']"
     ) as HTMLInputElement;
-    let nameElem = edit?.querySelector(
-      "input[name='name']"
-    ) as HTMLInputElement;
-    let priceElem = edit?.querySelector(
+    let nameElem = edit.querySelector("input[name='name']") as HTMLInputElement;
+    let priceElem = edit.querySelector(
       "input[name='price']"
     ) as HTMLInputElement;
-    let unitElem = edit?.querySelector(
-      "input[name='unit']"
-    ) as HTMLInputElement;
-    let barcodeElem = edit?.querySelector(
+    let unitElem = edit.querySelector("input[name='unit']") as HTMLInputElement;
+    let barcodeElem = edit.querySelector(
       "input[name='barcode']"
     ) as HTMLInputElement;
-    let typesElem = edit?.querySelector(
+    let typesElem = edit.querySelector(
       "select[name='types']"
     ) as HTMLInputElement;
 
@@ -98,14 +94,14 @@ export default function Admin() {
 
     titleElem.value = edited.title;
     descriptionElem.value = edited.description;
-    sizeElem.value = edited.size;
+    sizeElem.value = edited.size.toString();
     brandElem.value = edited.brand;
     manufacturerElem.value = edited.manufacturer;
     image_mElem.value = edited.image_m;
     nameElem.value = edited.name;
-    priceElem.value = edited.price;
+    priceElem.value = edited.price.toString();
     unitElem.value = edited.unit;
-    barcodeElem.value = edited.barcode;
+    barcodeElem.value = edited.barcode.toString();
     typesElem.value = edited.types as never;
   }
 
@@ -117,8 +113,12 @@ export default function Admin() {
         <div className="admin-left">
           <select size={size} name="select">
             <optgroup label="Выберите продукт">
-              {store.map((product: IProduct, index: string) => (
-                <option key={index} value={index} onClick={(e) => handleClick(e)}>
+              {store.map((product: IProduct, index: number) => (
+                <option
+                  key={product.id + index}
+                  value={index}
+                  onClick={(e) => handleClick(e)}
+                >
                   {product.title}
                 </option>
               ))}
@@ -132,11 +132,21 @@ export default function Admin() {
             <div className="admin__editPanel">
               <div>
                 <label htmlFor="title">Краткий заголовок:</label>
-                <input defaultValue={edited.title} type="string" name="title" onChange={(e) => handleChange(e)}/>
+                <input
+                  defaultValue={edited.title}
+                  type="string"
+                  name="title"
+                  onChange={(e) => handleChange(e)}
+                />
               </div>
               <div>
                 <label htmlFor="brand">Бренд:</label>
-                <input defaultValue={edited.brand} type="string" name="brand" onChange={(e) => handleChange(e)} />
+                <input
+                  defaultValue={edited.brand}
+                  type="string"
+                  name="brand"
+                  onChange={(e) => handleChange(e)}
+                />
               </div>
               <div>
                 <label htmlFor="manufacturer">Производитель</label>
@@ -171,15 +181,30 @@ export default function Admin() {
               </div>
               <div>
                 <label htmlFor="price">Цена:</label>
-                <input defaultValue={edited.price} type="string" name="price" onChange={(e) => handleChange(e)} />
+                <input
+                  defaultValue={edited.price}
+                  type="string"
+                  name="price"
+                  onChange={(e) => handleChange(e)}
+                />
               </div>
               <div>
                 <label htmlFor="size">Объем/Количество:</label>
-                <input defaultValue={edited.size} type="string" name="size" onChange={(e) => handleChange(e)} />
+                <input
+                  defaultValue={edited.size}
+                  type="string"
+                  name="size"
+                  onChange={(e) => handleChange(e)}
+                />
               </div>
               <div>
                 <label htmlFor="unit">Единица измерения</label>
-                <input defaultValue={edited.unit} type="string" name="unit" onChange={(e) => handleChange(e)} />
+                <input
+                  defaultValue={edited.unit}
+                  type="string"
+                  name="unit"
+                  onChange={(e) => handleChange(e)}
+                />
               </div>
               <div>
                 <label htmlFor="barcode">Штрихкод</label>

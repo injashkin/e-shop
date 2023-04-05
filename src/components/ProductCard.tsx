@@ -16,18 +16,16 @@ interface IProductCard {
 }
 
 export default function ProductCard({ mod, product }: IProductCard) {
-
   let productInCart: IProductInCart | undefined = {
     product: product,
     quantity: 0,
-  }
+  };
 
   let index: number = 0;
 
   const { state, dispatch } = useContext(AppContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
     dispatch({
       type: "CHANGE_QUANTITY",
       data: { id: product.id, quantity: +e.target.value },
@@ -87,7 +85,6 @@ export default function ProductCard({ mod, product }: IProductCard) {
 
   // Перенести в редьюсер
   function addToCart() {
-
     productInCart = state.productsInCart.find((item, i) => {
       if (item.product.id === product.id) {
         index = i;
@@ -97,7 +94,6 @@ export default function ProductCard({ mod, product }: IProductCard) {
     });
 
     if (productInCart) {
-
       productInCart.quantity = productInCart.quantity + 1;
       let addedCart = state.productsInCart;
 
@@ -191,8 +187,15 @@ export default function ProductCard({ mod, product }: IProductCard) {
     <div id={product.id} className={productCard}>
       <div className={`flex ${colClass}`}>
         {catMob && <div className="product-card__pop">ПОПУЛЯРНОЕ</div>}
+
         <div className={productCardImage}>
-          <img className="activator" src={getImageUrl(product.image_m)} alt="" />
+          <div>
+            <img
+              className="product-card__img"
+              src={getImageUrl(product.image_m)}
+              alt=""
+            />
+          </div>
         </div>
         <div className="product-card__description">
           <div className="product-card__unit">

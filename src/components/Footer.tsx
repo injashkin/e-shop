@@ -1,4 +1,5 @@
 import logo from "../assets/logo-white.svg";
+import logo_m from "../assets/logo-white-m.svg";
 import chevron from "../assets/chevron.svg";
 import download from "../assets/download-white.svg";
 import whatsapp from "../assets/whatsapp.svg";
@@ -9,13 +10,29 @@ import masterCard from "../assets/master-card.svg";
 import "./Footer.css";
 import Search from "./Search";
 import Button from "./Button";
+import ButtonLink from "./ButtonLink";
 
 export default function Footer() {
   return (
     <div className="footer-wrap">
+      <ButtonLink
+        text="Админка"
+        className="footer__admin"
+        href="/admin"
+      ></ButtonLink>
       <footer className="footer container">
         <div className="footer__col1">
-          <img src={logo}></img>
+          <div className="footer__logo-group">
+            <img src={logo} className="footer__logo"></img>
+            <img src={logo_m} className="footer__logo-mobile"></img>
+            <Button
+              text="Прайс-лист"
+              icon={download}
+              name={""}
+              className="footer__btn-download-mobile"
+              onClick={(e) => e}
+            ></Button>
+          </div>
           <div>
             Компания «Султан» — снабжаем розничные магазины товарами "под ключ"
             в Кокчетаве и Акмолинской области
@@ -58,7 +75,7 @@ export default function Footer() {
               icon={download}
               name={""}
               className="footer__btn-download"
-              onClick={(e) => (e)}
+              onClick={(e) => e}
             ></Button>
             <div>Связь в мессенджерах:</div>
             <div>
