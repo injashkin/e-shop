@@ -32,32 +32,37 @@ export const AppContext = createContext<{
 
 function App(): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const router = createBrowserRouter([
+  const router = createBrowserRouter(
+    [
+      {
+        path: "/",
+        element: <CatalogPage />,
+      },
+      {
+        path: "/catalog/:title",
+        element: <CardPage />,
+      },
+      {
+        path: "/catalog",
+        element: <CatalogPage />,
+      },
+      {
+        path: "/basket",
+        element: <BasketPage />,
+      },
+      //{
+      //  path: "/error",
+      //  element: <ErrorPage />,
+      //},
+      //{
+      //  path: "/admin",
+      //  element: <Admin />,
+      //},
+    ],
     {
-      path: "/",
-      element: <CatalogPage />,
-    },
-    {
-      path: "/catalog/:title",
-      element: <CardPage />,
-    },
-    {
-      path: "/catalog",
-      element: <CatalogPage />,
-    },
-    {
-      path: "/basket",
-      element: <BasketPage />,
-    },
-    //{
-    //  path: "/error",
-    //  element: <ErrorPage />,
-    //},
-    //{
-    //  path: "/admin",
-    //  element: <Admin />,
-    //},
-  ]);
+      basename: "/e-shop",
+    }
+  );
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
