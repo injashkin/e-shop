@@ -18,7 +18,7 @@ export default function Footer() {
       <ButtonLink
         text="Админка"
         className="footer__admin"
-        href="/admin"
+        href=""
       ></ButtonLink>
       <footer className="footer container">
         <div className="footer__col1">
