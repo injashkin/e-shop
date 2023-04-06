@@ -1,14 +1,13 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AppContext } from "../App";
 import boxOpen from "../assets/box-open.svg";
-import deleted from "../assets/deleted.svg";
 import basket from "../assets/basket.svg";
 import "./ProductCard.css";
 import Button from "./Button";
 import { Link } from "react-router-dom";
 import { IProduct, IProductInCart } from "../globalTypes";
 
-export type Mod = "row" | "col" | "cat" | "cat-mob";
+export type Mod = "cat" | "cat-mob";
 
 interface IProductCard {
   mod: Mod;
@@ -16,75 +15,17 @@ interface IProductCard {
 }
 
 export default function ProductCard({ mod, product }: IProductCard) {
-  let productInCart: IProductInCart | undefined = {
-    product: product,
-    quantity: 0,
-  };
-
-  let index: number = 0;
-
   const { state, dispatch } = useContext(AppContext);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: "CHANGE_QUANTITY",
-      data: { id: product.id, quantity: +e.target.value },
-    });
+  let productInCart: IProductInCart | undefined = {
+    product: product,
+    quantity: +product.id,
   };
 
-  function remove() {
-    dispatch({
-      type: "REMOVE",
-      data: { id: product.id },
-    });
-
-    dispatch({
-      type: "UPDATE_SUM",
-      data: "",
-    });
-
-    dispatch({
-      type: "UPDATE_TOTAL_NUM",
-      data: "",
-    });
-  }
-
-  function minus() {
-    dispatch({
-      type: "MINUS_QUANTITY",
-      data: { id: product.id },
-    });
-
-    dispatch({
-      type: "UPDATE_TOTAL_NUM",
-      data: "",
-    });
-
-    dispatch({
-      type: "UPDATE_SUM",
-      data: "",
-    });
-  }
-
-  function plus() {
-    dispatch({
-      type: "PLUS_QUANTITY",
-      data: { id: product.id },
-    });
-
-    dispatch({
-      type: "UPDATE_TOTAL_NUM",
-      data: "",
-    });
-
-    dispatch({
-      type: "UPDATE_SUM",
-      data: "",
-    });
-  }
-
   // Перенести в редьюсер
-  function addToCart() {
+  function addToCart(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    let index = 0;
+
     productInCart = state.productsInCart.find((item, i) => {
       if (item.product.id === product.id) {
         index = i;
@@ -119,20 +60,18 @@ export default function ProductCard({ mod, product }: IProductCard) {
     }
 
     dispatch({
-      type: "UPDATE_TOTAL_NUM",
+      type: "UPDATE_SUM",
       data: "",
     });
 
     dispatch({
-      type: "UPDATE_SUM",
+      type: "UPDATE_TOTAL_NUM",
       data: "",
     });
   }
 
   let cat = true;
   let catMob = false;
-  let col = false;
-  let row = false;
 
   let colClass = "";
   let productCard = "product-card";
@@ -140,26 +79,9 @@ export default function ProductCard({ mod, product }: IProductCard) {
   let productCardControl = "product-card__control";
   let productCardImage = "product-card__image";
 
-  if (mod === "row") {
-    row = true;
-    col = false;
-    cat = false;
-  }
 
-  if (mod === "col") {
-    col = true;
-    cat = false;
-    row = false;
-    productCard = `${productCard} product-card--col`;
-    productCardImage = `${productCardImage} product-card__image--col`;
-    colClass = " col";
-    productCardPrice = `${productCardPrice} product-card__price--sm`;
-    productCardControl = `${productCardControl} product-card__control--col`;
-  }
   if (mod === "cat") {
     cat = true;
-    col = false;
-    row = false;
     productCard = `${productCard} product-card--cat`;
     productCardImage = `${productCardImage} product-card__image--cat`;
     colClass = " col";
@@ -170,8 +92,6 @@ export default function ProductCard({ mod, product }: IProductCard) {
   if (mod === "cat-mob") {
     catMob = true;
     cat = true;
-    col = false;
-    row = false;
     productCard = `${productCard} product-card--cat product-card--cat-mob`;
     productCardImage = `${productCardImage} product-card__image--cat product-card__image--cat-mob`;
     colClass = " col";
@@ -184,7 +104,7 @@ export default function ProductCard({ mod, product }: IProductCard) {
   }
 
   return (
-    <div id={product.id} className={productCard}>
+    <div id={`product-${product.barcode}`} className={productCard}>
       <div className={`flex ${colClass}`}>
         {catMob && <div className="product-card__pop">ПОПУЛЯРНОЕ</div>}
 
@@ -202,74 +122,47 @@ export default function ProductCard({ mod, product }: IProductCard) {
             <img src={boxOpen} />
             <span>
               {product.size}
-              {product.types}
+              {product.unit}
             </span>
           </div>
-          <Link to={`/catalog/${product.title}`}>
+          <Link
+            to={`/catalog/${product.title}`}
+            onClick={() =>
+              dispatch({ type: "SELECT", data: { barcode: product.barcode } })
+            }
+          >
             <h3>
               <span>{product.brand} </span>
               {product.name}
             </h3>
           </Link>
 
-          {cat && (
-            <div className="product-card__detail">
-              <div>
-                <span>Штрихкод: </span>
-                <span>{product.barcode}</span>
-              </div>
-              <div>
-                <span>Производитель: </span>
-                <span>{product.manufacturer}</span>
-              </div>
-              <div>
-                <span>Бренд: </span>
-                <span>{product.brand}</span>
-              </div>
+          <div className="product-card__detail">
+            <div>
+              <span>Штрихкод: </span>
+              <span>{product.barcode}</span>
             </div>
-          )}
-
-          {(col || row) && <p>{product.description}</p>}
+            <div>
+              <span>Производитель: </span>
+              <span>{product.manufacturer}</span>
+            </div>
+            <div>
+              <span>Бренд: </span>
+              <span>{product.brand}</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className={`${productCardControl}`}>
-        {row && <div className="sep49"></div>}
-        {(row || col) && (
-          <div className="product-card__inc-dec">
-            <Button text="-" className="product-card__minus" onClick={minus} />
-
-            <input
-              type="text"
-              id="card-quantity"
-              name="quantity"
-              className="quantity"
-              value={state.productsInCart[+product.id - 1].quantity}
-              onChange={(e) => handleChange(e)}
-            ></input>
-
-            <Button text="+" className="product-card__plus" onClick={plus} />
-          </div>
-        )}
-
-        {(row || col) && <div className="sep49"></div>}
         <div className={productCardPrice}>{`${product.price} ₸`}</div>
-        {(row || col) && <div className="sep49"></div>}
-        {(row || col) && (
-          <Button
-            icon={deleted}
-            className="product-card__plus"
-            onClick={remove}
-          />
-        )}
-        {cat && (
-          <Button
-            text="В корзину"
-            icon={basket}
-            className="product-card__plus"
-            onClick={addToCart}
-          />
-        )}
+
+        <Button
+          text="В корзину"
+          icon={basket}
+          className="product-card__plus"
+          onClick={(e) => addToCart(e)}
+        />
       </div>
     </div>
   );

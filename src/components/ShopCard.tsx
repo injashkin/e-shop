@@ -2,14 +2,13 @@ import React, { useContext } from "react";
 import { AppContext } from "../App";
 
 import "./ShopCard.css";
-import imgProduct from "../images/biomio.png";
 import basket from "../assets/basket.svg";
 import download from "../assets/download.svg";
 import dotLine from "../assets/dot-line.svg";
 import share from "../assets/share.svg";
 import Button from "./Button";
 import { useParams } from "react-router-dom";
-import { IProduct, IProductInCart } from "../globalTypes";
+import { IProductInCart } from "../globalTypes";
 
 export default function ShopCard() {
   const { state, dispatch } = useContext(AppContext);
@@ -35,7 +34,7 @@ export default function ShopCard() {
   function minus() {
     dispatch({
       type: "MINUS_QUANTITY",
-      data: { id: product.id },
+      data: { barcode: product.barcode },
     });
 
     dispatch({
@@ -52,7 +51,7 @@ export default function ShopCard() {
   function plus() {
     dispatch({
       type: "PLUS_QUANTITY",
-      data: { id: product.id },
+      data: { barcode: product.barcode },
     });
 
     dispatch({
@@ -69,6 +68,7 @@ export default function ShopCard() {
   // Перенести в редьюсер
   function addToCart() {
     let index = 0;
+
     let productInCart = state.productsInCart.find((item, i) => {
       if (item.product.id === product.id) {
         index = i;
@@ -132,7 +132,8 @@ export default function ShopCard() {
           <div className="card__price">
             <span>{`${product.price}₸`}</span>
           </div>
-          <Button text="-" className="product-card__minus" onClick={minus} />
+
+          <Button text="-" className="shop-card__minus" onClick={minus} />
           <input
             type="number"
             id="card-quantity"
@@ -141,8 +142,8 @@ export default function ShopCard() {
             value={productInCart.quantity}
             onChange={(e) => changeInputValue(+e.target.value)}
           ></input>
+          <Button text="+" className="shop-card__plus" onClick={plus} />
 
-          <Button text="+" className="product-card__plus" onClick={plus} />
           <Button
             text="В корзину"
             icon={basket}

@@ -65,6 +65,7 @@ export interface IData {
   type: string;
   price: number;
   newValue: number;
+  barcode: number;
 }
 
 interface ISortedData {

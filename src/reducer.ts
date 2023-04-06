@@ -41,15 +41,38 @@ export const initialState: IState = {
 export default function reducer(state: IState, action: IAction): IState {
   const { type, data } = action;
   let index: number | undefined;
-  let newProductsInCart: IProductInCart[];
+  let newProductsInCart: IProductInCart[] = [];
 
   console.log(type);
 
   switch (type) {
+    case "SELECT":
+      let product = state.productsInCart.find(
+        (item) => item.product.barcode === data.barcode
+      )!;
+
+      if (product) {
+        newProductsInCart = state.productsInCart;
+      } else {
+        newProductsInCart.push({
+          product: state.products.find(
+            (item) => item.barcode === data.barcode
+          )!,
+          quantity: 0,
+        });
+      }
+
+      return { ...state, productsInCart: newProductsInCart };
+
     case "PLUS_QUANTITY":
+      //index = state.productsInCart.findIndex(
+      //  (item) => item.product.id === data.id
+      //);
+      console.log(data.barcode);
       index = state.productsInCart.findIndex(
-        (item) => item.product.id === data.id
+        (item) => item.product.barcode === data.barcode
       );
+
       newProductsInCart = state.productsInCart;
 
       if (newProductsInCart[index].quantity) {
@@ -63,9 +86,11 @@ export default function reducer(state: IState, action: IAction): IState {
       };
 
     case "MINUS_QUANTITY":
+      console.log(data.barcode);
       index = state.productsInCart.findIndex(
-        (item) => item.product.id === data.id
+        (item) => item.product.barcode === data.barcode
       );
+
       newProductsInCart = [...state.productsInCart];
       let numProducts = state.numProducts;
 
