@@ -119,30 +119,44 @@ export default function ShopCard() {
 
   return (
     <div id={"product-" + product.id} className="card">
-      <div className="image">
-        <img className="activator" src={getImageUrl(product.image_m)} alt="" />
+      <div className="card__image">
+        <div>
+          <img
+            className="activator"
+            src={getImageUrl(product.image_m)}
+            alt=""
+          />
+        </div>
       </div>
       <div className="card__right-side">
+        <div className="card__availability">В наличии</div>
         <header className="card__header">
           <span>{product.brand} </span>
           <span>{product.name}</span>
         </header>
 
-        <div className="card__form">
-          <div className="card__price">
-            <span>{`${product.price}₸`}</span>
-          </div>
+        <div>
+          <span>{product.size} </span>
+          <span>{product.unit}</span>
+        </div>
 
-          <Button text="-" className="shop-card__minus" onClick={minus} />
-          <input
-            type="number"
-            id="card-quantity"
-            name="quantity"
-            className="quantity"
-            value={productInCart.quantity}
-            onChange={(e) => changeInputValue(+e.target.value)}
-          ></input>
-          <Button text="+" className="shop-card__plus" onClick={plus} />
+        <div className="card__form">
+          <div className="card__control-group">
+            <div className="card__price">
+              <span>{`${product.price}₸`}</span>
+            </div>
+
+            <Button text="-" className="shop-card__minus" onClick={minus} />
+            <input
+              type="number"
+              id="card-quantity"
+              name="quantity"
+              className="quantity"
+              value={productInCart.quantity}
+              onChange={(e) => changeInputValue(+e.target.value)}
+            ></input>
+            <Button text="+" className="shop-card__plus" onClick={plus} />
+          </div>
 
           <Button
             text="В корзину"
@@ -201,7 +215,7 @@ export default function ShopCard() {
           <p>{product.description}</p>
         </div>
 
-        <img src={dotLine}></img>
+        <img className="card__separator" src={dotLine}></img>
 
         <div className="card__characteristic">
           <h3>Характеристики </h3>
@@ -225,17 +239,17 @@ export default function ShopCard() {
           <div>
             <span>Вес: </span>
             <span>{product.size} </span>
-            <span>{product.types}</span>
+            <span>{product.unit}</span>
           </div>
           <div>
             <span>Объем:м </span>
             <span>{product.size} </span>
-            <span>{product.types}</span>
+            <span>{product.unit}</span>
           </div>
           <div>
             <span>Кол-во в коробке: </span>
             <span>{product.size} </span>
-            <span>{product.types}</span>
+            <span>{product.unit}</span>
           </div>
         </div>
       </div>

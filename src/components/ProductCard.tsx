@@ -79,7 +79,6 @@ export default function ProductCard({ mod, product }: IProductCard) {
   let productCardControl = "product-card__control";
   let productCardImage = "product-card__image";
 
-
   if (mod === "cat") {
     cat = true;
     productCard = `${productCard} product-card--cat`;

@@ -86,7 +86,6 @@ export default function reducer(state: IState, action: IAction): IState {
       };
 
     case "MINUS_QUANTITY":
-      console.log(data.barcode);
       index = state.productsInCart.findIndex(
         (item) => item.product.barcode === data.barcode
       );
@@ -145,16 +144,17 @@ export default function reducer(state: IState, action: IAction): IState {
       return { ...state, totalSum: sum };
 
     case "SORT":
-      console.log("data.changed", data.changed);
       let sorted: IProduct[] = [];
       let sortedName: string = data.sortedData[+data.changed].label;
 
       if (data.changed === "0") {
-        sorted = [...state.products];
+        sorted = [...state.products].sort((a, b) =>
+          b.name! < a.name! ? 1 : -1
+        );
       }
       if (data.changed === "1") {
         sorted = [...state.products].sort((a, b) =>
-          b.name! < a.name! ? 1 : -1
+          b.name! > a.name! ? 1 : -1
         );
       }
       if (data.changed === "2") {
@@ -205,6 +205,8 @@ export default function reducer(state: IState, action: IAction): IState {
       return { ...state, quantityFromCard: data.newValue };
     case "ADD_TO_BASKET_PRICE":
       return { ...state, price: data.price };
+    case "CLEAR_CART":
+      return { ...state, productsInCart: [], numProducts: 0, totalSum: 0 };
     default:
       return { ...state };
   }
