@@ -1,12 +1,12 @@
 import "./Basket.css";
-import Button from "./Button";
 import { MouseEvent, useContext } from "react";
 import { AppContext } from "../App";
 import { IProductInCart } from "../globalTypes";
 import Cart from "./Cart";
-import doubleCheck from "../assets/double-check.svg";
-import close from "../assets/close.svg";
 import { useNavigate } from "react-router-dom";
+import Modal from "./Modal/Modal";
+import Button from "./Button";
+import doubleCheck from "../assets/double-check.svg";
 
 let modalHeader = "";
 let modalText = "";
@@ -17,9 +17,9 @@ export default function Basket() {
   const navigate = useNavigate();
 
   const closeModal = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
-    let modal = document.querySelector(".basket__modal-wrap") as HTMLElement;
-    if (modal.style.display === "block") {
-      modal.style.display = "none";
+    let modalEl = document.querySelector(".modal") as HTMLElement;
+    if (modalEl.style.display === "block") {
+      modalEl.style.display = "none";
     }
 
     navigate("/catalog");
@@ -28,7 +28,6 @@ export default function Basket() {
   const openModal = (
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) => {
-    console.log(state.numProducts);
     if (state.numProducts) {
       modalHeader = "Спасибо за заказ";
       modalText = "Наш менеджер свяжется с вами в ближайшее время";
@@ -42,20 +41,19 @@ export default function Basket() {
       data: "",
     });
 
-    let modal = document.querySelector(".basket__modal-wrap") as HTMLElement;
+    let modal = document.querySelector(".modal") as HTMLElement;
     modal.style.display = "block";
   };
 
   return (
     <div>
-      <div className="basket__modal-wrap" onClick={(e) => closeModal(e)}>
-        <div className="basket__modal">
-          <img className="basket__modal-close" src={close} />
-          <Button icon={doubleCheck} onClick={(e) => e} />
-          <div className="basket__modal-header">{modalHeader}</div>
-          <p className="basket__modal-text">{modalText}</p>
-        </div>
-      </div>
+      <Modal
+        closeModal={(e) => closeModal(e)}
+        title={modalHeader}
+        text={modalText}
+      >
+        <Button icon={doubleCheck} onClick={(e) => e} />
+      </Modal>
       <div className="basket container">
         <div className="basket__bread-crumbs">
           <div>Главная</div>
