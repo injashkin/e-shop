@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { AppContext } from "../App";
 import boxOpen from "../assets/box-open.svg";
 import deleted from "../assets/deleted.svg";
-import "./ProductCard.css";
+import "./cart.css";
 import Button from "./Button";
 import { Link } from "react-router-dom";
 import { IProductInCart } from "../globalTypes";
@@ -67,19 +67,19 @@ export default function Cart({ products }: ICart) {
   }
 
   return (
-    <div id={`product-${product.barcode}`} className="product-card">
+    <div id={`product-${product.barcode}`} className="cart">
       <div className="flex">
-        <div className="product-card__image">
+        <div className="cart__image">
           <div>
             <img
-              className="product-card__img"
+              className="cart__img"
               src={getImageUrl(product.image_m)}
               alt=""
             />
           </div>
         </div>
-        <div className="product-card__description">
-          <div className="product-card__unit">
+        <div className="cart__description">
+          <div className="cart__unit">
             <img src={boxOpen} />
             <span>
               {product.size}
@@ -102,12 +102,12 @@ export default function Cart({ products }: ICart) {
         </div>
       </div>
 
-      <div className="product-card__control">
+      <div className="cart__control">
         <div className="sep49"></div>
-        <div className="product-card__inc-dec">
+        <div className="cart__inc-dec">
           <Button
             text="-"
-            className="product-card__minus"
+            className="cart__minus"
             onClick={(e) => minus(e)}
           />
           <input
@@ -120,17 +120,17 @@ export default function Cart({ products }: ICart) {
           ></input>
           <Button
             text="+"
-            className="product-card__plus"
+            className="cart__plus"
             onClick={(e) => plus(e)}
           />
         </div>
         <div className="sep49"></div>
-        <div className="product-card__price">{`${product.price} ₸`}</div>
+        <div className="cart__price">{`${product.price} ₸`}</div>
         <div className="sep49"></div>
 
         <Button
           icon={deleted}
-          className="product-card__plus"
+          className="cart__plus"
           onClick={remove}
         />
       </div>

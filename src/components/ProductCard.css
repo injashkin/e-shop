@@ -216,10 +216,6 @@
     max-width: 65%;
     margin-top: 2rem;
   }
-
-  .product-card__control>:first-child {
-    display: none;
-  }
 }
 
 @media (max-width: 1250px) {
