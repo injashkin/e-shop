@@ -3,24 +3,6 @@
   padding-right: 1rem;
 }
 
-.catalog__bread-crumbs {
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: center;
-  padding: 0px;
-  gap: 10px;
-  text-align: left;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 120%;
-  color: #3F4E65;
-}
-
-.catalog__bread-crumbs>*:not(:first-child):not(.separator) {
-  opacity: 0.5;
-}
-
 .catalog__header {
   display: flex;
   justify-content: space-between;

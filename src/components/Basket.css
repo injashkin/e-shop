@@ -35,14 +35,6 @@
   border-bottom: 1px dashed #3F4E65;
 }
 
-.separator {
-  width: 0px;
-  height: 16px;
-  opacity: 0.3;
-  border: 1px dashed #3F4E65;
-  margin: 0 0.625rem;
-}
-
 .basket__bottom {
   display: flex;
   justify-content: space-between;

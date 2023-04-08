@@ -9,16 +9,7 @@ import { IAction, IState } from "./globalTypes";
 import CatalogPage from "./Pages/CatalogPage";
 import reducer, { initialState } from "./reducer";
 import Admin from "./components/Admin";
-
-//export const GameContext = React.createContext<{
-//  state: GameState;
-//  dispatch: React.Dispatch<GameActions>;
-//}>({
-//  state: initialGameState,
-//  dispatch: () => undefined,
-//});
-
-// dispatch: React.Dispatch<ActionType>;
+import Layout from "./Layout";
 
 export type GlobalContent = {
   state: IState;
@@ -36,27 +27,33 @@ function App(): JSX.Element {
     [
       {
         path: "/",
-        element: <CatalogPage />,
-      },
-      {
-        path: "/catalog/:title",
-        element: <CardPage />,
-      },
-      {
-        path: "/catalog",
-        element: <CatalogPage />,
-      },
-      {
-        path: "/basket",
-        element: <BasketPage />,
-      },
-      {
-        path: "/error",
-        element: <ErrorPage />,
-      },
-      {
-        path: "/admin",
-        element: <Admin />,
+        element: <Layout />,
+        children: [
+          {
+            index: true,
+            element: <CatalogPage />,
+          },
+          {
+            path: "catalog/:title",
+            element: <CardPage />,
+          },
+          {
+            path: "catalog",
+            element: <CatalogPage />,
+          },
+          {
+            path: "basket",
+            element: <BasketPage />,
+          },
+          {
+            path: "admin",
+            element: <Admin />,
+          },
+          {
+            path: "*",
+            element: <ErrorPage />,
+          },
+        ],
       },
     ],
     {

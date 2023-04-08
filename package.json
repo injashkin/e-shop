@@ -20,7 +20,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
     "sort-by": "^1.2.0",
-    "store": "^2.0.12"
+    "store": "^2.0.12",
+    "use-react-router-breadcrumbs": "^4.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",

@@ -170,11 +170,6 @@ export default function Catalog() {
 
   return (
     <div className="catalog container" onClick={handleClick}>
-      <div className="catalog__bread-crumbs">
-        <div>Главная</div>
-        <div className="separator"></div>
-        <div>Косметика и гигиена</div>
-      </div>
       <div className="catalog__header">
         <h1>Косметика и гигиена</h1>
 

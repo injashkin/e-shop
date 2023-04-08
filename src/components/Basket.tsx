@@ -52,12 +52,6 @@ export default function Basket() {
         <Button icon={doubleCheck} onClick={(e) => e} />
       </Modal>
       <div className="basket container">
-        <div className="basket__bread-crumbs">
-          <div>Главная</div>
-          <div className="separator"></div>
-          <div>Корзина</div>
-        </div>
-
         <h1>Корзинa</h1>
 
         {state.productsInCart.map((product: IProductInCart) => (
