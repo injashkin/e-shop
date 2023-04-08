@@ -10,6 +10,7 @@ import doubleCheck from "../assets/double-check.svg";
 
 let modalHeader = "";
 let modalText = "";
+let show = false;
 
 export default function Basket() {
   const { state, dispatch } = useContext(AppContext);
@@ -17,11 +18,7 @@ export default function Basket() {
   const navigate = useNavigate();
 
   const closeModal = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
-    let modalEl = document.querySelector(".modal") as HTMLElement;
-    if (modalEl.style.display === "block") {
-      modalEl.style.display = "none";
-    }
-
+    show = false;
     navigate("/catalog");
   };
 
@@ -41,13 +38,13 @@ export default function Basket() {
       data: "",
     });
 
-    let modal = document.querySelector(".modal") as HTMLElement;
-    modal.style.display = "block";
+    show = true;
   };
 
   return (
     <div>
       <Modal
+        show={show}
         closeModal={(e) => closeModal(e)}
         title={modalHeader}
         text={modalText}

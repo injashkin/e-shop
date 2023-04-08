@@ -9,6 +9,10 @@
   z-index: 599;
 }
 
+.modal--show {
+  display: block;
+}
+
 .modal__content {
   display: flex;
   flex-direction: column;
