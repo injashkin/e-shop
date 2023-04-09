@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AppContext } from "../App";
 
 import "./ShopCard.css";
@@ -9,6 +9,7 @@ import share from "../assets/share.svg";
 import Button from "./Button";
 import { useParams } from "react-router-dom";
 import { IProductInCart } from "../globalTypes";
+import { time } from "console";
 
 export default function ShopCard() {
   const { state, dispatch } = useContext(AppContext);
@@ -116,6 +117,10 @@ export default function ShopCard() {
   function getImageUrl(name: string) {
     return new URL(`../images/${name}`, import.meta.url).href;
   }
+
+  useEffect(() => {
+    document.title = title as string;
+  }, []);
 
   return (
     <div id={"product-" + product.id} className="card">

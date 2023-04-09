@@ -1,12 +1,10 @@
 .breadcrumb {
   display: flex;
   justify-content: flex-start;
-  gap: 10px;
   text-align: left;
   font-weight: 300;
   font-size: 14px;
   line-height: 120%;
-  color: #3F4E65;
   margin-top: 2.8125rem;
   width: 100%;
   padding: 0 1rem;
@@ -16,11 +14,12 @@
   display: flex;
 }
 
-.breadcrumb>a:last-child .separator {
-  display: none;
+.breadcrumb>a span {
+  display: flex;
+  color: #3F4E65;
 }
 
-.separator {
+.breadcrumb .separator {
   width: 0px;
   height: 16px;
   opacity: 0.3;
@@ -28,6 +27,11 @@
   margin: 0 0.625rem;
 }
 
-.bread-crumbs>*:not(:first-child):not(.separator) {
+.breadcrumb>a:last-child .separator {
+  display: none;
+}
+
+.breadcrumb>a:last-child span {
   opacity: 0.5;
 }
+

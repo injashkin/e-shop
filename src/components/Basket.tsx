@@ -1,5 +1,5 @@
 import "./Basket.css";
-import { MouseEvent, useContext } from "react";
+import { MouseEvent, useContext, useEffect } from "react";
 import { AppContext } from "../App";
 import { IProductInCart } from "../globalTypes";
 import Cart from "./Cart";
@@ -41,11 +41,15 @@ export default function Basket() {
     show = true;
   };
 
+  useEffect(() => {
+    document.title = "Корзина";
+  }, []);
+
   return (
     <div>
       <Modal
         show={show}
-        closeModal={(e) => closeModal(e)}
+        onClose={(e) => closeModal(e)}
         title={modalHeader}
         text={modalText}
       >

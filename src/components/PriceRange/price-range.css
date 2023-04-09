@@ -1,0 +1,31 @@
+.price-range {
+  display: flex;
+  margin: 1rem 0 0.625rem;
+}
+
+.price-range> :first-child {
+  margin-right: 0.625rem;
+}
+
+.price-range> :last-child {
+  margin-left: 0.625rem;
+}
+
+.price-range>div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 14px;
+  gap: 10px;
+  background: linear-gradient(90deg, rgba(255, 198, 80, 0.3) 0%, rgba(254, 202, 110, 0.3) 97.25%);
+  border-radius: 1000px;
+  width: 7rem;
+}
+
+.price-range input {
+  border: none;
+  background-color: inherit;
+  width: 5rem;
+  text-align: center;
+}

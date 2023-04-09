@@ -10,11 +10,12 @@ import brand4 from "../images/brand4.png";
 import brand5 from "../images/brand5.png";
 import Checkbox from "./Checkbox";
 import { AppContext } from "../App";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IProduct, typesOfCare } from "../globalTypes";
 import Button from "./Button";
 import React from "react";
 import Pagination from "./Pagination";
+import PriceRange from "./PriceRange/PriceRange";
 
 const sort = [
   { id: "0", label: "Название" },
@@ -23,10 +24,24 @@ const sort = [
   { id: "3", label: "Сначала дорогие" },
 ];
 
+const defaultPriceMin = 0;
+const defaultPriceMax = 10000;
+
 export type Current = "prev" | "next" | "number";
 
 export default function Catalog() {
   const { state, dispatch } = useContext(AppContext);
+
+  const [priceMin, setPriceMin] = useState(defaultPriceMin);
+  const [priceMax, setPriceMax] = useState(defaultPriceMax);
+
+  function handleMax(e: React.FormEvent<HTMLInputElement>) {
+    setPriceMax(+(e.target as HTMLInputElement).value);
+  }
+
+  function handleMin(e: React.FormEvent<HTMLInputElement>) {
+    setPriceMin(+(e.target as HTMLInputElement).value);
+  }
 
   const arr = state.products.map((item: IProduct) => item.manufacturer);
 
@@ -88,16 +103,6 @@ export default function Catalog() {
       targetDiv.closest(".catalog__btn-show") ||
       targetDiv.closest(".catalog__btn-delete")
     ) {
-      // Получает цены из диапазона цен
-      const inputFilterMin = document.querySelector(
-        "input[name='filter-min']"
-      ) as HTMLInputElement;
-      const inputFilterMax = document.querySelector(
-        "input[name='filter-max']"
-      ) as HTMLInputElement;
-      let min = inputFilterMin.value;
-      let max = inputFilterMax.value;
-
       // Создает массив из отмеченных чекбоксов
       const brandList = document.querySelector(
         ".catalog__left-brand-list"
@@ -109,17 +114,18 @@ export default function Catalog() {
 
       dispatch({
         type: "FILTER",
-        data: { min, max, checkboxes },
+        data: { min: priceMin, max: priceMax, checkboxes: checkboxes },
       });
 
       if (targetDiv.closest(".catalog__btn-delete")) {
         dispatch({
           type: "FILTER",
-          data: { min: 0, max: 10000, Checkbox: [] },
+          data: { min: defaultPriceMin, max: defaultPriceMax, Checkbox: [] },
         });
 
-        inputFilterMin.value = "0";
-        inputFilterMax.value = "10000";
+        setPriceMin(defaultPriceMin);
+        setPriceMax(defaultPriceMax);
+
         inputs.forEach((elem) => (elem.checked = false));
       }
     }
@@ -168,10 +174,14 @@ export default function Catalog() {
     });
   }
 
+  useEffect(() => {
+    document.title = "Каталог";
+  }, []);
+
   return (
     <div className="catalog container" onClick={handleClick}>
       <div className="catalog__header">
-        <h1>Косметика и гигиена</h1>
+        <h1>Каталог</h1>
 
         <div className="catalog__sort-wrapper">
           <div className="catalog__sort">
@@ -207,26 +217,15 @@ export default function Catalog() {
           <div>ПОДБОР ПО ПАРАМЕТРАМ</div>
           <div className="catalog__left-by-price">
             <div>Цена ₸</div>
-            <div className="catalog__left-inputs">
-              <div>
-                <input
-                  defaultValue="0"
-                  name="filter-min"
-                  type="number"
-                  min="0"
-                />
-              </div>
-              -
-              <div>
-                <input
-                  defaultValue="10000"
-                  name="filter-max"
-                  type="number"
-                  min="0"
-                />
-              </div>
-            </div>
+
+            <PriceRange
+              defaultMin={priceMin}
+              defaultMax={priceMax}
+              getMin={handleMin}
+              getMax={handleMax}
+            ></PriceRange>
           </div>
+
           <div className="catalog__left-brand">
             <div>Производитель</div>
             <Search icon={search} />
@@ -263,9 +262,7 @@ export default function Catalog() {
             ))}
           </div>
 
-          <div
-            className="catalog__sort-wrapper catalog__sort-wrapper--mobile"
-          >
+          <div className="catalog__sort-wrapper catalog__sort-wrapper--mobile">
             <div className="catalog__sort">
               <span>Сортировка:</span>
               <a>
