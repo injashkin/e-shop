@@ -24,8 +24,8 @@ const sort = [
   { id: "3", label: "Сначала дорогие" },
 ];
 
-const defaultPriceMin = 0;
-const defaultPriceMax = 10000;
+const defaultPriceMin = "0";
+const defaultPriceMax = "10000";
 
 export type Current = "prev" | "next" | "number";
 
@@ -35,12 +35,12 @@ export default function Catalog() {
   const [priceMin, setPriceMin] = useState(defaultPriceMin);
   const [priceMax, setPriceMax] = useState(defaultPriceMax);
 
-  function handleMax(e: React.FormEvent<HTMLInputElement>) {
-    setPriceMax(+(e.target as HTMLInputElement).value);
+  function handleMax(e: React.ChangeEvent<HTMLInputElement>) {
+    setPriceMax((e.target as HTMLInputElement).value);
   }
 
-  function handleMin(e: React.FormEvent<HTMLInputElement>) {
-    setPriceMin(+(e.target as HTMLInputElement).value);
+  function handleMin(e: React.ChangeEvent<HTMLInputElement>) {
+    setPriceMin((e.target as HTMLInputElement).value);
   }
 
   const arr = state.products.map((item: IProduct) => item.manufacturer);

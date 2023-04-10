@@ -1,10 +1,10 @@
 import "./price-range.css";
 
 interface IPriceRange {
-  defaultMin: number;
-  defaultMax: number;
-  getMin: (e: React.FormEvent<HTMLInputElement>) => void;
-  getMax: (e: React.FormEvent<HTMLInputElement>) => void;
+  defaultMin: string;
+  defaultMax: string;
+  getMin: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  getMax: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function PriceRange({
@@ -27,7 +27,7 @@ export default function PriceRange({
       -
       <div>
         <input
-          onInput={getMax}
+          onChange={getMax}
           //defaultValue={defaultMax}
           value={defaultMax}
           name="filter-max"

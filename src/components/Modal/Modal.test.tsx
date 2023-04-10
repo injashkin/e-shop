@@ -1,8 +1,8 @@
-import { fireEvent, getByText, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import Modal from "./Modal";
 
 describe("Модальное окно", () => {
-  test("должен отобразить окно с текстом", () => {
+  it("должен отобразить окно с текстом", () => {
     const component = render(
       <Modal
         title="Спасибо за заказ"
@@ -14,7 +14,7 @@ describe("Модальное окно", () => {
     expect(component).toMatchSnapshot();
   });
 
-  test("должен закрыть окно при нажатии на крестик", () => {
+  it("должен закрыть окно при нажатии на крестик", () => {
     const closeModal = vi.fn();
 
     const component = render(
@@ -22,11 +22,11 @@ describe("Модальное окно", () => {
         <div>test</div>
       </Modal>
     );
-    expect(screen.getByText("test")).toBeTruthy();
+    expect(component.getByText("test")).toBeTruthy();
 
     fireEvent.click(screen.getByAltText(/close/i));
     expect(closeModal).toHaveBeenCalledTimes(1);
   });
 
-  test("должен закрыть окно при нажатии на крестик", () => {});
+  it("должен закрыть окно при нажатии на крестик", () => {});
 });
