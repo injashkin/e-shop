@@ -96,21 +96,6 @@ export default function reducer(state: IState, action: IAction): IState {
         productsInCart: newProductsInCart,
       };
 
-    case "CHANGE_QUANTITY":
-      index = state.productsInCart.findIndex(
-        (item) => item.product.barcode === data.barcode
-      );
-
-      console.log(index);
-
-      newProductsInCart = [...state.productsInCart];
-      newProductsInCart[index].quantity = data.quantity;
-   
-      return {
-        ...state,
-        productsInCart: newProductsInCart,
-      };
-
     case "UPDATE_QUANTITY":
       index = state.productsInCart.findIndex(
         (item) => item.product.id === data.id

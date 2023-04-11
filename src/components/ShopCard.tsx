@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../App";
-
 import "./ShopCard.css";
 import basket from "../assets/basket.svg";
 import download from "../assets/download.svg";
@@ -9,37 +8,16 @@ import share from "../assets/share.svg";
 import Button from "./Button/Button";
 import { useParams } from "react-router-dom";
 import { IProductInCart } from "../globalTypes";
-import { time } from "console";
 import Counter from "./Counter/Counter";
 
 export default function ShopCard() {
   const { state, dispatch } = useContext(AppContext);
   let { title } = useParams();
 
-  const initValue = 3;
-
-  //const [val, setVal] = useState(3);
-
-  /*
-  function changeValue(e: React.FormEvent<HTMLInputElement>) {
-    console.log("ffffffffffffffffff")
-    setCount(+(e.target as HTMLInputElement).value);
-
-    dispatch({
-      type: "CHANGE_QUANTITY",
-      data: "",
-    })
-  }
-  */
-
   let productInCart: IProductInCart = {
     product: state.products[0],
     quantity: 0,
   };
-
-  //const handleClick = (e:  React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-  //  const targetDiv = e.target as HTMLElement;
-  //}
 
   const productInCartCurrent = state.productsInCart.find(
     (index) => index.product.title.trim() === title?.trim()
@@ -49,15 +27,8 @@ export default function ShopCard() {
 
   let { product } = productInCart;
 
-  const changeInputValue = (newValue: number) => {
-    dispatch({ type: "UPDATE_INPUT", data: newValue });
-  };
-
-  const handleChange = (values: number) => {
-    dispatch({
-      type: "CHANGE_QUANTITY",
-      data: {quantity: values, barcode: product.barcode},
-    });
+  const changeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: "UPDATE_INPUT", data: e.target.value });
   };
 
   function minus() {
@@ -66,15 +37,7 @@ export default function ShopCard() {
       data: { barcode: product.barcode },
     });
 
-    dispatch({
-      type: "UPDATE_TOTAL_NUM",
-      data: "",
-    });
-
-    dispatch({
-      type: "UPDATE_SUM",
-      data: "",
-    });
+    dataUpdate();
   }
 
   function plus() {
@@ -83,15 +46,7 @@ export default function ShopCard() {
       data: { barcode: product.barcode },
     });
 
-    dispatch({
-      type: "UPDATE_TOTAL_NUM",
-      data: "",
-    });
-
-    dispatch({
-      type: "UPDATE_SUM",
-      data: "",
-    });
+    dataUpdate();
   }
 
   // Перенести в редьюсер
@@ -131,13 +86,17 @@ export default function ShopCard() {
       });
     }
 
+    dataUpdate();
+  }
+
+  function dataUpdate() {
     dispatch({
-      type: "UPDATE_TOTAL_NUM",
+      type: "UPDATE_SUM",
       data: "",
     });
 
     dispatch({
-      type: "UPDATE_SUM",
+      type: "UPDATE_TOTAL_NUM",
       data: "",
     });
   }
@@ -152,8 +111,6 @@ export default function ShopCard() {
 
   return (
     <div id={"product-" + product.id} className="card">
-      <Counter initValue={productInCart.quantity} onChangeValue={handleChange} />
-
       <div className="card__image">
         <div>
           <img
@@ -181,16 +138,12 @@ export default function ShopCard() {
               <span>{`${product.price}₸`}</span>
             </div>
 
-            <Button text="-" className="shop-card__minus" onClick={minus} />
-            <input
-              type="number"
-              id="card-quantity"
-              name="quantity"
-              className="quantity"
-              value={productInCart.quantity}
-              onChange={(e) => changeInputValue(+e.target.value)}
-            ></input>
-            <Button text="+" className="shop-card__plus" onClick={plus} />
+            <Counter
+              quantity={productInCart.quantity}
+              changeValue={changeInputValue}
+              minus={minus}
+              plus={plus}
+            />
           </div>
 
           <Button

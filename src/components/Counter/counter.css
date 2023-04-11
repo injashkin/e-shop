@@ -1,3 +1,13 @@
 .counter {
-  display: block;
+  display: flex;
+
+}
+
+.quantity {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 130%;
+  color: #3F4E65;
+  width: 3rem;
+  text-align: center;
 }

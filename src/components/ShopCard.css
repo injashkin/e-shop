@@ -74,15 +74,6 @@
   margin-left: 2.5rem;
 }
 
-.quantity {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 130%;
-  color: #3F4E65;
-  width: 3rem;
-  text-align: center;
-}
-
 .card__basket-btn {
   width: 11.5rem;
   height: 3.6875rem;

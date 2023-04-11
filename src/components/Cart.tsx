@@ -6,6 +6,7 @@ import "./cart.css";
 import Button from "./Button/Button";
 import { Link } from "react-router-dom";
 import { IProductInCart } from "../globalTypes";
+import Counter from "./Counter/Counter";
 
 interface ICart {
   products: IProductInCart;
@@ -16,10 +17,10 @@ export default function Cart({ products }: ICart) {
 
   const { product, quantity } = products;
 
-  const handleChange = (value: number) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: "CHANGE_QUANTITY",
-      data: { id: product.id, quantity: value },
+      data: { id: product.id, quantity: e.target.value },
     });
   };
 
@@ -105,34 +106,18 @@ export default function Cart({ products }: ICart) {
       <div className="cart__control">
         <div className="sep49"></div>
         <div className="cart__inc-dec">
-          <Button
-            text="-"
-            className="cart__minus"
-            onClick={(e) => minus(e)}
-          />
-          <input
-            type="text"
-            id="card-quantity"
-            name="quantity"
-            className="quantity"
-            value={quantity}
-            onChange={(e) => handleChange(+e.target.value)}
-          ></input>
-          <Button
-            text="+"
-            className="cart__plus"
-            onClick={(e) => plus(e)}
+          <Counter
+            quantity={quantity}
+            changeValue={handleChange}
+            minus={(e) => minus(e)}
+            plus={plus}
           />
         </div>
         <div className="sep49"></div>
         <div className="cart__price">{`${product.price} ₸`}</div>
         <div className="sep49"></div>
 
-        <Button
-          icon={deleted}
-          className="cart__plus"
-          onClick={remove}
-        />
+        <Button icon={deleted} className="cart__plus" onClick={remove} />
       </div>
     </div>
   );

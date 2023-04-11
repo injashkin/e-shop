@@ -1,33 +1,19 @@
-import { useState } from "react";
 import Button from "../Button/Button";
 import "./counter.css";
 
 interface ICounter {
-  initValue: number;
-  onChangeValue: (values: number) => void
+  quantity: number;
+  minus: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  plus: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  changeValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function Counter({onChangeValue, initValue}: ICounter) {
-  const [value, setValue] = useState(initValue);
-
-  console.log("child", value)
-
-  const minus = () => {
-    if (value > 0) {
-      setValue(value - 1);
-    } else setValue(value);
-    onChangeValue(value)
-  };
-
-  const plus = () => {
-    setValue(value + 1);
-    onChangeValue(value)
-  };
-
-  //const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
-  //  setValue(+(e.target as HTMLInputElement).value);
-  //};
-
+export default function Counter({
+  changeValue,
+  quantity,
+  minus,
+  plus,
+}: ICounter) {
 
   return (
     <div className="counter">
@@ -37,8 +23,8 @@ export default function Counter({onChangeValue, initValue}: ICounter) {
         id="card-quantity"
         name="quantity"
         className="quantity"
-        value={value}
-        //onInput={(e) => handleInput(e)}
+        value={quantity}
+        onChange={changeValue}
       ></input>
       <Button text="+" className="shop-card__plus" onClick={plus} />
     </div>
