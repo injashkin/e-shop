@@ -3,7 +3,7 @@ import { AppContext } from "../App";
 import boxOpen from "../assets/box-open.svg";
 import basket from "../assets/basket.svg";
 import "./ProductCard.css";
-import Button from "./Button";
+import Button from "./Button/Button";
 import { Link } from "react-router-dom";
 import { IProduct, IProductInCart } from "../globalTypes";
 

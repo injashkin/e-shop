@@ -6,7 +6,7 @@ import basket from "../assets/basket.svg";
 import download from "../assets/download.svg";
 import dotLine from "../assets/dot-line.svg";
 import share from "../assets/share.svg";
-import Button from "./Button";
+import Button from "./Button/Button";
 import { useParams } from "react-router-dom";
 import { IProductInCart } from "../globalTypes";
 import { time } from "console";

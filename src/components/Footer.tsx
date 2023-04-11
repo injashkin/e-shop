@@ -9,7 +9,7 @@ import masterCard from "../assets/master-card.svg";
 
 import "./Footer.css";
 import Search from "./Search";
-import Button from "./Button";
+import Button from "./Button/Button";
 import ButtonLink from "./ButtonLink";
 
 export default function Footer() {

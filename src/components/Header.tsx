@@ -13,7 +13,7 @@ import line from "../assets/line.svg";
 import hamburger from "../assets/hamburger.svg";
 import manager from "../assets/manager.png";
 import "./Header.css";
-import Button from "./Button";
+import Button from "./Button/Button";
 import Search from "./Search";
 import ButtonLink from "./ButtonLink";
 

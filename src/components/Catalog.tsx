@@ -12,7 +12,7 @@ import Checkbox from "./Checkbox";
 import { AppContext } from "../App";
 import { useContext, useEffect, useState } from "react";
 import { IProduct, typesOfCare } from "../globalTypes";
-import Button from "./Button";
+import Button from "./Button/Button";
 import React from "react";
 import Pagination from "./Pagination";
 import PriceRange from "./PriceRange/PriceRange";

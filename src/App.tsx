@@ -56,9 +56,9 @@ function App(): JSX.Element {
         ],
       },
     ],
-    {
-      basename: "/e-shop",
-    }
+    //{
+    //  basename: "/e-shop",
+    //}
   );
 
   return (

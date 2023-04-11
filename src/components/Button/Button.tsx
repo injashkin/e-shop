@@ -10,7 +10,7 @@ interface ButtonProps {
 }
 
 export default function Button(props: ButtonProps) {
-  const { text, icon, className="", name, onClick } = props;
+  const { text, icon, className = "", name, onClick } = props;
   let classes = className;
 
   if (!text) classes = `${classes} btn-round`;
@@ -20,7 +20,7 @@ export default function Button(props: ButtonProps) {
     <div className={classes && `${classes}-btn-wrap`}>
       <button
         type="button"
-        className={`btn ${classes}`}
+        className={classes ? `btn ${classes}` : "btn"}
         name={name}
         onClick={(e) => onClick(e)}
       >

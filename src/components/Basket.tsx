@@ -5,7 +5,7 @@ import { IProductInCart } from "../globalTypes";
 import Cart from "./Cart";
 import { useNavigate } from "react-router-dom";
 import Modal from "./Modal/Modal";
-import Button from "./Button";
+import Button from "./Button/Button";
 import doubleCheck from "../assets/double-check.svg";
 
 let modalHeader = "";
