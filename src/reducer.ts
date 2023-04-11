@@ -1,10 +1,4 @@
-import {
-  IAction,
-  IData,
-  IProduct,
-  IProductInCart,
-  IState,
-} from "./globalTypes";
+import { IAction, IProduct, IProductInCart, IState } from "./globalTypes";
 import products from "./products.json";
 
 export enum Types {
@@ -65,10 +59,7 @@ export default function reducer(state: IState, action: IAction): IState {
       return { ...state, productsInCart: newProductsInCart };
 
     case "PLUS_QUANTITY":
-      //index = state.productsInCart.findIndex(
-      //  (item) => item.product.id === data.id
-      //);
-      console.log(data.barcode);
+
       index = state.productsInCart.findIndex(
         (item) => item.product.barcode === data.barcode
       );
@@ -100,6 +91,21 @@ export default function reducer(state: IState, action: IAction): IState {
           (newProductsInCart[index].quantity as number) - 1;
         numProducts = state.numProducts - 1;
       }
+      return {
+        ...state,
+        productsInCart: newProductsInCart,
+      };
+
+    case "CHANGE_QUANTITY":
+      index = state.productsInCart.findIndex(
+        (item) => item.product.barcode === data.barcode
+      );
+
+      console.log(index);
+
+      newProductsInCart = [...state.productsInCart];
+      newProductsInCart[index].quantity = data.quantity;
+   
       return {
         ...state,
         productsInCart: newProductsInCart,

@@ -171,13 +171,14 @@
 
 .catalog__left-filter-label {
   display: flex;
+  cursor: pointer;
 }
 
-.catalog__left-filter-label span:hover {
+.catalog__left-filter-label:hover {
   font-weight: bolder;
 }
 
-.catalog__left-filter-label span:active {
+.catalog__left-filter-label:active {
   font-weight: normal;
 }
 

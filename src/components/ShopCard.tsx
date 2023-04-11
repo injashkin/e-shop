@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../App";
 
 import "./ShopCard.css";
@@ -10,15 +10,36 @@ import Button from "./Button/Button";
 import { useParams } from "react-router-dom";
 import { IProductInCart } from "../globalTypes";
 import { time } from "console";
+import Counter from "./Counter/Counter";
 
 export default function ShopCard() {
   const { state, dispatch } = useContext(AppContext);
   let { title } = useParams();
 
+  const initValue = 3;
+
+  //const [val, setVal] = useState(3);
+
+  /*
+  function changeValue(e: React.FormEvent<HTMLInputElement>) {
+    console.log("ffffffffffffffffff")
+    setCount(+(e.target as HTMLInputElement).value);
+
+    dispatch({
+      type: "CHANGE_QUANTITY",
+      data: "",
+    })
+  }
+  */
+
   let productInCart: IProductInCart = {
     product: state.products[0],
     quantity: 0,
   };
+
+  //const handleClick = (e:  React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  //  const targetDiv = e.target as HTMLElement;
+  //}
 
   const productInCartCurrent = state.productsInCart.find(
     (index) => index.product.title.trim() === title?.trim()
@@ -30,6 +51,13 @@ export default function ShopCard() {
 
   const changeInputValue = (newValue: number) => {
     dispatch({ type: "UPDATE_INPUT", data: newValue });
+  };
+
+  const handleChange = (values: number) => {
+    dispatch({
+      type: "CHANGE_QUANTITY",
+      data: {quantity: values, barcode: product.barcode},
+    });
   };
 
   function minus() {
@@ -124,6 +152,8 @@ export default function ShopCard() {
 
   return (
     <div id={"product-" + product.id} className="card">
+      <Counter initValue={productInCart.quantity} onChangeValue={handleChange} />
+
       <div className="card__image">
         <div>
           <img

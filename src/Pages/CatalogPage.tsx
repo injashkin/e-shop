@@ -1,4 +1,4 @@
-import Catalog from "../components/Catalog";
+import Catalog from "../components/Catalog/Catalog";
 
 export default function CatalogPage() {
   return <Catalog />;

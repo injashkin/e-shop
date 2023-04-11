@@ -1,21 +1,21 @@
 import "./Catalog.css";
-import ProductCard from "./ProductCard";
-import Search from "./Search";
-import search from "../assets/search.svg";
-import deleted from "../assets/deleted.svg";
-import brand1 from "../images/brand1.png";
-import brand2 from "../images/brand2.png";
-import brand3 from "../images/brand3.png";
-import brand4 from "../images/brand4.png";
-import brand5 from "../images/brand5.png";
-import Checkbox from "./Checkbox";
-import { AppContext } from "../App";
+import ProductCard from "../ProductCard";
+import Search from "../Search";
+import search from "../../assets/search.svg";
+import deleted from "../../assets/deleted.svg";
+import brand1 from "../../images/brand1.png";
+import brand2 from "../../images/brand2.png";
+import brand3 from "../../images/brand3.png";
+import brand4 from "../../images/brand4.png";
+import brand5 from "../../images/brand5.png";
+import Checkbox from "../Checkbox";
+import { AppContext } from "../../App";
 import { useContext, useEffect, useState } from "react";
-import { IProduct, typesOfCare } from "../globalTypes";
-import Button from "./Button/Button";
+import { IProduct, typesOfCare } from "../../globalTypes";
+import Button from "../Button/Button";
 import React from "react";
-import Pagination from "./Pagination";
-import PriceRange from "./PriceRange/PriceRange";
+import Pagination from "../Pagination";
+import PriceRange from "../PriceRange/PriceRange";
 
 const sort = [
   { id: "0", label: "Название" },
